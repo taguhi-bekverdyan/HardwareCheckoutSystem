@@ -8,7 +8,6 @@ using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
 using Prism.Unity;
-using Unity;
 using IUnityContainer = Microsoft.Practices.Unity.IUnityContainer;
 
 
