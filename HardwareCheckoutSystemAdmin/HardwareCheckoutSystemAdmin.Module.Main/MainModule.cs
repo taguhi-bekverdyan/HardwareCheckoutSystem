@@ -26,8 +26,10 @@ namespace HardwareCheckoutSystemAdmin.Module.Main
 
         public void Initialize()
         {
+            //register first view
             _regionManager.RegisterViewWithRegion(RegionNames.WindowContentRegion, typeof(DeviceListView));
 
+            //register views
             _unityContainer.RegisterType(typeof(object), typeof(DeviceListView), nameof(DeviceListView));
             _unityContainer.RegisterType(typeof(object), typeof(EditDeviceView), nameof(EditDeviceView));
         }

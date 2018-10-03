@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using HardwareCheckoutSystemAdmin.Common.Prism;
 using HardwareCheckoutSystemAdmin.Views;
 using Microsoft.Practices.Unity;
@@ -12,7 +8,6 @@ using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Unity;
-using static System.Windows.Application;
 
 namespace HardwareCheckoutSystemAdmin
 {
@@ -20,6 +15,7 @@ namespace HardwareCheckoutSystemAdmin
     {
         public Bootstrapper()
         {
+            //AutoWireViewModel logic
             ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver((viewType) =>
             {
                 var viewName = viewType.FullName;
@@ -50,7 +46,6 @@ namespace HardwareCheckoutSystemAdmin
         {
             var regionManager = RegionManager.GetRegionManager((Shell));
             RegionManagerAware.SetRegionManagerAware(Shell, regionManager);
-
             App.Current.MainWindow.Show();
         }
 

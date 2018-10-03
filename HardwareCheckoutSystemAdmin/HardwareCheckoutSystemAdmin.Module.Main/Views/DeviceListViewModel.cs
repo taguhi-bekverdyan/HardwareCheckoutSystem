@@ -20,6 +20,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 
         public void EditDeviceAction()
         {
+            //include new user control in region
             //var parameters = new NavigationParameters { { "request", new PartsPickerRequest(vendorId.Value) } };
             var parameters = new NavigationParameters { { "request", 15 } };
             RegionManager.RequestNavigate(RegionNames.DocumentsRegion,nameof(EditDeviceView),parameters);

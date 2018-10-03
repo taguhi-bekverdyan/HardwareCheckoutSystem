@@ -13,6 +13,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             var person = navigationContext.Parameters["request"];
+
+            //data loading
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
