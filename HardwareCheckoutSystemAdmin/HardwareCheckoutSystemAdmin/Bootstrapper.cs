@@ -2,6 +2,8 @@
 using System.Globalization;
 using System.Reflection;
 using HardwareCheckoutSystemAdmin.Common.Prism;
+using HardwareCheckoutSystemAdmin.Data.Infrastructure;
+using HardwareCheckoutSystemAdmin.Data.Services;
 using HardwareCheckoutSystemAdmin.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
@@ -36,6 +38,7 @@ namespace HardwareCheckoutSystemAdmin
             ViewModelLocationProvider.SetDefaultViewModelFactory((type) => Container.Resolve(type));
 
             Container.RegisterType<IShellService, ShellService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IPersonService, PersonService>(new ContainerControlledLifetimeManager());
         }
 
         protected override System.Windows.DependencyObject CreateShell()

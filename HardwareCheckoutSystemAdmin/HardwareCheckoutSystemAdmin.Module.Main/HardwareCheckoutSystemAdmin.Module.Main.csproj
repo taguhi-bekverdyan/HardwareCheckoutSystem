@@ -131,6 +131,14 @@
       <Project>{eb90f234-a632-46b8-bdd5-71ffcab12500}</Project>
       <Name>HardwareCheckoutSystemAdmin.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HardwareCheckoutSystemAdmin.Data.Infrastucture\HardwareCheckoutSystemAdmin.Data.Infrastructure.csproj">
+      <Project>{FBBC1189-56AD-4BF2-9355-D92D036C8472}</Project>
+      <Name>HardwareCheckoutSystemAdmin.Data.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HardwareCheckoutSystemAdmin.Models\HardwareCheckoutSystemAdmin.Models.csproj">
+      <Project>{5B83FC4C-DBB4-4F55-A74B-344ED25433BE}</Project>
+      <Name>HardwareCheckoutSystemAdmin.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
