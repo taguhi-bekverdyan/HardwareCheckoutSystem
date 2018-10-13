@@ -21,8 +21,11 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
 
+            context.Persons.Add(new Person { Address = "Yerevan", Age = 12, FirstName = "Narek", LastName = "Smith", Id = 3, ParentId = null });
+            context.Persons.Add(new Person { Address = "Yerevan", Age = 12, FirstName = "John", LastName = "Smith", Id = 2, ParentId = 3 });
+            context.Persons.Add(new Person { Address = "Yerevan", Age = 12, FirstName = "Artur", LastName = "Smith", Id = 4, ParentId = 3 });
+            context.Persons.Add(new Person{Address = "Yerevan", Age = 12, FirstName = "Gago", LastName = "Smith", Id = 1, ParentId = 2});
 
-            context.Persons.Add(new Person{Address = "Yerevan", Age = 12, FirstName = "Gago", LastName = "Smith", Id = 1});
         }
     }
 }

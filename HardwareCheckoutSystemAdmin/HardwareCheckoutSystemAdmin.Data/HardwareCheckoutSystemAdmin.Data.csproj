@@ -61,6 +61,18 @@
     <Compile Include="Migrations\201810121752268_FirstMigration.Designer.cs">
       <DependentUpon>201810121752268_FirstMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810131215258_ChangedPersonAnnotations.cs" />
+    <Compile Include="Migrations\201810131215258_ChangedPersonAnnotations.Designer.cs">
+      <DependentUpon>201810131215258_ChangedPersonAnnotations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810131230548_AddedParent.cs" />
+    <Compile Include="Migrations\201810131230548_AddedParent.Designer.cs">
+      <DependentUpon>201810131230548_AddedParent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810131239511_ChangedForeignKey.cs" />
+    <Compile Include="Migrations\201810131239511_ChangedForeignKey.Designer.cs">
+      <DependentUpon>201810131239511_ChangedForeignKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -77,6 +89,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201810121752268_FirstMigration.resx">
       <DependentUpon>201810121752268_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810131215258_ChangedPersonAnnotations.resx">
+      <DependentUpon>201810131215258_ChangedPersonAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810131230548_AddedParent.resx">
+      <DependentUpon>201810131230548_AddedParent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810131239511_ChangedForeignKey.resx">
+      <DependentUpon>201810131239511_ChangedForeignKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
