@@ -8,22 +8,22 @@ using HardwareCheckoutSystemAdmin.Models;
 
 namespace HardwareCheckoutSystemAdmin.Data
 {
-    public class DataContext : DbContext
+  public class DataContext : DbContext
+  {
+    public DataContext() : base("AppDatabaseConnectionString")
     {
-        public DataContext() : base("AppDatabaseConnectionString")
-        {
-        }
-
-        #region DbSets
-
-        public DbSet<Person> Persons { get; set; }
-        #endregion
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.HasDefaultSchema("public");
-            base.OnModelCreating(modelBuilder);
-        }
-
     }
+
+    #region DbSets
+    public DbSet<Device> Devices { get; set; }
+    public DbSet<Person> Persons { get; set; }
+    #endregion
+
+    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    {
+      modelBuilder.HasDefaultSchema("public");
+      base.OnModelCreating(modelBuilder);
+    }
+
+  }
 }
