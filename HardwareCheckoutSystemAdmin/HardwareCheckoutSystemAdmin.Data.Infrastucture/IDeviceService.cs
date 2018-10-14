@@ -12,5 +12,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Infrastructure
     Task Insert(Device person);
     Task<List<Device>> FindAll();
     Task<Device> FindOne(int personId);
+    Task Update(int key);
+    Task Delete(int key);
   }
 }

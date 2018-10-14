@@ -27,6 +27,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
     {
       var list = await _personService.FindAll();
       var devices = await _deviceService.FindAll();
+
       //include new user control in region
       //var parameters = new NavigationParameters { { "request", new PartsPickerRequest(vendorId.Value) } };
       var parameters = new NavigationParameters { { "request", 15 } };

@@ -27,7 +27,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
       context.Persons.Add(new Person { Address = "Yerevan", Age = 12, FirstName = "Gago", LastName = "Smith", Id = 1, ParentId = 2 });
       context.Persons.Add(new Person { Address = "Yerevan", Age = 13, FirstName = "Lucho", LastName = "Smith", Id = 5, ParentId = 1 });
 
-      context.Devices.Add(new Device { SN = 001, Brand = "Dell", Model = "i7", Description = "Laptop" });
+      context.Devices.Add(new Device { SN = 001, Brand = "Dell", Model = "i7", Category = "Laptop" });
     }
   }
 }

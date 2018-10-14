@@ -41,14 +41,34 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
     #endregion
 
     #region [UPDATE]
-
+    public async Task Update(int key)
+    {
+      using (var context = new DataContext())
+      {
+        var deviceToUpdate = (from d in context.Devices
+                             where d.SN == key
+                             select d).FirstOrDefault();
+        deviceToUpdate.Brand = "Acer";
+        await context.SaveChangesAsync();
+      }
+    }
 
 
 
     #endregion
 
     #region [DELETE]
-
+    public async Task Delete(int key)
+    {
+      using (var context = new DataContext())
+      {
+        var deviceToDelete = (from d in context.Devices
+                              where d.SN == key
+                              select d).FirstOrDefault();
+        context.Devices.Remove(deviceToDelete);
+        await context.SaveChangesAsync();
+      }
+    }
 
 
     #endregion
