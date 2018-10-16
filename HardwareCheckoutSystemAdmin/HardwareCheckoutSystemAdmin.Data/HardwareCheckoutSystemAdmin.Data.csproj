@@ -77,6 +77,14 @@
     <Compile Include="Migrations\201810141553176_AddDevices.Designer.cs">
       <DependentUpon>201810141553176_AddDevices.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810151656341_AddedDevicesRelatedModels.cs" />
+    <Compile Include="Migrations\201810151656341_AddedDevicesRelatedModels.Designer.cs">
+      <DependentUpon>201810151656341_AddedDevicesRelatedModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810151706375_RenamedPermissionInDevices.cs" />
+    <Compile Include="Migrations\201810151706375_RenamedPermissionInDevices.Designer.cs">
+      <DependentUpon>201810151706375_RenamedPermissionInDevices.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -105,6 +113,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810141553176_AddDevices.resx">
       <DependentUpon>201810141553176_AddDevices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810151656341_AddedDevicesRelatedModels.resx">
+      <DependentUpon>201810151656341_AddedDevicesRelatedModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810151706375_RenamedPermissionInDevices.resx">
+      <DependentUpon>201810151706375_RenamedPermissionInDevices.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,13 +10,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
   public class DeviceListViewModel : BindableBase, IRegionManagerAware
   {
     private readonly IShellService _service;
-    private readonly IPersonService _personService;
     private readonly IDeviceService _deviceService;
 
-    public DeviceListViewModel(IShellService service, IPersonService personService, IDeviceService deviceService)
+    public DeviceListViewModel(IShellService service, IDeviceService deviceService)
     {
       _service = service;
-      _personService = personService;
       _deviceService = deviceService;
     }
 
@@ -25,7 +23,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 
     public async void EditDeviceAction()
     {
-      var list = await _personService.FindAll();
       var devices = await _deviceService.FindAll();
 
       //include new user control in region

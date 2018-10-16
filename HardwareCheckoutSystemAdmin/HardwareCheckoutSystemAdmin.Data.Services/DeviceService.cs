@@ -31,24 +31,32 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
       }
     }
 
-    public async Task<Device> FindOne(int deviceSn)
+    public async Task<Device> FindById(Guid deviceId)
     {
       using (var context = new DataContext())
       {
-        return await context.Devices.FirstOrDefaultAsync(d => d.SN == deviceSn);
+        return await context.Devices.FirstOrDefaultAsync(d => d.Id == deviceId);
+      }
+    }
+
+    public async Task<Device> FindBySn(string sn)
+    {
+      using (var context = new DataContext())
+      {
+        return await context.Devices.FirstOrDefaultAsync(d => d.SerialNumber == sn);
       }
     }
     #endregion
 
     #region [UPDATE]
-    public async Task Update(int key)
+    public async Task Update(Device device)
     {
       using (var context = new DataContext())
       {
         var deviceToUpdate = (from d in context.Devices
-                             where d.SN == key
-                             select d).FirstOrDefault();
-        deviceToUpdate.Brand = "Acer";
+                              where d.Id == device.Id
+                              select d).FirstOrDefault();
+        deviceToUpdate = device;
         await context.SaveChangesAsync();
       }
     }
@@ -58,12 +66,12 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
     #endregion
 
     #region [DELETE]
-    public async Task Delete(int key)
+    public async Task Delete(Guid key)
     {
       using (var context = new DataContext())
       {
         var deviceToDelete = (from d in context.Devices
-                              where d.SN == key
+                              where d.Id == key
                               select d).FirstOrDefault();
         context.Devices.Remove(deviceToDelete);
         await context.SaveChangesAsync();

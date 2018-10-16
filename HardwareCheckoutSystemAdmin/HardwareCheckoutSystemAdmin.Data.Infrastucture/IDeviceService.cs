@@ -9,10 +9,11 @@ namespace HardwareCheckoutSystemAdmin.Data.Infrastructure
 {
   public interface IDeviceService
   {
-    Task Insert(Device person);
+    Task Insert(Device device);
     Task<List<Device>> FindAll();
-    Task<Device> FindOne(int personId);
-    Task Update(int key);
-    Task Delete(int key);
+    Task<Device> FindById(Guid deviceId);
+    Task<Device> FindBySn(string sn);
+    Task Update(Device device);
+    Task Delete(Guid key);
   }
 }

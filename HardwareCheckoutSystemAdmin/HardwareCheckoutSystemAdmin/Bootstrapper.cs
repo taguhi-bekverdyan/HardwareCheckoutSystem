@@ -38,7 +38,6 @@ namespace HardwareCheckoutSystemAdmin
       ViewModelLocationProvider.SetDefaultViewModelFactory((type) => Container.Resolve(type));
 
       Container.RegisterType<IShellService, ShellService>(new ContainerControlledLifetimeManager());
-      Container.RegisterType<IPersonService, PersonService>(new ContainerControlledLifetimeManager());
       Container.RegisterType<IDeviceService, DeviceService>(new ContainerControlledLifetimeManager());
     }
 
