@@ -43,7 +43,7 @@ namespace HardwareCheckoutSystemAdmin
             Container.RegisterType<IRequestService, RequestService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IResponseService, ResponseService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IBrandService, BrandService>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<ICategoryService, ICategoryService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager());
         }
 
         protected override System.Windows.DependencyObject CreateShell()
