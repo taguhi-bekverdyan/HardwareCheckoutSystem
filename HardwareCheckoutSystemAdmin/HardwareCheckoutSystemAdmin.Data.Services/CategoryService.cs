@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HardwareCheckoutSystemAdmin.Data.Services
 {
-    class CategoryService : ICategoryService
+    public class CategoryService : ICategoryService
     {
         public async Task Delete(Category category)
         {
