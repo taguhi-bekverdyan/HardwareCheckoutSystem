@@ -57,21 +57,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
-    <Compile Include="Migrations\201810121752268_FirstMigration.cs" />
-    <Compile Include="Migrations\201810121752268_FirstMigration.Designer.cs">
-      <DependentUpon>201810121752268_FirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201810171817442_FirstMigration.cs" />
+    <Compile Include="Migrations\201810171817442_FirstMigration.Designer.cs">
+      <DependentUpon>201810171817442_FirstMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810131215258_ChangedPersonAnnotations.cs" />
-    <Compile Include="Migrations\201810131215258_ChangedPersonAnnotations.Designer.cs">
-      <DependentUpon>201810131215258_ChangedPersonAnnotations.cs</DependentUpon>
+    <Compile Include="Migrations\201810171840235_HcsDB-V1.cs" />
+    <Compile Include="Migrations\201810171840235_HcsDB-V1.Designer.cs">
+      <DependentUpon>201810171840235_HcsDB-V1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810131230548_AddedParent.cs" />
-    <Compile Include="Migrations\201810131230548_AddedParent.Designer.cs">
-      <DependentUpon>201810131230548_AddedParent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810131239511_ChangedForeignKey.cs" />
-    <Compile Include="Migrations\201810131239511_ChangedForeignKey.Designer.cs">
-      <DependentUpon>201810131239511_ChangedForeignKey.cs</DependentUpon>
+    <Compile Include="Migrations\201810172012130_Hcs-V2.cs" />
+    <Compile Include="Migrations\201810172012130_Hcs-V2.Designer.cs">
+      <DependentUpon>201810172012130_Hcs-V2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,17 +83,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201810121752268_FirstMigration.resx">
-      <DependentUpon>201810121752268_FirstMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201810171817442_FirstMigration.resx">
+      <DependentUpon>201810171817442_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810131215258_ChangedPersonAnnotations.resx">
-      <DependentUpon>201810131215258_ChangedPersonAnnotations.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201810171840235_HcsDB-V1.resx">
+      <DependentUpon>201810171840235_HcsDB-V1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810131230548_AddedParent.resx">
-      <DependentUpon>201810131230548_AddedParent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810131239511_ChangedForeignKey.resx">
-      <DependentUpon>201810131239511_ChangedForeignKey.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201810172012130_Hcs-V2.resx">
+      <DependentUpon>201810172012130_Hcs-V2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,13 +7,13 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class ChangedForeignKey : IMigrationMetadata
+    public sealed partial class FirstMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangedForeignKey));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(FirstMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201810131239511_ChangedForeignKey"; }
+            get { return "201810171817442_FirstMigration"; }
         }
         
         string IMigrationMetadata.Source

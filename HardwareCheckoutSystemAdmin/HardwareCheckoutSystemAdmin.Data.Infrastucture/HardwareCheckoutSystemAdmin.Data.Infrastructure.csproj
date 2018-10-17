@@ -40,7 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPersonService.cs" />
+    <Compile Include="IBrandService.cs" />
+    <Compile Include="ICategoryService.cs" />
+    <Compile Include="IDeviceService.cs" />
+    <Compile Include="IRequestService.cs" />
+    <Compile Include="IResponseService.cs" />
+    <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

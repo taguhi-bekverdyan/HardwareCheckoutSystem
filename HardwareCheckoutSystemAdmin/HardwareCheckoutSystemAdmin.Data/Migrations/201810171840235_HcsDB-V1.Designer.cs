@@ -7,13 +7,13 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class ChangedPersonAnnotations : IMigrationMetadata
+    public sealed partial class HcsDBV1 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangedPersonAnnotations));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(HcsDBV1));
         
         string IMigrationMetadata.Id
         {
-            get { return "201810131215258_ChangedPersonAnnotations"; }
+            get { return "201810171840235_HcsDB-V1"; }
         }
         
         string IMigrationMetadata.Source
