@@ -33,6 +33,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main
             _unityContainer.RegisterType(typeof(object), typeof(MainView), nameof(MainView));
             _unityContainer.RegisterType(typeof(object), typeof(EditDeviceView), nameof(EditDeviceView));
             _unityContainer.RegisterType(typeof(object),typeof(DeviceListView), nameof(DeviceListView));
+            _unityContainer.RegisterType(typeof(object), typeof(CategoryListView), nameof(CategoryListView));
+            _unityContainer.RegisterType(typeof(object), typeof(BrandListView), nameof(BrandListView));
+            _unityContainer.RegisterType(typeof(object), typeof(UserListView), nameof(UserListView));
+            _unityContainer.RegisterType(typeof(object), typeof(RequestListView), nameof(RequestListView));
+            _unityContainer.RegisterType(typeof(object), typeof(ResponseListView), nameof(ResponseListView));
         }
     }
 }

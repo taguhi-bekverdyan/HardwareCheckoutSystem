@@ -24,11 +24,16 @@
 
         <Button Grid.Column="0" Grid.Row="1" Margin="10" Content="Devices" FontSize="22"
                 Command="{Binding OpenDeviceListView}"/>
-        <Button Grid.Column="0" Grid.Row="2" Margin="10" Content="Users" FontSize="22"/>
-        <Button Grid.Column="1" Grid.Row="1" Margin="10" Content="Requests" FontSize="22"/>
-        <Button Grid.Column="2" Grid.Row="1" Margin="10" Content="Responses" FontSize="22"/>
-        <Button Grid.Column="2" Grid.Row="2" Margin="10" Content="Brands" FontSize="22"/>
-        <Button Grid.Column="1" Grid.Row="2" Margin="10" Content="Categories" FontSize="22"/>
+        <Button Grid.Column="0" Grid.Row="2" Margin="10" Content="Users" FontSize="22"
+                Command="{Binding OpenUserListView}"/>
+        <Button Grid.Column="1" Grid.Row="1" Margin="10" Content="Requests" FontSize="22"
+                Command="{Binding OpenRequestListView}"/>
+        <Button Grid.Column="2" Grid.Row="1" Margin="10" Content="Responses" FontSize="22"
+                Command="{Binding OpenResponseListView}"/>
+        <Button Grid.Column="2" Grid.Row="2" Margin="10" Content="Brands" FontSize="22"
+                Command="{Binding OpenBrandListView}"/>
+        <Button Grid.Column="1" Grid.Row="2" Margin="10" Content="Categories" FontSize="22"
+                Command="{Binding OpenCategoryListView}"/>
 
     </Grid>
 </UserControl>

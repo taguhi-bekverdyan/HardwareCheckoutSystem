@@ -83,6 +83,14 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Views\BrandListView.xaml.cs">
+      <DependentUpon>BrandListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BrandListViewModel.cs" />
+    <Compile Include="Views\CategoryListView.xaml.cs">
+      <DependentUpon>CategoryListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CategoryListViewModel.cs" />
     <Compile Include="Views\DeviceListView.xaml.cs">
       <DependentUpon>DeviceListView.xaml</DependentUpon>
     </Compile>
@@ -96,6 +104,26 @@
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainViewModel.cs" />
+    <Compile Include="Views\RequestListView.xaml.cs">
+      <DependentUpon>RequestListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RequestListViewModel.cs" />
+    <Compile Include="Views\ResponseListView.xaml.cs">
+      <DependentUpon>ResponseListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResponseListViewModel.cs" />
+    <Compile Include="Views\UserListView.xaml.cs">
+      <DependentUpon>UserListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserListViewModel.cs" />
+    <Page Include="Views\BrandListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CategoryListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DeviceListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -105,6 +133,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RequestListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ResponseListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
