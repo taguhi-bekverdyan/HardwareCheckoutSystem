@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 {
     /// <summary>
-    /// Interaction logic for DeviceListView.xaml
+    /// Interaction logic for MainView.xaml
     /// </summary>
-    public partial class DeviceListView : UserControl
+    public partial class MainView : UserControl
     {
-        public DeviceListView()
+        public MainView()
         {
             InitializeComponent();
         }

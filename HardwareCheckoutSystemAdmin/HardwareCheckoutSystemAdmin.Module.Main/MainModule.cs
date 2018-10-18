@@ -27,11 +27,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main
         public void Initialize()
         {
             //register first view
-            _regionManager.RegisterViewWithRegion(RegionNames.WindowContentRegion, typeof(DeviceListView));
+            _regionManager.RegisterViewWithRegion(RegionNames.WindowContentRegion, typeof(MainView));
 
             //register views
-            _unityContainer.RegisterType(typeof(object), typeof(DeviceListView), nameof(DeviceListView));
+            _unityContainer.RegisterType(typeof(object), typeof(MainView), nameof(MainView));
             _unityContainer.RegisterType(typeof(object), typeof(EditDeviceView), nameof(EditDeviceView));
+            _unityContainer.RegisterType(typeof(object),typeof(DeviceListView), nameof(DeviceListView));
         }
     }
 }
