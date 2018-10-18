@@ -9,53 +9,53 @@ using HardwareCheckoutSystemAdmin.Models;
 
 namespace HardwareCheckoutSystemAdmin.Data.Services
 {
-  public class UserService : IUserService
+  public class CategoryService : ICategoryService
   {
     public async Task Delete(Guid key)
     {
       using (var context = new DataContext())
       {
-        var userToDelete = (from d in context.Users
+        var categoryToDelete = (from d in context.Categories
                               where d.Id == key
                               select d).FirstOrDefault();
-        context.Users.Remove(userToDelete);
+        context.Categories.Remove(categoryToDelete);
         await context.SaveChangesAsync();
       }
     }
 
-    public async Task<List<User>> FindAll()
+    public async Task<List<Category>> FindAll()
     {
       using (var context = new DataContext())
       {
-        return await context.Users.ToListAsync();
+        return await context.Categories.ToListAsync();
       }
     }
 
-    public async Task<User> FindById(Guid userId)
+    public async Task<Category> FindById(Guid categoryId)
     {
       using (var context = new DataContext())
       {
-        return await context.Users.FirstOrDefaultAsync(d => d.Id == userId);
+        return await context.Categories.FirstOrDefaultAsync(d => d.Id == categoryId);
       }
     }
 
-    public async Task Insert(User user)
+    public async Task Insert(Category category)
     {
       using (var context = new DataContext())
       {
-        context.Users.Add(user);
+        context.Categories.Add(category);
         await context.SaveChangesAsync();
       }
     }
 
-    public async Task Update(User user)
+    public async Task Update(Category category)
     {
       using (var context = new DataContext())
       {
-        var userToUpdate = (from d in context.Users
-                              where d.Id == user.Id
+        var categoryToUpdate = (from d in context.Categories
+                              where d.Id == category.Id
                               select d).FirstOrDefault();
-        userToUpdate = user;
+        categoryToUpdate = category;
         await context.SaveChangesAsync();
       }
     }

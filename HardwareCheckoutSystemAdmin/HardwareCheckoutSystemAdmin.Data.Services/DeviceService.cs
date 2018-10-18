@@ -60,9 +60,6 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         await context.SaveChangesAsync();
       }
     }
-
-
-
     #endregion
 
     #region [DELETE]
@@ -77,10 +74,6 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         await context.SaveChangesAsync();
       }
     }
-
-
     #endregion
-
-
   }
 }

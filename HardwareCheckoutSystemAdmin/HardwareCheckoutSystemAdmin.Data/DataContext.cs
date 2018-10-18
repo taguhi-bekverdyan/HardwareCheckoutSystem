@@ -20,7 +20,7 @@ namespace HardwareCheckoutSystemAdmin.Data
     public DbSet<Brand> Brands { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Request> Requests { get; set; } 
-    public DbSet<Response> Responses { get; set; } // W/o FindAll()
+    public DbSet<Response> Responses { get; set; }
     #endregion
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)

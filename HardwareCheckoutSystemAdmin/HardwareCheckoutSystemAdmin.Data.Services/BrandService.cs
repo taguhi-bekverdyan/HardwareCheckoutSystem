@@ -1,61 +1,61 @@
-﻿using System;
+﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
+using HardwareCheckoutSystemAdmin.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HardwareCheckoutSystemAdmin.Data.Infrastructure;
-using HardwareCheckoutSystemAdmin.Models;
 
 namespace HardwareCheckoutSystemAdmin.Data.Services
 {
-  public class UserService : IUserService
+  public class BrandService : IBrandService
   {
     public async Task Delete(Guid key)
     {
       using (var context = new DataContext())
       {
-        var userToDelete = (from d in context.Users
+        var brandToDelete = (from d in context.Brands
                               where d.Id == key
                               select d).FirstOrDefault();
-        context.Users.Remove(userToDelete);
+        context.Brands.Remove(brandToDelete);
         await context.SaveChangesAsync();
       }
     }
 
-    public async Task<List<User>> FindAll()
+    public async Task<List<Brand>> FindAll()
     {
       using (var context = new DataContext())
       {
-        return await context.Users.ToListAsync();
+        return await context.Brands.ToListAsync();
       }
     }
 
-    public async Task<User> FindById(Guid userId)
+    public async Task<Brand> FindById(Guid brandId)
     {
       using (var context = new DataContext())
       {
-        return await context.Users.FirstOrDefaultAsync(d => d.Id == userId);
+        return await context.Brands.FirstOrDefaultAsync(d => d.Id == brandId);
       }
     }
 
-    public async Task Insert(User user)
+    public async Task Insert(Brand brand)
     {
       using (var context = new DataContext())
       {
-        context.Users.Add(user);
+        context.Brands.Add(brand);
         await context.SaveChangesAsync();
       }
     }
 
-    public async Task Update(User user)
+    public async Task Update(Brand brand)
     {
       using (var context = new DataContext())
       {
-        var userToUpdate = (from d in context.Users
-                              where d.Id == user.Id
+        var brandToUpdate = (from d in context.Brands
+                              where d.Id == brand.Id
                               select d).FirstOrDefault();
-        userToUpdate = user;
+        brandToUpdate = brand;
         await context.SaveChangesAsync();
       }
     }

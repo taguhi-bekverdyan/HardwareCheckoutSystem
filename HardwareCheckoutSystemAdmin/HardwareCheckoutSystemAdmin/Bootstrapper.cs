@@ -40,6 +40,10 @@ namespace HardwareCheckoutSystemAdmin
       Container.RegisterType<IShellService, ShellService>(new ContainerControlledLifetimeManager());
       Container.RegisterType<IDeviceService, DeviceService>(new ContainerControlledLifetimeManager());
       Container.RegisterType<IUserService, UserService>(new ContainerControlledLifetimeManager());
+      Container.RegisterType<IBrandService, BrandService>(new ContainerControlledLifetimeManager());
+      Container.RegisterType<IRequestService, RequestService>(new ContainerControlledLifetimeManager());
+      Container.RegisterType<IResponseService, ResponseService>(new ContainerControlledLifetimeManager());
+      Container.RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager());
     }
 
     protected override System.Windows.DependencyObject CreateShell()

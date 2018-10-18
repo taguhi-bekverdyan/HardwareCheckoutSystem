@@ -12,12 +12,27 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
     private readonly IShellService _service;
     private readonly IDeviceService _deviceService;
     private readonly IUserService _userService;
+    private readonly ICategoryService _categoryService;
+    private readonly IRequestService _requestService;
+    private readonly IResponseService _responseService;
+    private readonly IBrandService _brandService;
 
-    public DeviceListViewModel(IShellService service, IDeviceService deviceService, IUserService userService)
+    public DeviceListViewModel(
+      IShellService service, 
+      IDeviceService deviceService, 
+      IUserService userService,
+      ICategoryService categoryService,
+      IBrandService brandService,
+      IRequestService requestService,
+      IResponseService responseService)
     {
       _service = service;
       _deviceService = deviceService;
       _userService = userService;
+      _categoryService = categoryService;
+      _brandService = brandService;
+      _responseService = responseService;
+      _requestService = requestService;
     }
 
     private DelegateCommand _editDeviceCommand;
@@ -26,7 +41,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
     public async void EditDeviceAction()
     {
       var devices = await _deviceService.FindAll();
-      var users = await _userService.FindAll();
 
       //include new user control in region
       //var parameters = new NavigationParameters { { "request", new PartsPickerRequest(vendorId.Value) } };
