@@ -16,6 +16,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
             using (DataContext context = new DataContext())
             {
                 if (category != null) {
+                    context.Categories.Attach(category);
                     context.Categories.Remove(category);
                     await context.SaveChangesAsync();
                 }

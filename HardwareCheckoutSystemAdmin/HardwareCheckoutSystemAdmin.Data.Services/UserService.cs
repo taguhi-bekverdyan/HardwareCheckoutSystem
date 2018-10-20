@@ -15,6 +15,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         {
             using (DataContext context = new DataContext())
             {
+                context.Users.Attach(user);
                 context.Users.Remove(user);
                 await context.SaveChangesAsync();
             }

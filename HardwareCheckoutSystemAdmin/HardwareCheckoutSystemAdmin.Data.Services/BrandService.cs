@@ -3,8 +3,6 @@ using HardwareCheckoutSystemAdmin.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace HardwareCheckoutSystemAdmin.Data.Services
@@ -15,6 +13,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         {
             using (DataContext context = new DataContext())
             {
+                context.Brands.Attach(brand);
                 context.Brands.Remove(brand);
                 await context.SaveChangesAsync();
             }
