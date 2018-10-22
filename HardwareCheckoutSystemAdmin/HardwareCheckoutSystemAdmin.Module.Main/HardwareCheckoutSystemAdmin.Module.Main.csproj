@@ -82,6 +82,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Views\DeviceListViewModel.cs" />
+    <Compile Include="Views\Devices\DeviceItem.cs" />
+    <Compile Include="Views\Devices\DevicesPageView.xaml.cs">
+      <DependentUpon>DevicesPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\DevicesPageViewModel.cs" />
     <Compile Include="Views\EditDeviceViewModel.cs" />
     <Compile Include="Views\DeviceListView.xaml.cs">
       <DependentUpon>DeviceListView.xaml</DependentUpon>
@@ -90,11 +95,23 @@
       <DependentUpon>EditDeviceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainModule.cs" />
+    <Compile Include="Views\Menu\MenuView.xaml.cs">
+      <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menu\MenuViewModel.cs" />
     <Page Include="Views\DeviceListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Devices\DevicesPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EditDeviceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menu\MenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,6 +151,10 @@
     <ProjectReference Include="..\HardwareCheckoutSystemAdmin.Data.Infrastucture\HardwareCheckoutSystemAdmin.Data.Infrastructure.csproj">
       <Project>{FBBC1189-56AD-4BF2-9355-D92D036C8472}</Project>
       <Name>HardwareCheckoutSystemAdmin.Data.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HardwareCheckoutSystemAdmin.Data\HardwareCheckoutSystemAdmin.Data.csproj">
+      <Project>{34FBE2A4-E3C5-4CF5-9169-C94F54D0951B}</Project>
+      <Name>HardwareCheckoutSystemAdmin.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\HardwareCheckoutSystemAdmin.Models\HardwareCheckoutSystemAdmin.Models.csproj">
       <Project>{5B83FC4C-DBB4-4F55-A74B-344ED25433BE}</Project>

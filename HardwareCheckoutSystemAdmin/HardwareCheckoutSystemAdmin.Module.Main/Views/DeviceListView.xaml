@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views"
         xmlns:mvvm="http://prismlibrary.com/"
-             xmlns:common="clr-namespace:HardwareCheckoutSystemAdmin.Common;assembly=HardwareCheckoutSystemAdmin.Common"
+        xmlns:common="clr-namespace:HardwareCheckoutSystemAdmin.Common;assembly=HardwareCheckoutSystemAdmin.Common"
         mvvm:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance local:DeviceListViewModel}"
         mc:Ignorable="d"

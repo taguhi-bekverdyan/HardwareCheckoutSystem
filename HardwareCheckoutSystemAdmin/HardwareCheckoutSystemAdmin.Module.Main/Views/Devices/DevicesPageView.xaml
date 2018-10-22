@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="HardwareCheckoutSystemAdmin.Module.Main.Views.Devices.DevicesPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views.Devices"
+             xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:common="clr-namespace:HardwareCheckoutSystemAdmin.Common;assembly=HardwareCheckoutSystemAdmin.Common"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance local:DevicesPageViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="100"/>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="20"/>
+      <RowDefinition Height="6*"/>
+    </Grid.RowDefinitions>
+    <Button Content="Add"/>
+    <Button Content="Edit" Grid.Column="1" />
+    <Button Content="Delete" Grid.Column="2" />
+    <Button Content="Brands" Grid.Column="4" />
+    <Button Content="Categories" Grid.Column="5" />
+    
+    <DataGrid Grid.Row="2" Grid.ColumnSpan="6" AutoGenerateColumns="False"
+              RowBackground="#FFCCCEFD" AlternatingRowBackground="White"
+              ItemsSource="{Binding DeviceItems}">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="SN" Width="*" Binding="{Binding SerialNumber}"/>
+        <DataGridTextColumn Header="Model" Width="*" Binding="{Binding Model}"/>
+        <DataGridTextColumn Header="Image" Width="*" Binding="{Binding Image}"/>
+        <DataGridTextColumn Header="Description" Width="*" Binding="{Binding Description}"/>        
+        <DataGridComboBoxColumn Header="Brand" Width="*" ItemsSource="{Binding }"/>
+        <DataGridComboBoxColumn Header="Category" Width="*" />
+        <DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status}"/>
+        <DataGridTextColumn Header="Permission" Width="*" Binding="{Binding Permission}"/>
+        <DataGridTextColumn Header="Max Period" Width="*" Binding="{Binding MaxPeriod}"/>
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+</UserControl>
