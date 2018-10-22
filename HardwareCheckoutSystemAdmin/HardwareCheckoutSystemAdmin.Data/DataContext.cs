@@ -27,6 +27,9 @@ namespace HardwareCheckoutSystemAdmin.Data
     {
       modelBuilder.HasDefaultSchema("public");
       base.OnModelCreating(modelBuilder);
+
+      modelBuilder.Entity<Device>().HasRequired<Brand>(b => b.Brand)
+        .WithMany(d => d.Devices).HasForeignKey<Guid>(s => s.BrandId);
     }
 
   }

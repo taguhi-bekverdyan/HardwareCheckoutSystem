@@ -28,8 +28,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
       Status = device.Status;
       MaxPeriod = device.MaxPeriod;
       Permission = device.Permission;
-      Brand = device.Brand;  // null
-      Category = device.Category; // null
+      //Brand = device.Brand;  // null
+      //Category = device.Category; // null
     }
   }
 }
