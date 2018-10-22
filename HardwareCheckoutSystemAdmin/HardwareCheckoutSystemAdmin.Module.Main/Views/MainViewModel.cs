@@ -7,6 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.ResponseViewElements;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 {
