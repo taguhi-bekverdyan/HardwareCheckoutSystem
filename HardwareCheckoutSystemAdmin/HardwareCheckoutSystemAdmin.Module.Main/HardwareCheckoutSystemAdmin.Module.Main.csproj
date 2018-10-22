@@ -38,10 +38,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -99,18 +99,18 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\BrandListView.xaml.cs">
+    <Compile Include="Views\BrandViewElements\BrandListView.xaml.cs">
       <DependentUpon>BrandListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BrandListViewModel.cs" />
-    <Compile Include="Views\CategoryListView.xaml.cs">
+    <Compile Include="Views\BrandViewElements\BrandListViewModel.cs" />
+    <Compile Include="Views\CategoryViewElements\CategoryListView.xaml.cs">
       <DependentUpon>CategoryListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CategoryListViewModel.cs" />
-    <Compile Include="Views\DeviceListView.xaml.cs">
+    <Compile Include="Views\CategoryViewElements\CategoryListViewModel.cs" />
+    <Compile Include="Views\DeviceViewElements\DeviceListView.xaml.cs">
       <DependentUpon>DeviceListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DeviceListViewModel.cs" />
+    <Compile Include="Views\DeviceViewElements\DeviceListViewModel.cs" />
     <Compile Include="Views\EditDeviceViewModel.cs" />
     <Compile Include="Views\EditDeviceView.xaml.cs">
       <DependentUpon>EditDeviceView.xaml</DependentUpon>
@@ -120,27 +120,27 @@
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainViewModel.cs" />
-    <Compile Include="Views\RequestListView.xaml.cs">
+    <Compile Include="Views\RequestViewElements\RequestListView.xaml.cs">
       <DependentUpon>RequestListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RequestListViewModel.cs" />
-    <Compile Include="Views\ResponseListView.xaml.cs">
+    <Compile Include="Views\RequestViewElements\RequestListViewModel.cs" />
+    <Compile Include="Views\ResponseViewElements\ResponseListView.xaml.cs">
       <DependentUpon>ResponseListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ResponseListViewModel.cs" />
-    <Compile Include="Views\UserListView.xaml.cs">
+    <Compile Include="Views\ResponseViewElements\ResponseListViewModel.cs" />
+    <Compile Include="Views\UserViewElements\UserListView.xaml.cs">
       <DependentUpon>UserListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserListViewModel.cs" />
-    <Page Include="Views\BrandListView.xaml">
+    <Compile Include="Views\UserViewElements\UserListViewModel.cs" />
+    <Page Include="Views\BrandViewElements\BrandListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CategoryListView.xaml">
+    <Page Include="Views\CategoryViewElements\CategoryListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DeviceListView.xaml">
+    <Page Include="Views\DeviceViewElements\DeviceListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -152,15 +152,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RequestListView.xaml">
+    <Page Include="Views\RequestViewElements\RequestListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ResponseListView.xaml">
+    <Page Include="Views\ResponseViewElements\ResponseListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserListView.xaml">
+    <Page Include="Views\UserViewElements\UserListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

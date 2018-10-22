@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HardwareCheckoutSystemAdmin.Module.Main.Views
+namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
 {
     /// <summary>
     /// Interaction logic for CategoryListView.xaml

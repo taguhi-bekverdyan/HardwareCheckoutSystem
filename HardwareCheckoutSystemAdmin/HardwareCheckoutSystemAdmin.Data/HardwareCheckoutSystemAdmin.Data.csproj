@@ -31,10 +31,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Npgsql.2.2.7\lib\net45\Mono.Security.dll</HintPath>
@@ -57,17 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
-    <Compile Include="Migrations\201810171817442_FirstMigration.cs" />
-    <Compile Include="Migrations\201810171817442_FirstMigration.Designer.cs">
-      <DependentUpon>201810171817442_FirstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810171840235_HcsDB-V1.cs" />
-    <Compile Include="Migrations\201810171840235_HcsDB-V1.Designer.cs">
-      <DependentUpon>201810171840235_HcsDB-V1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810172012130_Hcs-V2.cs" />
-    <Compile Include="Migrations\201810172012130_Hcs-V2.Designer.cs">
-      <DependentUpon>201810172012130_Hcs-V2.cs</DependentUpon>
+    <Compile Include="Migrations\201810221211277_HcsDB-V1.cs" />
+    <Compile Include="Migrations\201810221211277_HcsDB-V1.Designer.cs">
+      <DependentUpon>201810221211277_HcsDB-V1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,14 +75,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201810171817442_FirstMigration.resx">
-      <DependentUpon>201810171817442_FirstMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810171840235_HcsDB-V1.resx">
-      <DependentUpon>201810171840235_HcsDB-V1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810172012130_Hcs-V2.resx">
-      <DependentUpon>201810172012130_Hcs-V2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201810221211277_HcsDB-V1.resx">
+      <DependentUpon>201810221211277_HcsDB-V1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

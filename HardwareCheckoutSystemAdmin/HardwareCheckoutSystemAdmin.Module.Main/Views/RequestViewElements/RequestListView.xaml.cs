@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HardwareCheckoutSystemAdmin.Module.Main.Views
+namespace HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements
 {
     /// <summary>
-    /// Interaction logic for UserListView.xaml
+    /// Interaction logic for RequestListView.xaml
     /// </summary>
-    public partial class UserListView : UserControl
+    public partial class RequestListView : UserControl
     {
-        public UserListView()
+        public RequestListView()
         {
             InitializeComponent();
         }

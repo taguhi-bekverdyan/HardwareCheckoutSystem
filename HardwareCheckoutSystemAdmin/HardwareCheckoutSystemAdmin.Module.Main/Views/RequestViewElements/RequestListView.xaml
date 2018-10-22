@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="HardwareCheckoutSystemAdmin.Module.Main.Views.BrandListView"
+﻿<UserControl x:Class="HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements.RequestListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -26,11 +26,11 @@
             </Grid.ColumnDefinitions>
 
             <Button Width="80" Height="40" Grid.Column="0" Content="Edit"
-                    Command="{Binding UpdateBrand}"/>
+                    Command="{Binding UpdateRequest}"/>
             <Button Width="80" Height="40" Grid.Column="1" Content="Add"
-                    Command="{Binding AddBrand}"/>
+                    Command="{Binding AddRequest}"/>
             <Button Width="80" Height="40" Grid.Column="2" Content="Delete"
-                    Command="{Binding DeleteBrand}"/>
+                    Command="{Binding DeleteRequest}"/>
 
 
 
@@ -38,8 +38,8 @@
 
 
         <DataGrid Grid.Row="1" Margin="10" IsReadOnly="True" 
-                  CanUserAddRows="False" ItemsSource="{Binding Brands}"
-                  SelectedItem="{Binding SelectedBrand,Mode=TwoWay}">
+                  CanUserAddRows="False" ItemsSource="{Binding Requests}"
+                  SelectedItem="{Binding SelectedRequests,Mode=TwoWay}">
 
         </DataGrid>
 

@@ -21,7 +21,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false),
-                        SerialNumber = c.String(maxLength: 50),
+                        SerialNumber = c.String(nullable: false, maxLength: 50),
                         Model = c.String(maxLength: 50),
                         Description = c.String(),
                         MaxPeriod = c.DateTime(),
