@@ -6,14 +6,14 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class HcsDBV1 : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.0.0-20911")]
+    public sealed partial class hcsDBV1 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(HcsDBV1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(hcsDBV1));
         
         string IMigrationMetadata.Id
         {
-            get { return "201810221211277_HcsDB-V1"; }
+            get { return "201810221922582_hcsDB-V1"; }
         }
         
         string IMigrationMetadata.Source

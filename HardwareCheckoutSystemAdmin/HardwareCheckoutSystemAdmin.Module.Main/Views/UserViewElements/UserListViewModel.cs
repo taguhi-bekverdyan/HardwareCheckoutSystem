@@ -2,6 +2,7 @@
 using HardwareCheckoutSystemAdmin.Models;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Windows;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
 {
-    class UserListViewModel:BindableBase
+    class UserListViewModel:BindableBase, INavigationAware
     {
         private IUserService _userService;
 
@@ -38,7 +39,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
         public UserListViewModel(IUserService service)
         {
             _userService = service;
-            Users = _userService.FindAll().Result;
+
             DeleteUser = new DelegateCommand(DeleteUserAction, CanUpdateOrDelete);
             AddUser = new DelegateCommand(AddUserAction);
             UpdateUser = new DelegateCommand(UpdateUserAction, CanUpdateOrDelete);
@@ -49,9 +50,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
 
         public void AddUserAction()
         {
-            //Category cat = new Category() { Id = Guid.NewGuid(),Name = "Phone"};
-            //_categoryService.Insert(cat);
-            //Categories = _categoryService.FindAll().Result;
             MessageBox.Show("TODO");
         }
 
@@ -66,9 +64,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
 
         public void DeleteUserAction()
         {
-            _userService.Delete(SelectedUser);
-            SelectedUser = null;
-            Users = _userService.FindAll().Result;
+            MessageBox.Show("TODO"); 
         }
 
         public bool CanUpdateOrDelete()
@@ -79,5 +75,26 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             }
             return true;
         }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            UpdateData();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async void UpdateData()
+        {
+            Users = await _userService.FindAll();
+        }
+
     }
 }

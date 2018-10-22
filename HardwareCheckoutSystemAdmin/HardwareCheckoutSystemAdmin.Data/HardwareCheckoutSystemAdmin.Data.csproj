@@ -57,9 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
-    <Compile Include="Migrations\201810221211277_HcsDB-V1.cs" />
-    <Compile Include="Migrations\201810221211277_HcsDB-V1.Designer.cs">
-      <DependentUpon>201810221211277_HcsDB-V1.cs</DependentUpon>
+    <Compile Include="Migrations\201810221922582_hcsDB-V1.cs" />
+    <Compile Include="Migrations\201810221922582_hcsDB-V1.Designer.cs">
+      <DependentUpon>201810221922582_hcsDB-V1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,8 +75,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201810221211277_HcsDB-V1.resx">
-      <DependentUpon>201810221211277_HcsDB-V1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201810221922582_hcsDB-V1.resx">
+      <DependentUpon>201810221922582_hcsDB-V1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

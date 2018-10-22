@@ -2,12 +2,14 @@
 using HardwareCheckoutSystemAdmin.Models;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
 {
-    class CategoryListViewModel:BindableBase
+    class CategoryListViewModel:BindableBase, INavigationAware
     {
         private ICategoryService _categoryService;
 
@@ -34,7 +36,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
         public CategoryListViewModel(ICategoryService service)
         {
             _categoryService = service;
-            Categories = _categoryService.FindAll().Result;
+            
             DeleteCategory = new DelegateCommand(DeleteCategoryAction, CanUpdateOrDelete);
             AddCategory = new DelegateCommand(AddCategoryAction);
             UpdateCategory = new DelegateCommand(UpdateCategoryAction, CanUpdateOrDelete);
@@ -45,9 +47,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
 
         public void AddCategoryAction()
         {
-            //Category cat = new Category() { Id = Guid.NewGuid(),Name = "Phone"};
-            //_categoryService.Insert(cat);
-            //Categories = _categoryService.FindAll().Result;
             MessageBox.Show("TODO");
         }
 
@@ -62,9 +61,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
 
         public void DeleteCategoryAction()
         {
-            _categoryService.Delete(SelectedCategory);
-            SelectedCategory = null;
-            Categories = _categoryService.FindAll().Result;
+            MessageBox.Show("TODO");
         }
 
         public bool CanUpdateOrDelete()
@@ -74,6 +71,26 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
                 return false;
             }
             return true;
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            UpdateData();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private async void UpdateData()
+        {
+            Categories = await _categoryService.FindAll();
         }
 
     }

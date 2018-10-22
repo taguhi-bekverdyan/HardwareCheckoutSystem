@@ -2,6 +2,7 @@
 using HardwareCheckoutSystemAdmin.Models;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Windows;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.ResponseViewElements
 {
-    class ResponseListViewModel:BindableBase
+    class ResponseListViewModel:BindableBase, INavigationAware
     {
         private IResponseService _responseService;
 
@@ -38,7 +39,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.ResponseViewElements
         public ResponseListViewModel(IResponseService service)
         {
             _responseService = service;
-            Responses = _responseService.FindAll().Result;
+
             DeleteResponse = new DelegateCommand(DeleteResponseAction, CanUpdateOrDelete);
             AddResponse = new DelegateCommand(AddResponseAction);
             UpdateResponse = new DelegateCommand(UpdateResponseAction, CanUpdateOrDelete);
@@ -49,9 +50,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.ResponseViewElements
 
         public void AddResponseAction()
         {
-            //Category cat = new Category() { Id = Guid.NewGuid(),Name = "Phone"};
-            //_categoryService.Insert(cat);
-            //Categories = _categoryService.FindAll().Result;
             MessageBox.Show("TODO");
         }
 
@@ -66,9 +64,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.ResponseViewElements
 
         public void DeleteResponseAction()
         {
-            _responseService.Delete(SelectedResponse);
-            SelectedResponse = null;
-            Responses = _responseService.FindAll().Result;
+            MessageBox.Show("TODO");
         }
 
         public bool CanUpdateOrDelete()
@@ -79,5 +75,26 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.ResponseViewElements
             }
             return true;
         }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            UpdateData();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async void UpdateData()
+        {
+            Responses = await _responseService.FindAll();
+        }
+
     }
 }

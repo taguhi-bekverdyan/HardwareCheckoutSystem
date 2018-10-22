@@ -4,16 +4,16 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HardwareCheckoutSystemAdmin.Data.Migrations;
+//using HardwareCheckoutSystemAdmin.Data.Migrations;
 using HardwareCheckoutSystemAdmin.Models;
 
 namespace HardwareCheckoutSystemAdmin.Data
 {
     public class DataContext : DbContext
     {
-        public DataContext() : base("MyConnectionString")
+        public DataContext() : base("AppDatabaseConnectionString")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataContext, Configuration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataContext, Configuration>());
         }
 
         #region DbSets

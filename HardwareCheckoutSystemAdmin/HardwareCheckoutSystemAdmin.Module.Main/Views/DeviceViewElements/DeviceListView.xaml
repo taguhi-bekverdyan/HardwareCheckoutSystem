@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views"
              xmlns:mvvm="http://prismlibrary.com/"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
-             d:DataContext="{d:DesignInstance local:DeviceListViewModel}"
+             
              mc:Ignorable="d" 
              Background="#ffffff"
              d:DesignHeight="450" d:DesignWidth="800">

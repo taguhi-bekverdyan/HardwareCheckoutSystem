@@ -3,7 +3,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class HcsDBV1 : DbMigration
+    public partial class hcsDBV1 : DbMigration
     {
         public override void Up()
         {
@@ -34,8 +34,8 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("public.Brands", t => t.BrandId, cascadeDelete: true)
                 .ForeignKey("public.Categories", t => t.CategoryId, cascadeDelete: true)
-                .Index(t => t.CategoryId)
-                .Index(t => t.BrandId);
+                .Index(t => t.BrandId)
+                .Index(t => t.CategoryId);
             
             CreateTable(
                 "public.Categories",
@@ -113,12 +113,12 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
             DropForeignKey("public.Devices", "CategoryId", "public.Categories");
             DropForeignKey("public.Devices", "BrandId", "public.Brands");
             DropIndex("public.Responses", new[] { "Request_Id" });
-            DropIndex("public.Responses", new[] { "UserId" });
             DropIndex("public.Requests", new[] { "LastResponseId" });
+            DropIndex("public.Responses", new[] { "UserId" });
             DropIndex("public.Requests", new[] { "UserId" });
             DropIndex("public.Requests", new[] { "DeviceId" });
-            DropIndex("public.Devices", new[] { "BrandId" });
             DropIndex("public.Devices", new[] { "CategoryId" });
+            DropIndex("public.Devices", new[] { "BrandId" });
             DropTable("public.Users");
             DropTable("public.Responses");
             DropTable("public.Requests");

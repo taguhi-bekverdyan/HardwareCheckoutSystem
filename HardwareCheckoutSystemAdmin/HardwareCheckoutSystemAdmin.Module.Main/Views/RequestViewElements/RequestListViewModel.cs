@@ -2,6 +2,7 @@
 using HardwareCheckoutSystemAdmin.Models;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Windows;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements
 {
-    class RequestListViewModel:BindableBase
+    class RequestListViewModel:BindableBase, INavigationAware
     {
         private IRequestService _requestService;
 
@@ -38,7 +39,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements
         public RequestListViewModel(IRequestService service)
         {
             _requestService = service;
-            Requests = _requestService.FindAll().Result;
+            
+
+
             DeleteRequest = new DelegateCommand(DeleteRequestAction, CanUpdateOrDelete);
             AddRequest = new DelegateCommand(AddRequestAction);
             UpdateRequest = new DelegateCommand(UpdateRequestAction, CanUpdateOrDelete);
@@ -49,9 +52,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements
 
         public void AddRequestAction()
         {
-            //Category cat = new Category() { Id = Guid.NewGuid(),Name = "Phone"};
-            //_categoryService.Insert(cat);
-            //Categories = _categoryService.FindAll().Result;
             MessageBox.Show("TODO");
         }
 
@@ -66,9 +66,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements
 
         public void DeleteRequestAction()
         {
-            _requestService.Delete(SelectedRequest);
-            SelectedRequest = null;
-            Requests = _requestService.FindAll().Result;
+            MessageBox.Show("TODO");
         }
 
         public bool CanUpdateOrDelete()
@@ -79,5 +77,26 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements
             }
             return true;
         }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            UpdateData();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async void UpdateData()
+        {
+            Requests = await _requestService.FindAll();
+        }
+
     }
 }

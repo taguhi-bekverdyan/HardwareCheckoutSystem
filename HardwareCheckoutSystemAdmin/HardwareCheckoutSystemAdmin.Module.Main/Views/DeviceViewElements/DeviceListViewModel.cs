@@ -2,6 +2,7 @@
 using HardwareCheckoutSystemAdmin.Models;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ using System.Windows;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 {
-    class DeviceListViewModel:BindableBase
+    class DeviceListViewModel:BindableBase, INavigationAware
     {
 
         private IDeviceService _deviceService;
@@ -34,7 +35,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         public DeviceListViewModel(IDeviceService deviceService)
         {
             _deviceService = deviceService;
-            Devices = _deviceService.FindAll().Result;
+            
             DeleteDevice = new DelegateCommand(DeleteDeviceAction, CanUpdateOrDelete);
             AddDevice = new DelegateCommand(AddDeviceAction);
             UpdateDevice = new DelegateCommand(UpdateDeviceAction, CanUpdateOrDelete);
@@ -59,8 +60,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             
         public void DeleteDeviceAction()
         {
-            _deviceService.Delete(SelectedDevice);
-            SelectedDevice = null;
+            MessageBox.Show("TODO");
         }
 
         public bool CanUpdateOrDelete()
@@ -71,7 +71,26 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             }
             return true;
         }
-        
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            UpdateData();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async void UpdateData()
+        {
+            Devices = await _deviceService.FindAll();
+        }
 
     }
 }

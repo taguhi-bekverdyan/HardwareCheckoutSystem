@@ -2,12 +2,13 @@
 using HardwareCheckoutSystemAdmin.Models;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System.Collections.Generic;
 using System.Windows;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
 {
-    class BrandListViewModel:BindableBase
+    class BrandListViewModel:BindableBase, INavigationAware
     {
 
         private IBrandService _brandService;
@@ -35,7 +36,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
         public BrandListViewModel(IBrandService service)
         {
             _brandService = service;
-            Brands = _brandService.FindAll().Result;
+            
             DeleteBrand = new DelegateCommand(DeleteBrandAction, CanUpdateOrDelete);
             AddBrand = new DelegateCommand(AddBrandAction);
             UpdateBrand = new DelegateCommand(UpdateBrandAction, CanUpdateOrDelete);
@@ -45,10 +46,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
         public DelegateCommand AddBrand { get; private set; }
 
         public void AddBrandAction()
-        {
-            //Category cat = new Category() { Id = Guid.NewGuid(),Name = "Phone"};
-            //_categoryService.Insert(cat);
-            //Categories = _categoryService.FindAll().Result;
+        {           
             MessageBox.Show("TODO");
         }
 
@@ -63,9 +61,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
 
         public void DeleteBrandAction()
         {
-            _brandService.Delete(SelectedBrand);
-            SelectedBrand = null;
-            Brands = _brandService.FindAll().Result;
+            MessageBox.Show("TODO");
         }
 
         public bool CanUpdateOrDelete()
@@ -75,6 +71,26 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
                 return false;
             }
             return true;
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            UpdateData();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            
+        }
+
+        private async void UpdateData()
+        {
+            Brands = await _brandService.FindAll();
         }
 
     }
