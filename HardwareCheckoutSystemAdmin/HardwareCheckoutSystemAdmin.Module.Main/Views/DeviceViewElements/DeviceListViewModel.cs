@@ -31,7 +31,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         public DeviceViewItem SelectedDevice
         {
             get { return _selectedDevice; }
-            set { SetProperty(ref _selectedDevice, value); }
+            set
+            {
+                SetProperty(ref _selectedDevice, value);
+                DeleteDevice.RaiseCanExecuteChanged();
+                UpdateDevice.RaiseCanExecuteChanged();
+            }
         }
 
         public DeviceListViewModel(IDeviceService deviceService,IShellService shellService)
@@ -60,6 +65,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             }
             
             _shellService.ShowShell(nameof(AddDeviceView), 450, 450,param);
+            SelectedDevice = null;
         }
 
         public DelegateCommand UpdateDevice { get; private set; }
@@ -71,9 +77,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 
         public DelegateCommand DeleteDevice { get; private set; }
             
-        public void DeleteDeviceAction()
+        public async void DeleteDeviceAction()
         {
-            MessageBox.Show("TODO");
+            await _deviceService.DeleteDeviceById(SelectedDevice.GetId());
         }
 
         public bool CanUpdateOrDelete()

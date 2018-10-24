@@ -22,6 +22,16 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
             }
         }
 
+        public async Task DeleteDeviceById(Guid id)
+        {
+            using (DataContext context = new DataContext())
+            {
+                Device device = await FindDeviceById(id);
+                context.Devices.Attach(device);
+                context.Devices.Remove(device);
+            }
+        }
+
         public async Task<List<Device>> FindAll()
         {
             using (DataContext context = new DataContext())

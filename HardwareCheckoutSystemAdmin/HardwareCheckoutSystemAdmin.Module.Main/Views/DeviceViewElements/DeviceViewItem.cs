@@ -39,6 +39,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             _id = Guid.NewGuid();
         }
 
+        public Guid GetId()
+        {
+            return _id;
+        }
+
         public static explicit operator Device(DeviceViewItem item)
         {
             Device device = new Device();

@@ -15,5 +15,6 @@ namespace HardwareCheckoutSystemAdmin.Data.Infrastructure
         Task<Device> FindDeviceBySerialNumber(string sn);
         Task Update(Device device);
         Task Delete(Device device);
+        Task DeleteDeviceById(Guid id);
     }
 }

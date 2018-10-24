@@ -80,6 +80,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             {
                 await _deviceService.Update(newDevice);
             }
+            
         }
 
         private async Task<Guid> GetBrandGuid()
