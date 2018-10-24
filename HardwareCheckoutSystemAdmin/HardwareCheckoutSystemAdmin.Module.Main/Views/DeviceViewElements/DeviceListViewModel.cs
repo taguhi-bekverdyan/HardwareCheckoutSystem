@@ -1,4 +1,5 @@
-﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
+﻿using HardwareCheckoutSystemAdmin.Common.Prism;
+using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -17,25 +18,26 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
     {
 
         private IDeviceService _deviceService;
+        private IShellService _shellService;
 
-        private List<Device> _devices = new List<Device>();
-        public List<Device> Devices
+        private List<DeviceViewItem> _devices;
+        public List<DeviceViewItem> Devices
         {
             get { return _devices; }
             set { SetProperty(ref _devices,value); }
         }
 
-        private Device _selectedDevice;
-        public Device SelectedDevice
+        private DeviceViewItem _selectedDevice;
+        public DeviceViewItem SelectedDevice
         {
             get { return _selectedDevice; }
             set { SetProperty(ref _selectedDevice, value); }
         }
 
-        public DeviceListViewModel(IDeviceService deviceService)
+        public DeviceListViewModel(IDeviceService deviceService,IShellService shellService)
         {
             _deviceService = deviceService;
-            
+            _shellService = shellService;
             DeleteDevice = new DelegateCommand(DeleteDeviceAction, CanUpdateOrDelete);
             AddDevice = new DelegateCommand(AddDeviceAction);
             UpdateDevice = new DelegateCommand(UpdateDeviceAction, CanUpdateOrDelete);
@@ -46,7 +48,18 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 
         public void AddDeviceAction()
         {
-            MessageBox.Show("TODO");
+            NavigationParameters param;
+            if (SelectedDevice == null)
+            {
+                SelectedDevice = new DeviceViewItem();
+                param = new NavigationParameters { { "request", new Parameter(Mode.Add,SelectedDevice) } };
+            }
+            else
+            {
+                param = new NavigationParameters { { "request", new Parameter(Mode.Edit,SelectedDevice) } };
+            }
+            
+            _shellService.ShowShell(nameof(AddDeviceView), 450, 450,param);
         }
 
         public DelegateCommand UpdateDevice { get; private set; }
@@ -89,7 +102,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 
         private async void UpdateData()
         {
-            Devices = await _deviceService.FindAll();
+            Devices = new List<DeviceViewItem>();
+            List<Device> temp = await _deviceService.FindAll();
+            foreach (var item in temp)
+            {
+                Devices.Add(new DeviceViewItem(item));
+            }
         }
 
     }

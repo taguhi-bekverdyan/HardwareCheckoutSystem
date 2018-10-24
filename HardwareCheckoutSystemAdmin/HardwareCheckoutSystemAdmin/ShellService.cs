@@ -24,6 +24,31 @@ namespace HardwareCheckoutSystemAdmin
             RegionManager.SetRegionManager(shell, scopedRegion);
             RegionManagerAware.SetRegionManagerAware(shell, scopedRegion);
             scopedRegion.RequestNavigate(RegionNames.WindowContentRegion, uri);
+            
+            shell.Show();
+        }
+
+        public void ShowShell(string uri,int w,int h)
+        {
+            var shell = _container.Resolve<ShellView>();
+            var scopedRegion = _regionManager.CreateRegionManager();
+            RegionManager.SetRegionManager(shell, scopedRegion);
+            RegionManagerAware.SetRegionManagerAware(shell, scopedRegion);
+            scopedRegion.RequestNavigate(RegionNames.WindowContentRegion, uri);
+            shell.Width = w;
+            shell.Height = h;
+            shell.Show();
+        }
+
+        public void ShowShell(string uri,int w,int h, NavigationParameters navigationParameters)
+        {
+            var shell = _container.Resolve<ShellView>();
+            var scopedRegion = _regionManager.CreateRegionManager();
+            RegionManager.SetRegionManager(shell, scopedRegion);
+            RegionManagerAware.SetRegionManagerAware(shell, scopedRegion);
+            scopedRegion.RequestNavigate(RegionNames.WindowContentRegion, uri, navigationParameters);
+            shell.Width = w;
+            shell.Height = h;
             shell.Show();
         }
 

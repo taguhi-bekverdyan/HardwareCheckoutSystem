@@ -35,6 +35,14 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
             }
         }
 
+        public async Task<Brand> FindBrandByName(string name)
+        {
+            using (DataContext context = new DataContext())
+            {
+                return await context.Brands.FirstOrDefaultAsync(b => b.Name == name);
+            }
+        }
+
         public async Task Insert(Brand brand)
         {
             using (DataContext context = new DataContext())

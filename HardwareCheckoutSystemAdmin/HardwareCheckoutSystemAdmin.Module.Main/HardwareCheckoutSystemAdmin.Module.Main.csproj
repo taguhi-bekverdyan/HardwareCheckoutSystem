@@ -92,10 +92,16 @@
       <DependentUpon>CategoryListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CategoryViewElements\CategoryListViewModel.cs" />
+    <Compile Include="Views\DeviceViewElements\AddDeviceView.xaml.cs">
+      <DependentUpon>AddDeviceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceViewElements\AddDeviceViewModel.cs" />
     <Compile Include="Views\DeviceViewElements\DeviceListView.xaml.cs">
       <DependentUpon>DeviceListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DeviceViewElements\DeviceListViewModel.cs" />
+    <Compile Include="Views\DeviceViewElements\DeviceViewItem.cs" />
+    <Compile Include="Views\DeviceViewElements\Parameter.cs" />
     <Compile Include="Views\EditDeviceViewModel.cs" />
     <Compile Include="Views\EditDeviceView.xaml.cs">
       <DependentUpon>EditDeviceView.xaml</DependentUpon>
@@ -122,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CategoryViewElements\CategoryListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceViewElements\AddDeviceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

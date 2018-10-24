@@ -39,6 +39,14 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
             }
         }
 
+        public async Task<Category> FindCategoryByName(string name)
+        {
+            using (DataContext context = new DataContext())
+            {
+                return await context.Categories.FirstOrDefaultAsync(c => c.Name == name);
+            }
+        }
+
         public async Task Insert(Category category)
         {
             using (DataContext context = new DataContext())

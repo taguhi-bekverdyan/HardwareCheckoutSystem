@@ -13,5 +13,11 @@ namespace HardwareCheckoutSystemAdmin.Models
         public string Name { get; set; }
 
         public ICollection<Device> Devices { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
     }
 }
