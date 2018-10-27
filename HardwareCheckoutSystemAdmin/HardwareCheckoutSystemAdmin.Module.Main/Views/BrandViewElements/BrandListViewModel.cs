@@ -3,6 +3,7 @@ using HardwareCheckoutSystemAdmin.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 
@@ -14,15 +15,15 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
         private IBrandService _brandService;
 
 
-        private List<Brand> _brands = new List<Brand>();
-        public List<Brand> Brands
+        private List<BrandViewItem> _brands = new List<BrandViewItem>();
+        public List<BrandViewItem> Brands
         {
             get { return _brands; }
             set { SetProperty(ref _brands, value); }
         }
 
-        private Brand _selectedBrand;
-        public Brand SelectedBrand
+        private BrandViewItem _selectedBrand;
+        public BrandViewItem SelectedBrand
         {
             get { return _selectedBrand; }
             set
@@ -42,6 +43,15 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
             UpdateBrand = new DelegateCommand(UpdateBrandAction, CanUpdateOrDelete);
         }
 
+        private async void UpdateData()
+        {
+            Brands = new List<BrandViewItem>();
+            List<Brand> temp = await _brandService.FindAll();
+            foreach (var item in temp)
+            {
+                Brands.Add(new BrandViewItem(item));
+            }
+        }
 
         public DelegateCommand AddBrand { get; private set; }
 
@@ -59,10 +69,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
 
         public DelegateCommand DeleteBrand { get; private set; }
 
-        public void DeleteBrandAction()
+        public async void DeleteBrandAction()
         {
-            MessageBox.Show("TODO");
+            await _brandService.DeleteBrandById(SelectedBrand.GetId());
+            
         }
+
 
         public bool CanUpdateOrDelete()
         {
@@ -80,18 +92,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            
+            throw new NotImplementedException();
         }
-
-        private async void UpdateData()
-        {
-            Brands = await _brandService.FindAll();
-        }
-
     }
 }

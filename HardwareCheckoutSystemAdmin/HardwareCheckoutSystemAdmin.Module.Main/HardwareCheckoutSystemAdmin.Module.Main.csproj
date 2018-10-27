@@ -84,6 +84,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Views\BrandViewElements\BrandViewItem.cs" />
     <Compile Include="Views\BrandViewElements\BrandListView.xaml.cs">
       <DependentUpon>BrandListView.xaml</DependentUpon>
     </Compile>

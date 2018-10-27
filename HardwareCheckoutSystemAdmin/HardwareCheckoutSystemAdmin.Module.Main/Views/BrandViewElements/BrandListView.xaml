@@ -8,40 +8,27 @@
              xmlns:mvvm="http://prismlibrary.com/"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              Background="#ffffff"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="500" d:DesignWidth="420">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="310"/>
+            <ColumnDefinition Width="110"/>
+        </Grid.ColumnDefinitions>
 
-
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="100"/>
-
-            </Grid.ColumnDefinitions>
-
-            <Button Width="80" Height="40" Grid.Column="0" Content="Edit"
-                    Command="{Binding UpdateBrand}"/>
-            <Button Width="80" Height="40" Grid.Column="1" Content="Add"
-                    Command="{Binding AddBrand}"/>
-            <Button Width="80" Height="40" Grid.Column="2" Content="Delete"
+        <Button Width="80" Height="40" Grid.Column="1" Grid.Row="0" Content="Delete"
                     Command="{Binding DeleteBrand}"/>
-
-
-
-        </Grid>
-
-
-        <DataGrid Grid.Row="1" Margin="10" IsReadOnly="True" 
+        <DataGrid Grid.ColumnSpan="2" VerticalGridLinesBrush="#ffffff"  HorizontalAlignment="Left" Width="400" Grid.Row="1" Margin="10" IsReadOnly="True" 
                   CanUserAddRows="False" ItemsSource="{Binding Brands}"
-                  SelectedItem="{Binding SelectedBrand,Mode=TwoWay}">
+                  SelectedItem="{Binding SelectedBrand,Mode=TwoWay}" >
 
         </DataGrid>
-
+        <TextBox Width="280" Height="40" Grid.Row="2" Text="TextBox" IsReadOnly="True"/>
+        <Button Width="80" Height="40" Grid.Column="1" Grid.Row="2" Content="Add"
+                    Command="{Binding AddBrand}"/>
     </Grid>
 </UserControl>
