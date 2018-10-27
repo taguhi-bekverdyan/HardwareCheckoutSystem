@@ -1,24 +1,23 @@
 ﻿using HardwareCheckoutSystemAdmin.Common.Prism;
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
-using HardwareCheckoutSystemAdmin.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Prism;
+using Prism.Events;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 {
     class DeviceListViewModel:BindableBase, INavigationAware
     {
 
-        private IDeviceService _deviceService;
-        private IShellService _shellService;
+        private readonly IEventAggregator _eventAggregator;
+        private readonly IDeviceService _deviceService;
+        private readonly IShellService _shellService;
 
         private List<DeviceViewItem> _devices;
         public List<DeviceViewItem> Devices
@@ -39,10 +38,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             }
         }
 
-        public DeviceListViewModel(IDeviceService deviceService,IShellService shellService)
+        public DeviceListViewModel(IDeviceService deviceService,IShellService shellService, IEventAggregator eventAggregator)
         {
             _deviceService = deviceService;
             _shellService = shellService;
+            _eventAggregator = eventAggregator;
             DeleteDevice = new DelegateCommand(DeleteDeviceAction, CanUpdateOrDelete);
             AddDevice = new DelegateCommand(AddDeviceAction);
             UpdateDevice = new DelegateCommand(UpdateDeviceAction, CanUpdateOrDelete);
@@ -63,10 +63,26 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             {
                 param = new NavigationParameters { { "request", new Parameter(Mode.Edit,SelectedDevice) } };
             }
-            
+
+
+            _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Subscribe(DeviceAddedEventHandler, ThreadOption.UIThread);
             _shellService.ShowShell(nameof(AddDeviceView), 450, 450,param);
+
+
+            //todo change
             SelectedDevice = null;
         }
+
+        private async void DeviceAddedEventHandler(DeviceAddedOrEditedEventArgs args)
+        {
+            if (args.Device != null)
+            {
+                await UpdateData();
+            }
+            _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Unsubscribe(DeviceAddedEventHandler);
+        }
+
+
 
         public DelegateCommand UpdateDevice { get; private set; }
 
@@ -91,9 +107,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             return true;
         }
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            UpdateData();
+            await UpdateData();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -106,15 +122,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             throw new NotImplementedException();
         }
 
-        private async void UpdateData()
+        private async Task UpdateData()
         {
             Devices = new List<DeviceViewItem>();
-            List<Device> temp = await _deviceService.FindAll();
+            var temp = await _deviceService.FindAll();
             foreach (var item in temp)
             {
                 Devices.Add(new DeviceViewItem(item));
             }
         }
-
     }
 }

@@ -16,7 +16,8 @@ using HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 {
-    class MainViewModel : BindableBase
+    public class MainViewModel : BindableBase
+
     {
         private IShellService _shellService;
 
@@ -72,7 +73,5 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
         {
             _shellService.ShowShell(nameof(ResponseListView));
         }
-
-
     }
 }

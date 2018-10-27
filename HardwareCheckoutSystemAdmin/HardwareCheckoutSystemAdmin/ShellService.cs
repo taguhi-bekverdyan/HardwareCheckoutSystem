@@ -56,6 +56,7 @@ namespace HardwareCheckoutSystemAdmin
         {
             var shell = _container.Resolve<ShellView>();
             var scopedRegion = _regionManager.CreateRegionManager();
+            
             RegionManager.SetRegionManager(shell, scopedRegion);
             RegionManagerAware.SetRegionManagerAware(shell, scopedRegion);
             scopedRegion.RequestNavigate(RegionNames.WindowContentRegion, uri, navigationParameters);

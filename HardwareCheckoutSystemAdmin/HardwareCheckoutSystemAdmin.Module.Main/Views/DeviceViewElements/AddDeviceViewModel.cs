@@ -5,19 +5,19 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
+using HardwareCheckoutSystemAdmin.Common.Prism;
+using Prism.Events;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 {
     class AddDeviceViewModel:BindableBase, INavigationAware
     {
-
-        private IBrandService _brandService;
-        private ICategoryService _categoryService;
-        private IDeviceService _deviceService;
+        private readonly IEventAggregator _eventAggregator;
+        private readonly IShellService _shellService;
+        private readonly IBrandService _brandService;
+        private readonly ICategoryService _categoryService;
+        private readonly IDeviceService _deviceService;
 
 
         private DeviceViewItem _device;
@@ -57,11 +57,17 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             set { SetProperty(ref _selectedCategory, value); }
         }
 
-        public AddDeviceViewModel(IBrandService brandService,ICategoryService categoryService,IDeviceService deviceService)
+        public AddDeviceViewModel(IBrandService brandService,
+            ICategoryService categoryService,
+            IDeviceService deviceService,
+            IEventAggregator eventAggregator,
+            IShellService shellService)
         {
             _brandService = brandService;
             _categoryService = categoryService;
             _deviceService = deviceService;
+            _eventAggregator = eventAggregator;
+            _shellService = shellService;
             AddDevice = new DelegateCommand(AddDeviceAction);
         }
 
@@ -80,6 +86,10 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             {
                 await _deviceService.Update(newDevice);
             }
+
+            _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Publish(new DeviceAddedOrEditedEventArgs{Device = newDevice});
+
+
             
         }
 
@@ -121,5 +131,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             Categories = await _categoryService.FindAll();
         }
 
+    }
+
+    public class DeviceAddedOrEditedEvent : PubSubEvent<DeviceAddedOrEditedEventArgs> { }
+
+    public class DeviceAddedOrEditedEventArgs
+    {
+        public Device Device { get; set; }
     }
 }
