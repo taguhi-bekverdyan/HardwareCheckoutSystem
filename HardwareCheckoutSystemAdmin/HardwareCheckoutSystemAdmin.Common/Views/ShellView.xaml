@@ -7,7 +7,7 @@
         xmlns:mvvm="http://prismlibrary.com/"
         xmlns:common="clr-namespace:HardwareCheckoutSystemAdmin.Common;assembly=HardwareCheckoutSystemAdmin.Common"
         mvvm:ViewModelLocator.AutoWireViewModel="True"
-        d:DataContext="{d:DesignInstance local:ShellViewModel}"
+        
         mc:Ignorable="d"
         Title="{Binding Title}" Height="450" Width="800">
     <Grid>

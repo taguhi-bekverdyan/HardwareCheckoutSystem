@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Prism;
 using Prism.Events;
+using HardwareCheckoutSystemAdmin.Views;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 {
@@ -18,6 +19,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         private readonly IEventAggregator _eventAggregator;
         private readonly IDeviceService _deviceService;
         private readonly IShellService _shellService;
+        private ShellView _addDeviceView;
 
         private List<DeviceViewItem> _devices;
         public List<DeviceViewItem> Devices
@@ -46,6 +48,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             DeleteDevice = new DelegateCommand(DeleteDeviceAction, CanUpdateOrDelete);
             AddDevice = new DelegateCommand(AddDeviceAction);
             UpdateDevice = new DelegateCommand(UpdateDeviceAction, CanUpdateOrDelete);
+            _addDeviceView = null;
         }
 
         
@@ -53,32 +56,19 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 
         public void AddDeviceAction()
         {
-            NavigationParameters param;
-            if (SelectedDevice == null)
-            {
-                SelectedDevice = new DeviceViewItem();
-                param = new NavigationParameters { { "request", new Parameter(Mode.Add,SelectedDevice) } };
-            }
-            else
-            {
-                param = new NavigationParameters { { "request", new Parameter(Mode.Edit,SelectedDevice) } };
-            }
-
-
+            NavigationParameters param;          
+            param = new NavigationParameters { { "request", new DeviceParameter(Mode.Add,null) } };
+            
             _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Subscribe(DeviceAddedEventHandler, ThreadOption.UIThread);
-            _shellService.ShowShell(nameof(AddDeviceView), 450, 450,param);
-
-
+            _addDeviceView = _shellService.ShowShell(nameof(AddDeviceView), 450, 450,param);
             //todo change
             SelectedDevice = null;
         }
 
         private async void DeviceAddedEventHandler(DeviceAddedOrEditedEventArgs args)
         {
-            if (args.Device != null)
-            {
-                await UpdateData();
-            }
+            _addDeviceView.Close();
+            await UpdateData();            
             _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Unsubscribe(DeviceAddedEventHandler);
         }
 
@@ -88,7 +78,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 
         public void UpdateDeviceAction()
         {
-            MessageBox.Show("TODO");
+            NavigationParameters param;
+            param = new NavigationParameters { { "request", new DeviceParameter(Mode.Edit, SelectedDevice) } };
+            _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Subscribe(DeviceAddedEventHandler, ThreadOption.UIThread);
+            _addDeviceView = _shellService.ShowShell(nameof(AddDeviceView), 450, 450, param);
+            SelectedDevice = null;
         }
 
         public DelegateCommand DeleteDevice { get; private set; }
@@ -96,6 +90,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         public async void DeleteDeviceAction()
         {
             await _deviceService.DeleteDeviceById(SelectedDevice.GetId());
+            await UpdateData();
         }
 
         public bool CanUpdateOrDelete()

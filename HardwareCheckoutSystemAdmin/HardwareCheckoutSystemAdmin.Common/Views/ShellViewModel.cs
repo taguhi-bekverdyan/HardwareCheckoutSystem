@@ -1,6 +1,5 @@
 ﻿using HardwareCheckoutSystemAdmin.Common;
 using HardwareCheckoutSystemAdmin.Common.Prism;
-using HardwareCheckoutSystemAdmin.Module.Main.Views;
 using Microsoft.Practices.Unity;
 using Prism.Mvvm;
 using Prism.Regions;

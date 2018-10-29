@@ -21,6 +21,16 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
             }
         }
 
+        public async Task DeleteUserById(Guid id)
+        {
+            using (DataContext context = new DataContext())
+            {
+                User user = context.Users.FirstOrDefault(u => u.Id.Equals(id));
+                await Delete(user);
+                await context.SaveChangesAsync();
+            }
+        }
+
         public async Task<List<User>> FindAll()
         {
             using (DataContext context = new DataContext())

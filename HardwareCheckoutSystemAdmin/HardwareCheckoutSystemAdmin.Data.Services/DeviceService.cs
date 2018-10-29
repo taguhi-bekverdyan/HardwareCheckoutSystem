@@ -27,8 +27,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
             using (DataContext context = new DataContext())
             {
                 Device device = await FindDeviceById(id);
-                context.Devices.Attach(device);
-                context.Devices.Remove(device);
+                await Delete(device);
             }
         }
 

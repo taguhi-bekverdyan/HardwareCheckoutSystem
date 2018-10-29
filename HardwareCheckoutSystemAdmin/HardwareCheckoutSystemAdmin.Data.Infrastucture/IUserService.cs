@@ -14,5 +14,6 @@ namespace HardwareCheckoutSystemAdmin.Data.Infrastructure
         Task Update(User updated);
         Task Delete(User user);
         Task<List<User>> FindAll();
+        Task DeleteUserById(Guid id);
     }
 }

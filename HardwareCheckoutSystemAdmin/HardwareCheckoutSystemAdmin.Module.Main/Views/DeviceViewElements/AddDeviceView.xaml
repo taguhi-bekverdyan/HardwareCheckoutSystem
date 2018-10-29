@@ -23,7 +23,7 @@
     <StackPanel Margin="10">
         
         <Label Content="Serial number" FontSize="15"/>
-        <TextBox Height="25" Text="{Binding Device.SerialNumber,Mode=TwoWay}"/>
+        <TextBox Height="25" Text="{Binding SerialNumber,Mode=TwoWay}"/>
 
         <Grid Margin="0 5 0 0" Height="60">
             <Grid.ColumnDefinitions>
@@ -41,15 +41,15 @@
         </Grid>
 
         <Label Content="Model" FontSize="15"/>
-        <TextBox Height="25" Text="{Binding Device.Model,Mode=TwoWay}"/>
+        <TextBox Height="25" Text="{Binding Model,Mode=TwoWay}"/>
 
         <Label Content="Description" FontSize="15"/>
-        <TextBox Height="80" Text="{Binding Device.Description,Mode=TwoWay}"/>
+        <TextBox Height="80" Text="{Binding Description,Mode=TwoWay}"/>
 
         <!--<Label Content="Max Period" FontSize="15"/>-->
         <Label Content="Permission" FontSize="15"/>
         <ComboBox Height="30" ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
-                  SelectedItem="{Binding Device.Permission,Mode=TwoWay}"/>
+                  SelectedItem="{Binding Permission,Mode=TwoWay}"/>
 
         <Grid Height="35" Margin="0 5 0 0">
             <Grid.ColumnDefinitions>

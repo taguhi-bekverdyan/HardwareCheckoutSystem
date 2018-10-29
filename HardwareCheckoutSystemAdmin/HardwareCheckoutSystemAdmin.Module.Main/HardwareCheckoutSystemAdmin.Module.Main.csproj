@@ -101,7 +101,7 @@
     </Compile>
     <Compile Include="Views\DeviceViewElements\DeviceListViewModel.cs" />
     <Compile Include="Views\DeviceViewElements\DeviceViewItem.cs" />
-    <Compile Include="Views\DeviceViewElements\Parameter.cs" />
+    <Compile Include="Views\DeviceViewElements\Parameters.cs" />
     <Compile Include="Views\EditDeviceViewModel.cs" />
     <Compile Include="Views\EditDeviceView.xaml.cs">
       <DependentUpon>EditDeviceView.xaml</DependentUpon>
@@ -119,6 +119,11 @@
       <DependentUpon>ResponseListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ResponseViewElements\ResponseListViewModel.cs" />
+    <Compile Include="Views\UserViewElements\AddUserView.xaml.cs">
+      <DependentUpon>AddUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserViewElements\AddUserViewModel.cs" />
+    <Compile Include="Views\UserViewElements\UserViewItem.cs" />
     <Compile Include="Views\UserViewElements\UserListView.xaml.cs">
       <DependentUpon>UserListView.xaml</DependentUpon>
     </Compile>
@@ -152,6 +157,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ResponseViewElements\ResponseListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserViewElements\AddUserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,8 +6,8 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HardwareCheckoutSystemAdmin.Common.Prism;
 using Prism.Events;
+using HardwareCheckoutSystemAdmin.Common.Prism;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 {
@@ -20,14 +20,61 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         private readonly IDeviceService _deviceService;
 
 
-        private DeviceViewItem _device;
-        public DeviceViewItem Device
+        private Mode _mode;
+        private Guid _selectedDeviceId;
+
+        private string _serialNumber;
+        public string SerialNumber
         {
-            get { return _device; }
-            set { SetProperty(ref _device, value); }
+            get
+            {
+                return _serialNumber;
+            }
+            set
+            {
+                SetProperty(ref _serialNumber,value);
+                AddDevice.RaiseCanExecuteChanged();
+            }
         }
 
-        private Mode _mode;
+        private string _description;
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                SetProperty(ref _description, value);
+                AddDevice.RaiseCanExecuteChanged();
+            }
+        }
+
+        private string _model;
+        public string Model
+        {
+            get
+            {
+                return _model;
+            }
+            set
+            {
+                SetProperty(ref _model, value);
+                AddDevice.RaiseCanExecuteChanged();
+            }
+        }
+
+        private Permission _permission;
+        public Permission Permission
+        {
+            get { return _permission; }
+            set
+            {
+                SetProperty(ref _permission,value);
+                AddDevice.RaiseCanExecuteChanged();
+            }
+        }
 
         private List<Brand> _brands;
         public List<Brand> Brands
@@ -47,14 +94,22 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         public Brand SelectedBrand
         {
             get { return _selectedBrand; }
-            set { SetProperty(ref _selectedBrand,value); }
+            set
+            {
+                SetProperty(ref _selectedBrand,value);
+                AddDevice.RaiseCanExecuteChanged();
+            }
         }
 
         private Category _selectedCategory;
         public Category SelectedCategory
         {
             get { return _selectedCategory; }
-            set { SetProperty(ref _selectedCategory, value); }
+            set
+            {
+                SetProperty(ref _selectedCategory, value);
+                AddDevice.RaiseCanExecuteChanged();
+            }
         }
 
         public AddDeviceViewModel(IBrandService brandService,
@@ -68,41 +123,47 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             _deviceService = deviceService;
             _eventAggregator = eventAggregator;
             _shellService = shellService;
-            AddDevice = new DelegateCommand(AddDeviceAction);
+            AddDevice = new DelegateCommand(AddDeviceAction,CanAdd);
         }
 
 
         public DelegateCommand AddDevice { get; private set; }
         private async void AddDeviceAction()
         {
-            Device newDevice = (Device)Device;
-            newDevice.BrandId = await GetBrandGuid();
-            newDevice.CategoryId = await GetCategoryGuid();
+            Device device = new Device();
             if (_mode == Mode.Add)
             {
-                await _deviceService.Insert(newDevice);
+                device.Id = Guid.NewGuid();
+                device.BrandId = SelectedBrand.Id;
+                device.CategoryId = SelectedCategory.Id;
+                device.Model = Model;
+                device.Description = Description;
+                device.Permission = Permission;
+                device.SerialNumber = SerialNumber;
+                await _deviceService.Insert(device);
             }
             else if(_mode == Mode.Edit)
             {
-                await _deviceService.Update(newDevice);
+                device.Id = _selectedDeviceId;
+                device.BrandId = SelectedBrand.Id;
+                device.CategoryId = SelectedCategory.Id;
+                device.Model = Model;
+                device.Description = Description;
+                device.Permission = Permission;
+                device.SerialNumber = SerialNumber;
+                await _deviceService.Update(device);
             }
-
-            _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Publish(new DeviceAddedOrEditedEventArgs{Device = newDevice});
-
-
-            
+            _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Publish(new DeviceAddedOrEditedEventArgs{Device = device});           
         }
 
-        private async Task<Guid> GetBrandGuid()
+        private bool CanAdd()
         {
-            Brand b = await _brandService.FindBrandByName(SelectedBrand.Name);
-            return b.Id;
-        }
-
-        private async Task<Guid> GetCategoryGuid()
-        {
-            Category c = await _categoryService.FindCategoryByName(SelectedCategory.Name);
-            return c.Id;
+            if (SelectedBrand != null && SelectedCategory != null &&
+                SerialNumber.Length >= 15 && Model.Length != 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -118,11 +179,24 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             GetData();
-            Parameter param = (Parameter)navigationContext.Parameters["request"];
-            Device = param.Device;
-            SelectedBrand = Device.Brand;
-            SelectedCategory = Device.Category;
+            DeviceParameter param = (DeviceParameter)navigationContext.Parameters["request"];
+            DeviceViewItem device = param.Device;
             _mode = param.Mode;
+            if (_mode.Equals(Mode.Add))
+            {
+                Description = string.Empty;
+                Model = string.Empty;
+                SerialNumber = string.Empty;
+            }
+            else
+            {
+                Description = device.Description;
+                Model = device.Model;
+                SerialNumber = device.SerialNumber;
+                SelectedBrand = device.Brand;
+                SelectedCategory = device.Category;
+                _selectedDeviceId = device.GetId();
+            }            
         }
 
         private async void GetData()

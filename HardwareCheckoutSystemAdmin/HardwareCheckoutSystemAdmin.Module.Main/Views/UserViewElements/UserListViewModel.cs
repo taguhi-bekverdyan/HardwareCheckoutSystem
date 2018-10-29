@@ -1,5 +1,8 @@
-﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
+﻿using HardwareCheckoutSystemAdmin.Common.Prism;
+using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements;
+using HardwareCheckoutSystemAdmin.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -15,17 +18,18 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
     class UserListViewModel:BindableBase, INavigationAware
     {
         private IUserService _userService;
+        private IShellService _shellService;
+        private ShellView _addUserView;
 
-
-        private List<User> _users = new List<User>();
-        public List<User> Users
+        private List<UserViewItem> _users = new List<UserViewItem>();
+        public List<UserViewItem> Users
         {
             get { return _users; }
             set { SetProperty(ref _users, value); }
         }
 
-        private User _selectedUser;
-        public User SelectedUser
+        private UserViewItem _selectedUser;
+        public UserViewItem SelectedUser
         {
             get { return _selectedUser; }
             set
@@ -36,9 +40,10 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
         }
 
 
-        public UserListViewModel(IUserService service)
+        public UserListViewModel(IUserService service,IShellService shellService)
         {
             _userService = service;
+            _shellService = shellService;
 
             DeleteUser = new DelegateCommand(DeleteUserAction, CanUpdateOrDelete);
             AddUser = new DelegateCommand(AddUserAction);
@@ -50,7 +55,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
 
         public void AddUserAction()
         {
-            MessageBox.Show("TODO");
+            NavigationParameters param = new NavigationParameters { { "request", new UserParameter(Mode.Add, null) } };
+            _addUserView = _shellService.ShowShell(nameof(AddUserView),450,450,param);
         }
 
         public DelegateCommand UpdateUser { get; private set; }
@@ -62,9 +68,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
 
         public DelegateCommand DeleteUser { get; private set; }
 
-        public void DeleteUserAction()
+        public async void DeleteUserAction()
         {
-            MessageBox.Show("TODO"); 
+            User user = (User)SelectedUser;
+            await _userService.Delete(user);
+            SelectedUser = null;
         }
 
         public bool CanUpdateOrDelete()
@@ -76,9 +84,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             return true;
         }
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            UpdateData();
+            await UpdateData();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -91,9 +99,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             throw new NotImplementedException();
         }
 
-        private async void UpdateData()
+        private async Task UpdateData()
         {
-            Users = await _userService.FindAll();
+            Users = new List<UserViewItem>();
+            List<User> temp = await _userService.FindAll();
+            foreach (var item in temp)
+            {
+                Users.Add(new UserViewItem(item));
+            }
         }
 
     }

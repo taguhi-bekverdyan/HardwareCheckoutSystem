@@ -37,6 +37,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         public DeviceViewItem()
         {
             _id = Guid.NewGuid();
+            SerialNumber = string.Empty;
+            Model = string.Empty;
+            Description = string.Empty;
+            Status = DeviceStatus.StatusOne;
+
         }
 
         public Guid GetId()
