@@ -2,6 +2,7 @@
 using HardwareCheckoutSystemAdmin.Models;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -16,6 +17,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
     {
         #region Services
         private readonly IUserService _userService;
+        private readonly IEventAggregator _eventAggregator;
         #endregion
 
         #region Properties
@@ -95,8 +97,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
         #endregion
 
         #region Ctor
-        public AddUserViewModel(IUserService userService)
+        public AddUserViewModel(IUserService userService,IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             _userService = userService;
             FirstName = string.Empty;
             LastName = string.Empty;
@@ -150,13 +153,19 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
         }
         private void SetData()
         {
-            LastName = _user.LastName;
-            FirstName = _user.FirstName;
-            Address = _user.Address;
-            Birthdate = _user.Birthdate;
-            Permission = _user.Permission;
-            TelNumber = _user.TelNumber;
-            Occupation = _user.Occupation;
+            _user.LastName = LastName;
+            _user.FirstName = FirstName;
+            _user.Address = Address;
+            _user.Birthdate = Birthdate;
+            _user.Permission = Permission;
+            _user.TelNumber = TelNumber;
+            _user.Occupation = Occupation;
+        }
+
+        private void CallbackAction()
+        {
+            _eventAggregator.GetEvent<UserAddOrEditEvent>()
+                .Publish(new Object());
         }
         #endregion
 
@@ -177,15 +186,22 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
                 User user = (User)_user;
                 await _userService.Update(user);
             }
+            CallbackAction();
         }
 
         public DelegateCommand Cancel { get; private set; }
         private void CancelAction()
         {
-
+            CallbackAction();
         }
 
         #endregion
 
     }
+
+    public class UserAddOrEditEvent:PubSubEvent<object>
+    {
+
+    }
+
 }
