@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
+    <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ShellView.xaml">

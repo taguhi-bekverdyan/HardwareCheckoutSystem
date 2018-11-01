@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:StyleAlias="clr-namespace:HardwareCheckoutSystemAdmin.Models;assembly=HardwareCheckoutSystemAdmin.Models"
-             Background="#eeeeee"
+             Background="#212224"
              xmlns:mvvm="http://prismlibrary.com/"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="450" d:DesignWidth="450">
@@ -19,6 +19,7 @@
                 <x:Type TypeName="StyleAlias:Permission"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        
     </UserControl.Resources>
     <StackPanel Margin="10">
         
