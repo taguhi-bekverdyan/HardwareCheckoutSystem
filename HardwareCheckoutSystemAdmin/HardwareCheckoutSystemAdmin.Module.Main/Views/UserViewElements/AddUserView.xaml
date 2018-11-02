@@ -64,7 +64,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Margin="5" Content="Ok" Command="{Binding AddUser}"/>
+            <Button Margin="5" Content="Ok" Command="{Binding AddUser}" />
             <Button Grid.Column="1" Margin="5" Content="Cancel" Command="{Binding Cancel}"/>
 
         </Grid>

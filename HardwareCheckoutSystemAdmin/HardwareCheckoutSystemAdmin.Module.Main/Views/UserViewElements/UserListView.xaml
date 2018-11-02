@@ -9,6 +9,14 @@
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              Background="#212224"
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HardwareCheckoutSystemAdmin.Module.Main;component/Themes/WPF.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -26,11 +34,11 @@
             </Grid.ColumnDefinitions>
 
             <Button Width="80" Height="40" Grid.Column="0" Content="Edit"
-                    Command="{Binding UpdateUser}"/>
+                    Command="{Binding UpdateUser}" Style="{StaticResource CircleButton}"/>
             <Button Width="80" Height="40" Grid.Column="1" Content="Add"
-                    Command="{Binding AddUser}"/>
+                    Command="{Binding AddUser}" Style="{StaticResource CircleButton}"/>
             <Button Width="80" Height="40" Grid.Column="2" Content="Delete"
-                    Command="{Binding DeleteUser}"/>
+                    Command="{Binding DeleteUser}" Style="{StaticResource CircleButton}"/>
 
 
 

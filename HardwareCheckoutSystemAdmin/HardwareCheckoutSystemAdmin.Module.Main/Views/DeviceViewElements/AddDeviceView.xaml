@@ -19,7 +19,11 @@
                 <x:Type TypeName="StyleAlias:Permission"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        
+        <ResourceDictionary x:Key="styleLib">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HardwareCheckoutSystemAdmin.Module.Main;component/Themes/WPF.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel Margin="10">
         
@@ -58,7 +62,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Margin="5" Content="Ok" Command="{Binding AddDevice}"/>
+            <Button Margin="5" Content="Ok" Command="{Binding AddDevice}" 
+                    />
             <Button Grid.Column="1" Margin="5" Content="Cancel"/>
 
         </Grid>
