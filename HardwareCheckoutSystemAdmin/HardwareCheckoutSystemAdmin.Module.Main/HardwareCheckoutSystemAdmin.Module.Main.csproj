@@ -208,5 +208,12 @@
       <Name>HardwareCheckoutSystemAdmin.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\categories.png" />
+    <Resource Include="Images\devices.png" />
+    <Resource Include="Images\responses.png" />
+    <Resource Include="Images\resuests.png" />
+    <Resource Include="Images\users.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

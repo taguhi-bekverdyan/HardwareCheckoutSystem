@@ -26,42 +26,42 @@
         <Button Grid.Column="0" Grid.Row="1" Background="Transparent" BorderBrush="Transparent"
                 Command="{Binding OpenDeviceListView}" Width="150" Height="150">
             <StackPanel Width="120" Height="120">
-                <Image Source="D:\AppImages\devices.png" Stretch="Uniform" Width="110"/>
+                <Image Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Images/devices.png" Stretch="Uniform" Width="110"/>
                 
             </StackPanel>
         </Button>
         <Button Grid.Column="0" Grid.Row="2" Background="Transparent" BorderBrush="Transparent"
                 Command="{Binding OpenUserListView}" Width="150" Height="150">
             <StackPanel Width="120" Height="120">
-                <Image Source="D:\AppImages\users.png" Stretch="Uniform" Width="110"/>
+                <Image Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Images/users.png" Stretch="Uniform" Width="110"/>
 
             </StackPanel>
         </Button>
         <Button Grid.Column="1" Grid.Row="1" Background="Transparent" BorderBrush="Transparent"
                 Command="{Binding OpenRequestListView}" Width="150" Height="150">
             <StackPanel Width="120" Height="120">
-                <Image Source="D:\AppImages\resuests.png" Stretch="Uniform" Width="110"/>
+                <Image Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Images/resuests.png" Stretch="Uniform" Width="110"/>
 
             </StackPanel>
         </Button>
         <Button Grid.Column="2" Grid.Row="1" Background="Transparent" BorderBrush="Transparent"
                 Command="{Binding OpenResponseListView}" Width="150" Height="150">
             <StackPanel Width="120" Height="120">
-                <Image Source="D:\AppImages\responses.png" Stretch="Uniform" Width="110"/>
+                <Image Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Images/responses.png" Stretch="Uniform" Width="110"/>
 
             </StackPanel>
         </Button>
         <Button Grid.Column="2" Grid.Row="2" Background="Transparent" BorderBrush="Transparent"
                 Command="{Binding OpenBrandListView}" Width="150" Height="150">
             <StackPanel Width="120" Height="120">
-                <Image Source="D:\AppImages\responses.png" Stretch="Uniform" Width="110"/>
+                <Image Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Images/responses.png" Stretch="Uniform" Width="110"/>
 
             </StackPanel>
         </Button>
         <Button Grid.Column="1" Grid.Row="2" Background="Transparent" BorderBrush="Transparent"
                 Command="{Binding OpenCategoryListView}" Width="150" Height="150">
             <StackPanel Width="120" Height="120">
-                <Image Source="D:\AppImages\categories.png" Stretch="Uniform" Width="110"/>
+                <Image Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Images/categories.png" Stretch="Uniform" Width="110"/>
 
             </StackPanel>
         </Button>
