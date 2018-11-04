@@ -7,7 +7,7 @@ using Prism.Regions;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 {
-  public class DeviceListViewModel : BindableBase, IRegionManagerAware
+  public class xDeviceListViewModel : BindableBase, IRegionManagerAware
   {
     private readonly IShellService _service;
     private readonly IDeviceService _deviceService;
@@ -17,7 +17,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
     private readonly IResponseService _responseService;
     private readonly IBrandService _brandService;
 
-    public DeviceListViewModel(
+    public xDeviceListViewModel(
       IShellService service, 
       IDeviceService deviceService, 
       IUserService userService,

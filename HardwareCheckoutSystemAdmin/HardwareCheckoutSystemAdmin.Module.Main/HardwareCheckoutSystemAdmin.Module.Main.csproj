@@ -81,15 +81,15 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\DeviceListViewModel.cs" />
+    <Compile Include="Views\xDeviceListViewModel.cs" />
     <Compile Include="Views\Devices\DeviceItem.cs" />
-    <Compile Include="Views\Devices\DevicesPageView.xaml.cs">
-      <DependentUpon>DevicesPageView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Devices\DevicesPageViewModel.cs" />
-    <Compile Include="Views\EditDeviceViewModel.cs" />
-    <Compile Include="Views\DeviceListView.xaml.cs">
+    <Compile Include="Views\Devices\DeviceListView.xaml.cs">
       <DependentUpon>DeviceListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\DeviceListViewModel.cs" />
+    <Compile Include="Views\EditDeviceViewModel.cs" />
+    <Compile Include="Views\xDeviceListView.xaml.cs">
+      <DependentUpon>xDeviceListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditDeviceView.xaml.cs">
       <DependentUpon>EditDeviceView.xaml</DependentUpon>
@@ -99,11 +99,11 @@
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Menu\MenuViewModel.cs" />
-    <Page Include="Views\DeviceListView.xaml">
+    <Page Include="Views\xDeviceListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Devices\DevicesPageView.xaml">
+    <Page Include="Views\Devices\DeviceListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

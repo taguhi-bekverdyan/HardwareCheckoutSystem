@@ -1,4 +1,5 @@
-﻿using HardwareCheckoutSystemAdmin.Models;
+﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
+using HardwareCheckoutSystemAdmin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
       Status = device.Status;
       MaxPeriod = device.MaxPeriod;
       Permission = device.Permission;
-      //Brand = device.Brand;  // null
-      //Category = device.Category; // null
+      Brand = device.Brand;
+      Category = device.Category;
     }
   }
 }

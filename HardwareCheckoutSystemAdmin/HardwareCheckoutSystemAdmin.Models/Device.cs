@@ -25,7 +25,5 @@ namespace HardwareCheckoutSystemAdmin.Models
     public Permission Permission { get; set; }
     public DateTime MaxPeriod { get; set; }
     #endregion
-
-
   }
 }

@@ -10,19 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
+namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 {
-  /// <summary>
-  /// Interaction logic for DeviceView.xaml
-  /// </summary>
-  public partial class DevicesPageView : UserControl
-  {
-    public DevicesPageView()
+    /// <summary>
+    /// Interaction logic for DeviceListView.xaml
+    /// </summary>
+    public partial class xDeviceListView : UserControl
     {
-      InitializeComponent();
+        public xDeviceListView()
+        {
+            InitializeComponent();
+        }
     }
-  }
 }

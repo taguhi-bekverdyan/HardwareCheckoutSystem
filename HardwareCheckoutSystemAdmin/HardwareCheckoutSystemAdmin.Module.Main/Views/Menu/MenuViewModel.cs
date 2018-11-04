@@ -21,7 +21,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Menu
 
     private void OpenDevicesPageAction()
     {
-      RegionManager.RequestNavigate(RegionNames.WindowContentRegion, nameof(DevicesPageView));
+      RegionManager.RequestNavigate(RegionNames.WindowContentRegion, nameof(DeviceListView));
     }
 
     public MenuViewModel(IShellService service)

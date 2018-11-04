@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HardwareCheckoutSystemAdmin.Common;
-using HardwareCheckoutSystemAdmin.Module.Main.Views;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Devices;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Menu;
 using Microsoft.Practices.Unity;
@@ -33,8 +32,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main
 
       //register views
       _unityContainer.RegisterType(typeof(object), typeof(DeviceListView), nameof(DeviceListView));
-      _unityContainer.RegisterType(typeof(object), typeof(EditDeviceView), nameof(EditDeviceView));
-      _unityContainer.RegisterType(typeof(object), typeof(DevicesPageView), nameof(DevicesPageView));
     }
   }
 }

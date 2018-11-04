@@ -27,7 +27,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
     {
       using (var context = new DataContext())
       {
-        return await context.Devices.ToListAsync();
+        return await context.Devices.Include(d => d.Brand).Include(d => d.Category).ToListAsync();
       }
     }
 
@@ -35,7 +35,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
     {
       using (var context = new DataContext())
       {
-        return await context.Devices.FirstOrDefaultAsync(d => d.Id == deviceId);
+        return await context.Devices.Include(d => d.Brand).Include(d => d.Category).FirstOrDefaultAsync(d => d.Id == deviceId);
       }
     }
 
@@ -43,7 +43,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
     {
       using (var context = new DataContext())
       {
-        return await context.Devices.FirstOrDefaultAsync(d => d.SerialNumber == sn);
+        return await context.Devices.Include(d => d.Brand).Include(d => d.Category).FirstOrDefaultAsync(d => d.SerialNumber == sn);
       }
     }
     #endregion
