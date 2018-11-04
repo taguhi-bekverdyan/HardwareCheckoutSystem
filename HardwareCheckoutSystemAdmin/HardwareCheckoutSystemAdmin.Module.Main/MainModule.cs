@@ -32,6 +32,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main
 
       //register views
       _unityContainer.RegisterType(typeof(object), typeof(DeviceListView), nameof(DeviceListView));
+      _unityContainer.RegisterType(typeof(object), typeof(AddDeviceView), nameof(AddDeviceView));
     }
   }
 }

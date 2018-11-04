@@ -15,18 +15,22 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Menu
 {
   public class MenuViewModel : BindableBase, IRegionManagerAware
   {
-    //private readonly IShellService _service;
+    private readonly IShellService _service;
     public IRegionManager RegionManager { get ; set; }
-    public DelegateCommand DeviceCommand => new DelegateCommand(OpenDevicesPageAction);
+    public DelegateCommand DeviceCommand => new DelegateCommand(OpenDeviceListAction);
 
-    private void OpenDevicesPageAction()
+    private void OpenDeviceListAction()
     {
-      RegionManager.RequestNavigate(RegionNames.WindowContentRegion, nameof(DeviceListView));
+      // Show in the main window
+      //RegionManager.RequestNavigate(RegionNames.WindowContentRegion, nameof(DeviceListView));
+
+      // Show in a new window
+      _service.ShowShell(nameof(DeviceListView));
     }
 
     public MenuViewModel(IShellService service)
     {
-      //_service = service;
+      _service = service;
     }
   }
 }
