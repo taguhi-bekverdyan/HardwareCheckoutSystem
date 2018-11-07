@@ -5,6 +5,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
@@ -13,6 +14,13 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
     {
 
         private IBrandService _brandService;
+
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set { SetProperty(ref _name, value); }
+        }
 
 
         private List<BrandViewItem> _brands = new List<BrandViewItem>();
@@ -43,21 +51,21 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
             UpdateBrand = new DelegateCommand(UpdateBrandAction, CanUpdateOrDelete);
         }
 
-        private async void UpdateData()
-        {
-            Brands = new List<BrandViewItem>();
-            List<Brand> temp = await _brandService.FindAll();
-            foreach (var item in temp)
-            {
-                Brands.Add(new BrandViewItem(item));
-            }
-        }
-
+       
         public DelegateCommand AddBrand { get; private set; }
 
-        public void AddBrandAction()
-        {           
-            MessageBox.Show("TODO");
+        private async void AddBrandAction()
+        {
+            
+            Brand newbrand = new Brand();
+            newbrand.Id = Guid.NewGuid();
+            newbrand.Name = Name;
+            await _brandService.Insert(newbrand);
+            await UpdateData();
+            Name = null;
+
+            //Brand newbrand = (Brand)(new BrandViewItem());
+            //await _brandService.Insert(newbrand);
         }
 
         public DelegateCommand UpdateBrand { get; private set; }
@@ -72,9 +80,10 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
         public async void DeleteBrandAction()
         {
             await _brandService.DeleteBrandById(SelectedBrand.GetId());
-            
-        }
+            SelectedBrand = null;
+            await UpdateData();
 
+        }
 
         public bool CanUpdateOrDelete()
         {
@@ -85,9 +94,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
             return true;
         }
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            UpdateData();
+           await UpdateData();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -98,6 +107,16 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
             throw new NotImplementedException();
+        }
+
+        private async Task UpdateData()
+        {
+            Brands = new List<BrandViewItem>();
+            List<Brand> temp = await _brandService.FindAll();
+            foreach (var item in temp)
+            {
+                Brands.Add(new BrandViewItem(item));
+            }
         }
     }
 }

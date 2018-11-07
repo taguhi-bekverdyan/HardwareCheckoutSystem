@@ -20,14 +20,17 @@
             <ColumnDefinition Width="110"/>
         </Grid.ColumnDefinitions>
 
+        <Label Content="Brand" Grid.Column="0" Grid.Row="0" Margin="10" VerticalAlignment="Center" FontSize="30"/>
         <Button Width="80" Height="40" Grid.Column="1" Grid.Row="0" Content="Delete"
                     Command="{Binding DeleteBrand}"/>
-        <DataGrid Grid.ColumnSpan="2" VerticalGridLinesBrush="#ffffff"  HorizontalAlignment="Left" Width="400" Grid.Row="1" Margin="10" IsReadOnly="True" 
+
+        <DataGrid Grid.ColumnSpan="2" Grid.Row="1" Margin="10" IsReadOnly="True" 
+                  ColumnWidth="360" VerticalGridLinesBrush="#ffffff"
                   CanUserAddRows="False" ItemsSource="{Binding Brands}"
                   SelectedItem="{Binding SelectedBrand,Mode=TwoWay}" >
-
         </DataGrid>
-        <TextBox Width="280" Height="40" Grid.Row="2" Text="TextBox" IsReadOnly="True"/>
+
+        <TextBox Width="280" Height="40" Grid.Row="2" Text="{Binding Name, Mode=TwoWay}"/>
         <Button Width="80" Height="40" Grid.Column="1" Grid.Row="2" Content="Add"
                     Command="{Binding AddBrand}"/>
     </Grid>

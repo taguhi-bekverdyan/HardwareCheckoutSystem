@@ -93,6 +93,7 @@
       <DependentUpon>CategoryListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CategoryViewElements\CategoryListViewModel.cs" />
+    <Compile Include="Views\CategoryViewElements\CategoryViewItem.cs" />
     <Compile Include="Views\DeviceViewElements\DeviceListView.xaml.cs">
       <DependentUpon>DeviceListView.xaml</DependentUpon>
     </Compile>

@@ -10,29 +10,32 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
 {
     class BrandViewItem : BindableBase
     {
-        private string _name;
-        public string Name
-        {
-            get { return _name; }
-            set { SetProperty(ref _name, value); }
-        }
         private Guid _id;
+        public string Name { get; set; }
+
+        public BrandViewItem(Brand b)
+        {
+            Name = b.Name;
+            _id = b.Id;
+        }
 
         public BrandViewItem()
         {
             _id = Guid.NewGuid();
+            Name = string.Empty;
         }
-
-        public BrandViewItem(Brand brand)
-        {
-            Name = brand.Name;
-            _id = brand.Id;
-        }
-        
 
         public Guid GetId()
         {
             return _id;
+        }
+
+        public static explicit operator Brand(BrandViewItem item)
+        {
+            Brand brand = new Brand();
+            brand.Id = item._id;
+            brand.Name = item.Name;
+            return brand;
         }
 
     }
