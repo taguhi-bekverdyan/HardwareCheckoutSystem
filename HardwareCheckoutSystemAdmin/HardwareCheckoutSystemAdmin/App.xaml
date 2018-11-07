@@ -4,11 +4,7 @@
              xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin">
     <Application.Resources>
         
-            <Style TargetType="{x:Type Label}">
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontFamily" Value="Calibri" />
-        </Style>
+            
         
     </Application.Resources>
 </Application>

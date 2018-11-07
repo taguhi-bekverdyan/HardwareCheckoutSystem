@@ -28,6 +28,13 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             set { SetProperty(ref _devices,value); }
         }
 
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { SetProperty(ref _isBusy, value); }
+        }
+
         private DeviceViewItem _selectedDevice;
         public DeviceViewItem SelectedDevice
         {
@@ -45,6 +52,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             _deviceService = deviceService;
             _shellService = shellService;
             _eventAggregator = eventAggregator;
+            _isBusy = true;
+
             DeleteDevice = new DelegateCommand(DeleteDeviceAction, CanUpdateOrDelete);
             AddDevice = new DelegateCommand(AddDeviceAction);
             UpdateDevice = new DelegateCommand(UpdateDeviceAction, CanUpdateOrDelete);
@@ -104,7 +113,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
+            IsBusy = true;
             await UpdateData();
+            IsBusy = false;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -119,12 +130,13 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 
         private async Task UpdateData()
         {
-            Devices = new List<DeviceViewItem>();
+            List<DeviceViewItem> tempDevices = new List<DeviceViewItem>();
             var temp = await _deviceService.FindAll();
             foreach (var item in temp)
             {
-                Devices.Add(new DeviceViewItem(item));
+                tempDevices.Add(new DeviceViewItem(item));
             }
+            Devices = tempDevices;
         }
     }
 }

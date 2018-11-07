@@ -33,13 +33,22 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 
         public async Task<List<Device>> FindAll()
         {
-            using (DataContext context = new DataContext())
-            {
-                return await context.Devices
-                    .Include((d) => d.Brand)
-                    .Include((d) => d.Category)
-                    .ToListAsync();
-            }
+            //using (DataContext context = new DataContext())
+            //{
+            //    return await context.Devices
+            //        .Include((d) => d.Brand)
+            //        .Include((d) => d.Category)
+            //        .ToListAsync();
+            //}
+            return await Task<List<Device>>.Run(()=> {
+                using (DataContext context = new DataContext())
+                {
+                    return context.Devices
+                        .Include((d) => d.Brand)
+                        .Include((d) => d.Category)
+                        .ToListAsync();
+                }
+            });
         }
 
         public async Task<Device> FindDeviceById(Guid id)

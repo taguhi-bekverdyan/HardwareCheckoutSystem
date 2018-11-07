@@ -42,12 +42,20 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             }
         }
 
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { SetProperty(ref _isBusy, value); }
+        }
+
 
         public UserListViewModel(IUserService service,IShellService shellService,IEventAggregator eventAggregator)
         {
             _userService = service;
             _shellService = shellService;
             _eventAggregator = eventAggregator;
+            IsBusy = true;
 
             DeleteUser = new DelegateCommand(DeleteUserAction, CanUpdateOrDelete);
             AddUser = new DelegateCommand(AddUserAction);
@@ -105,6 +113,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
             await UpdateData();
+            IsBusy = false;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -119,12 +128,13 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
 
         private async Task UpdateData()
         {
-            Users = new List<UserViewItem>();
+            List<UserViewItem> tempUsers = new List<UserViewItem>();
             List<User> temp = await _userService.FindAll();
             foreach (var item in temp)
             {
-                Users.Add(new UserViewItem(item));
+                tempUsers.Add(new UserViewItem(item));
             }
+            Users = tempUsers;
         }
 
     }

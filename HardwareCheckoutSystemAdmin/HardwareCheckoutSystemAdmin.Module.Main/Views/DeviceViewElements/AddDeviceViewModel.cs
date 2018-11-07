@@ -124,6 +124,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             _eventAggregator = eventAggregator;
             _shellService = shellService;
             AddDevice = new DelegateCommand(AddDeviceAction,CanAdd);
+            Cancel = new DelegateCommand(CancelAction);
         }
 
 
@@ -154,6 +155,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
                 await _deviceService.Update(device);
             }
             _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Publish(new DeviceAddedOrEditedEventArgs{Device = device});           
+        }
+
+        public DelegateCommand Cancel { get; private set; }
+        private void CancelAction()
+        {
+            _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Publish(new DeviceAddedOrEditedEventArgs { Device = null });
         }
 
         private bool CanAdd()

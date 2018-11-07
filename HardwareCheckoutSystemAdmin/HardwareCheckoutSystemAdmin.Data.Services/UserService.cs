@@ -33,10 +33,12 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 
         public async Task<List<User>> FindAll()
         {
-            using (DataContext context = new DataContext())
-            {
-                return await context.Users.ToListAsync();
-            }
+            return await Task<List<User>>.Run(()=> {
+                using (DataContext context = new DataContext())
+                {
+                    return context.Users.ToListAsync();
+                }
+            });
         }
 
         public async Task<User> FindUserById(Guid id)

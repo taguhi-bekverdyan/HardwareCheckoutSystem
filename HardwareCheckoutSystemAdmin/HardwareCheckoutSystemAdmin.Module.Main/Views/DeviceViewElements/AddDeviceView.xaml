@@ -19,14 +19,14 @@
                 <x:Type TypeName="StyleAlias:Permission"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ResourceDictionary x:Key="styleLib">
+        <ResourceDictionary x:Key="myResources">
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/HardwareCheckoutSystemAdmin.Module.Main;component/Themes/WPF.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel Margin="10">
-        
+    <StackPanel Margin="10" Resources="{StaticResource myResources}">
+
         <Label Content="Serial number" FontSize="15"/>
         <TextBox Height="25" Text="{Binding SerialNumber,Mode=TwoWay}"/>
 
@@ -63,8 +63,9 @@
             </Grid.ColumnDefinitions>
 
             <Button Margin="5" Content="Ok" Command="{Binding AddDevice}" 
-                    />
-            <Button Grid.Column="1" Margin="5" Content="Cancel"/>
+                    Style="{StaticResource ResourceKey=CircleButton}"/>
+            <Button Grid.Column="1" Margin="5" Content="Cancel" Command="{Binding Cancel}"
+                    Style="{StaticResource ResourceKey=CircleButton}"/>
 
         </Grid>
 

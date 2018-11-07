@@ -94,6 +94,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             }
         }
 
+
+
         #endregion
 
         #region Ctor
@@ -106,6 +108,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             Address = string.Empty;
             TelNumber = string.Empty;
             Occupation = string.Empty;
+
 
             AddUser = new DelegateCommand(AddUserAction);
             Cancel = new DelegateCommand(CancelAction);

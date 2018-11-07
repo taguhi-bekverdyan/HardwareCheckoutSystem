@@ -19,8 +19,13 @@
                 <x:Type TypeName="StyleAlias:Permission"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ResourceDictionary x:Key="myResources">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HardwareCheckoutSystemAdmin.Module.Main;component/Themes/WPF.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel Margin="10">
+    <StackPanel Margin="10" Resources="{StaticResource myResources}">
         <Label Content="First Name" FontSize="15"/>
         <TextBox Height="25" Text="{Binding FirstName, Mode=TwoWay}"/>
 
@@ -64,8 +69,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Margin="5" Content="Ok" Command="{Binding AddUser}" />
-            <Button Grid.Column="1" Margin="5" Content="Cancel" Command="{Binding Cancel}"/>
+            <Button Margin="5" Content="Ok" Command="{Binding AddUser}" Style="{StaticResource ResourceKey= CircleButton}"/>
+            <Button Grid.Column="1" Margin="5" Content="Cancel" Command="{Binding Cancel}" Style="{StaticResource ResourceKey= CircleButton}"/>
 
         </Grid>
         
