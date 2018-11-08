@@ -10,11 +10,16 @@ using System.Windows;
 using Prism;
 using Prism.Events;
 using HardwareCheckoutSystemAdmin.Views;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 {
     class DeviceListViewModel:BindableBase, INavigationAware
     {
+
+        private const int Width = 450;
+        private const int Height = 420;
 
         private readonly IEventAggregator _eventAggregator;
         private readonly IDeviceService _deviceService;
@@ -57,6 +62,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             DeleteDevice = new DelegateCommand(DeleteDeviceAction, CanUpdateOrDelete);
             AddDevice = new DelegateCommand(AddDeviceAction);
             UpdateDevice = new DelegateCommand(UpdateDeviceAction, CanUpdateOrDelete);
+            OpenCategories = new DelegateCommand(OpenCategoriesAction);
+            OpenBrands = new DelegateCommand(OpenBrandsAction);
             _addDeviceView = null;
         }
 
@@ -85,7 +92,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 
         public DelegateCommand UpdateDevice { get; private set; }
 
-        public void UpdateDeviceAction()
+        private void UpdateDeviceAction()
         {
             NavigationParameters param;
             param = new NavigationParameters { { "request", new DeviceParameter(Mode.Edit, SelectedDevice) } };
@@ -96,13 +103,27 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 
         public DelegateCommand DeleteDevice { get; private set; }
             
-        public async void DeleteDeviceAction()
+        private async void DeleteDeviceAction()
         {
             await _deviceService.DeleteDeviceById(SelectedDevice.GetId());
             await UpdateData();
         }
 
-        public bool CanUpdateOrDelete()
+        public DelegateCommand OpenCategories { get; private set; }
+
+        private void OpenCategoriesAction()
+        {
+            _shellService.ShowShell(nameof(CategoryListView), Width, Height);
+        }
+
+        public DelegateCommand OpenBrands { get; private set; }
+
+        private void OpenBrandsAction()
+        {
+            _shellService.ShowShell(nameof(BrandListView), Width, Height);
+        }
+
+        private bool CanUpdateOrDelete()
         {
             if (SelectedDevice == null)
             {

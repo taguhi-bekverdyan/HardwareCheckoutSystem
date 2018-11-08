@@ -102,6 +102,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Views\BrandViewElements\BrandViewItem.cs" />
     <Compile Include="Views\BrandViewElements\BrandListView.xaml.cs">
       <DependentUpon>BrandListView.xaml</DependentUpon>
     </Compile>
@@ -110,10 +111,11 @@
       <DependentUpon>CategoryListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CategoryViewElements\CategoryListViewModel.cs" />
+    <Compile Include="Views\DeviceViewElements\AddDeviceViewModel.cs" />
     <Compile Include="Views\DeviceViewElements\AddDeviceView.xaml.cs">
       <DependentUpon>AddDeviceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DeviceViewElements\AddDeviceViewModel.cs" />
+    <Compile Include="Views\CategoryViewElements\CategoryViewItem.cs" />
     <Compile Include="Views\DeviceViewElements\DeviceListView.xaml.cs">
       <DependentUpon>DeviceListView.xaml</DependentUpon>
     </Compile>

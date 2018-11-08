@@ -20,6 +20,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 
     {
         private IShellService _shellService;
+        private const int Width = 450;
+        private const int Height = 420;
 
         public MainViewModel(IShellService shellService)
         {
@@ -39,7 +41,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 
         public void OpenCategoryListViewAction()
         {
-            _shellService.ShowShell(nameof(CategoryListView));
+            _shellService.ShowShell(nameof(CategoryListView),Width,Height);
         }
 
         private DelegateCommand _openBrandListView;
@@ -47,7 +49,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 
         public void OpenBrandListViewAction()
         {
-            _shellService.ShowShell(nameof(BrandListView));
+            _shellService.ShowShell(nameof(BrandListView),Width,Height);
         }
 
         private DelegateCommand _openUserListView;

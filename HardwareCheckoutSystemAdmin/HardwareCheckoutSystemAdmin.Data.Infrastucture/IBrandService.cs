@@ -15,5 +15,6 @@ namespace HardwareCheckoutSystemAdmin.Data.Infrastructure
         Task<Brand> FindBrandByIdAsync(Guid id);
         Task<Brand> FindBrandByName(string name);
         Task<List<Brand>> FindAll();
+        Task DeleteBrandById(Guid id);
     }
 }

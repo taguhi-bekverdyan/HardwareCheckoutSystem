@@ -15,5 +15,6 @@ namespace HardwareCheckoutSystemAdmin.Data.Infrastructure
         Task<Category> FindCategoryById(Guid id);
         Task<Category> FindCategoryByName(string name);
         Task<List<Category>> FindAll();
+        Task DeleteCategoryById(Guid id);
     }
 }

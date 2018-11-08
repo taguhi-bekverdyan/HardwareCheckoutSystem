@@ -5,6 +5,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
@@ -13,16 +14,23 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
     {
         private ICategoryService _categoryService;
 
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set { SetProperty(ref _name, value); }
+        }
 
-        private List<Category> _categories = new List<Category>();
-        public List<Category> Categories
+
+        private List<CategoryViewItem> _categories = new List<CategoryViewItem>();
+        public List<CategoryViewItem> Categories
         {
             get { return _categories; }
             set { SetProperty(ref _categories, value); }
         }
 
-        private Category _selectedCategory;
-        public Category SelectedCategory
+        private CategoryViewItem _selectedCategory;
+        public CategoryViewItem SelectedCategory
         {
             get { return _selectedCategory; }
             set
@@ -45,9 +53,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
 
         public DelegateCommand AddCategory { get; private set; }
 
-        public void AddCategoryAction()
+        public async void AddCategoryAction()
         {
-            MessageBox.Show("TODO");
+            Category newCategory = new Category();
+            newCategory.Id = Guid.NewGuid();
+            newCategory.Name = Name;
+            await _categoryService.Insert(newCategory);
+            await UpdateData();
+            Name = null;
         }
 
         public DelegateCommand UpdateCategory { get; private set; }
@@ -59,9 +72,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
 
         public DelegateCommand DeleteCategory { get; private set; }
 
-        public void DeleteCategoryAction()
+        public async void DeleteCategoryAction()
         {
-            MessageBox.Show("TODO");
+            await _categoryService.DeleteCategoryById(SelectedCategory.GetId());
+            SelectedCategory = null;
+            await UpdateData();
         }
 
         public bool CanUpdateOrDelete()
@@ -73,9 +88,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
             return true;
         }
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            UpdateData();
+            await UpdateData();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -88,9 +103,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
             throw new System.NotImplementedException();
         }
 
-        private async void UpdateData()
+        private async Task UpdateData()
         {
-            Categories = await _categoryService.FindAll();
+            Categories = new List<CategoryViewItem>();
+            List<Category> temp = await _categoryService.FindAll();
+            foreach (var item in temp)
+            {
+                Categories.Add(new CategoryViewItem(item));
+            }
         }
 
     }

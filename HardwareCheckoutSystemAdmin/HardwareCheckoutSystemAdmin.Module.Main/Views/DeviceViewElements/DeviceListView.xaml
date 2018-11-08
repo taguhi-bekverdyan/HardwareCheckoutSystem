@@ -31,8 +31,10 @@
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="100"/>
                 
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
 
             <Button Width="80" Height="40" Grid.Column="0" Content="Edit"
@@ -41,8 +43,13 @@
                     Command="{Binding AddDevice}" Style="{StaticResource CircleButton}"/>
             <Button Width="80" Height="40" Grid.Column="2" Content="Delete"
                     Command="{Binding DeleteDevice}" Style="{StaticResource CircleButton}"/>
-            
-            
+
+            <Button Width="80" Height="40" Grid.Column="4" Content="Brands"
+                    Command="{Binding OpenCategories}" Style="{StaticResource CircleButton}"/>
+            <Button Width="80" Height="40" Grid.Column="5" Content="Categories"
+                    Command="{Binding OpenBrands}" Style="{StaticResource CircleButton}"/>
+
+
 
         </Grid>
 
