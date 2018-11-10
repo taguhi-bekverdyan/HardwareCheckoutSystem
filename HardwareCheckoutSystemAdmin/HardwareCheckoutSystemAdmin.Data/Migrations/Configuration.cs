@@ -2,7 +2,9 @@ using HardwareCheckoutSystemAdmin.Models;
 
 namespace HardwareCheckoutSystemAdmin.Data.Migrations
 {
+    using HardwareCheckoutSystemAdmin.Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -20,12 +22,22 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+            //context.Categories.AddRange(new List<Category>()
+            //    {
+            //  new Category { Id=Guid.NewGuid(), Name="Desktop Computers"},
+            //  new Category { Id = Guid.NewGuid(), Name = "Servers" },
+            //  new Category { Id = Guid.NewGuid(), Name = "Monitors" },
+            //  new Category { Id = Guid.NewGuid(), Name = "Accessories" },
+            //  new Category { Id = Guid.NewGuid(), Name = "Network Equipments" },
+            //  new Category { Id = Guid.NewGuid(), Name = "Printers and Scanners" },
+            //  new Category { Id = Guid.NewGuid(), Name = "Laptops" }
+            //   });
 
-            context.Persons.Add(new Person { Address = "Yerevan", Age = 12, FirstName = "Narek", LastName = "Smith", Id = 3, ParentId = null });
-            context.Persons.Add(new Person { Address = "Yerevan", Age = 12, FirstName = "John", LastName = "Smith", Id = 2, ParentId = 3 });
-            context.Persons.Add(new Person { Address = "Yerevan", Age = 12, FirstName = "Artur", LastName = "Smith", Id = 4, ParentId = 3 });
-            context.Persons.Add(new Person{Address = "Yerevan", Age = 12, FirstName = "Gago", LastName = "Smith", Id = 1, ParentId = 2});
-
+            context.Brands.AddRange(new List<Brand>()
+                 {  new Brand ("Dell"),
+                     new Brand ("TP-Link"),
+                     new Brand ("D-Link")
+            });
         }
     }
 }

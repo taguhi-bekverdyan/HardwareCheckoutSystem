@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HardwareCheckoutSystemAdmin.Module.Main.Views
+namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
 {
     /// <summary>
-    /// Interaction logic for EditDeviceView.xaml
+    /// Interaction logic for CategoriesView.xaml
     /// </summary>
-    public partial class EditDeviceView : UserControl
+    public partial class CategoriesView : UserControl
     {
-        public EditDeviceView()
+        public CategoriesView()
         {
             InitializeComponent();
         }

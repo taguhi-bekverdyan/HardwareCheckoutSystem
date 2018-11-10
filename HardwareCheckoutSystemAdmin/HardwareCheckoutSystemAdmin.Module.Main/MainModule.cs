@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using HardwareCheckoutSystemAdmin.Common;
 using HardwareCheckoutSystemAdmin.Module.Main.Views;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Brands;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Categories;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Devices;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
@@ -27,11 +30,16 @@ namespace HardwareCheckoutSystemAdmin.Module.Main
         public void Initialize()
         {
             //register first view
-            _regionManager.RegisterViewWithRegion(RegionNames.WindowContentRegion, typeof(DeviceListView));
+            _regionManager.RegisterViewWithRegion(RegionNames.WindowContentRegion, typeof(MainWindowView));
 
             //register views
-            _unityContainer.RegisterType(typeof(object), typeof(DeviceListView), nameof(DeviceListView));
-            _unityContainer.RegisterType(typeof(object), typeof(EditDeviceView), nameof(EditDeviceView));
+            _unityContainer.RegisterType(typeof(object), typeof(MainWindowView), nameof(MainWindowView));
+            _unityContainer.RegisterType(typeof(object), typeof(DevicesView), nameof(DevicesView));
+            _unityContainer.RegisterType(typeof(object), typeof(BrandsView), nameof(BrandsView));
+            _unityContainer.RegisterType(typeof(object), typeof(AddBrandView), nameof(AddBrandView));
+            _unityContainer.RegisterType(typeof(object), typeof(AddDeviceView), nameof(AddDeviceView));
+            _unityContainer.RegisterType(typeof(object), typeof(AddCategoryView), nameof(AddCategoryView));
+            _unityContainer.RegisterType(typeof(object), typeof(CategoriesView), nameof(CategoriesView));
         }
     }
 }

@@ -15,8 +15,12 @@ namespace HardwareCheckoutSystemAdmin.Data
         }
 
         #region DbSets
-
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<Device> Devices { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Request> Requests { get; set; }
+        public DbSet<Response> Responses { get; set; }
         #endregion
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

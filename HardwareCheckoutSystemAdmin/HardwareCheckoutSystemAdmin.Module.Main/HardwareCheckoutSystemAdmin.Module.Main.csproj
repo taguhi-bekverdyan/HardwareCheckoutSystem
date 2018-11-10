@@ -81,23 +81,37 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\DeviceListViewModel.cs" />
-    <Compile Include="Views\EditDeviceViewModel.cs" />
-    <Compile Include="Views\DeviceListView.xaml.cs">
-      <DependentUpon>DeviceListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\EditDeviceView.xaml.cs">
-      <DependentUpon>EditDeviceView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainModule.cs" />
-    <Page Include="Views\DeviceListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\EditDeviceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="Views\Brands\AddBrandView.xaml.cs">
+      <DependentUpon>AddBrandView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Brands\AddBrandViewModel.cs" />
+    <Compile Include="Views\Brands\BrandsView.xaml.cs">
+      <DependentUpon>BrandsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Brands\BrandsViewModel.cs" />
+    <Compile Include="Views\Categories\AddCategoryView.xaml.cs">
+      <DependentUpon>AddCategoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Categories\AddCategoryViewModel.cs" />
+    <Compile Include="Views\Categories\CategoriesView.xaml.cs">
+      <DependentUpon>CategoriesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Categories\CategoriesViewModel.cs" />
+    <Compile Include="Views\Devices\AddDeviceViewModel.cs" />
+    <Compile Include="Views\Devices\AddDeviceView.xaml.cs">
+      <DependentUpon>AddDeviceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\DevicesView.xaml.cs">
+      <DependentUpon>DevicesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\DevicesViewModel.cs" />
+    <Compile Include="Views\HelperClasses\Param.cs" />
+    <Compile Include="Views\HelperClasses\ViewMode.cs" />
+    <Compile Include="Views\MainWindowView.xaml.cs">
+      <DependentUpon>MainWindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -118,9 +132,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -140,5 +152,36 @@
       <Name>HardwareCheckoutSystemAdmin.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Brands\AddBrandView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Brands\BrandsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Categories\AddCategoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Categories\CategoriesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Devices\AddDeviceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Devices\DevicesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

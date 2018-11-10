@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="HardwareCheckoutSystemAdmin.Module.Main.Views.Devices.AddDeviceView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+       xmlns:Alias="clr-namespace:HardwareCheckoutSystemAdmin.Models;assembly=HardwareCheckoutSystemAdmin.Models"
+             xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views.Devices"    
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+          xmlns:mvvm="http://prismlibrary.com/"
+              xmlns:common="clr-namespace:HardwareCheckoutSystemAdmin.Common;assembly=HardwareCheckoutSystemAdmin.Common"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+        d:DataContext="{d:DesignInstance local:AddDeviceView}"   
+      mc:Ignorable="d" 
+      d:DesignHeight="350" d:DesignWidth="650">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="DataFromEnum" MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Alias:Permission"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="10">SerialNumber</TextBlock>
+        <TextBox x:Name="SN" Text="{Binding SerialNumber,Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="10" ></TextBox>
+        <TextBlock Grid.Row="1" Grid.Column="0" Margin="10">Model</TextBlock>
+        <TextBox Text="{Binding Model,Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="10" ></TextBox>
+        <TextBlock Grid.Row="2" Grid.Column="0" Margin="10">Permission</TextBlock>
+        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Source={StaticResource DataFromEnum}}"  SelectedItem="{Binding SelectedPermission,Mode=TwoWay}" ></ComboBox>
+        <TextBlock Grid.Column="0" Grid.Row="3">Categories</TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="3">Brands</TextBlock>
+        <ComboBox ItemsSource="{Binding Path=Categories}" DisplayMemberPath="Name"  SelectedValuePath="Name"  SelectedItem="{Binding SelectedCategory,Mode=TwoWay}"  Grid.Column="0" Grid.Row="4"></ComboBox>
+        <ComboBox ItemsSource="{Binding Path=Brands}" DisplayMemberPath="Name"  SelectedValuePath="Name"  SelectedItem="{Binding SelectedBrand,Mode=TwoWay}" Grid.Column="1" Grid.Row="4"></ComboBox>
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Margin="5" Grid.Column="1">Add</Button>
+            <Button Margin="5" Grid.Column="0">Cancel</Button>
+        </Grid>
+    </Grid>
+</UserControl>

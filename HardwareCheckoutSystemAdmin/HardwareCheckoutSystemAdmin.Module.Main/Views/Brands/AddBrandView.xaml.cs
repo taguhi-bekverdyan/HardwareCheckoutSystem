@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HardwareCheckoutSystemAdmin.Module.Main.Views
+namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
 {
     /// <summary>
-    /// Interaction logic for DeviceListView.xaml
+    /// Interaction logic for AddBrandView.xaml
     /// </summary>
-    public partial class DeviceListView : UserControl
+    public partial class AddBrandView : UserControl
     {
-        public DeviceListView()
+        public AddBrandView()
         {
             InitializeComponent();
         }

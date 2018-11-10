@@ -24,7 +24,7 @@ namespace HardwareCheckoutSystemAdmin.Views
         public ShellViewModel(IShellService service)
         {
             _service = service;
-            //RegionManager.RequestNavigate(RegionNames.WindowContentRegion, nameof(DeviceListView));
+            RegionManager.RequestNavigate(RegionNames.WindowContentRegion, nameof(MainWindowView));
         }
 
         public IRegionManager RegionManager { get; set; }
