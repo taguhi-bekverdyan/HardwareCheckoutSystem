@@ -1,4 +1,5 @@
 ﻿using HardwareCheckoutSystemAdmin.Common.Prism;
+using HardwareCheckoutSystemAdmin.Common.Views;
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
 using Prism.Commands;
@@ -20,6 +21,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     private readonly IBrandService _brands;
     private readonly ICategoryService _categories;
     private readonly IEventAggregator _eventAggreagator;
+    private readonly IShellService _shellService;
+
     public IRegionManager RegionManager { get; set; }
     public Device Device { get; set; }
     public Brand SelectedBrand { get; set; }
@@ -27,6 +30,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     public List<Brand> Brands { get; set; }
     public List<Category> Categories { get; set; }
     public DelegateCommand SaveDeviceCommand => new DelegateCommand(SaveDeviceAction);
+    public DelegateCommand CancelDeviceCommand => new DelegateCommand(CancelDeviceAction);
 
     public AddDeviceViewModel(IDeviceService devices, IBrandService brands, ICategoryService category, IEventAggregator eventAggregator)
     {
@@ -56,7 +60,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
       Device.BrandId = SelectedBrand.Id;
       Device.CategoryId = SelectedCategory.Id;
       await _devices.Insert(Device);
-      var x = _eventAggreagator.GetEvent<UpdateDevicesEvent>();
+      _eventAggreagator.GetEvent<UpdateDevicesEvent>().Publish(new UpdateDevicesEventArgs(Device));
+    }
+
+    private void CancelDeviceAction()
+    {
       _eventAggreagator.GetEvent<UpdateDevicesEvent>().Publish(null);
     }
   }

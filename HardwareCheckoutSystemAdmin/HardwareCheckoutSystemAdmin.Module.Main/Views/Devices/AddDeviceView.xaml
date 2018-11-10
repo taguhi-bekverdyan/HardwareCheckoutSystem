@@ -53,8 +53,8 @@
     <Label Grid.Row="8" Content="MaxPeriod"/>
     <TextBox Grid.Column="1" Grid.Row="8" Text="{Binding Device.MaxPeriod}"/>
     <StackPanel Grid.Column="1" Grid.Row="10" Orientation="Horizontal" HorizontalAlignment="Right">
-      <Button Width="200" Content="OK" Command="{Binding SaveDeviceCommand}"></Button>
-      <Button Width="200" Content="Cancel" Margin="20 0 20 0"></Button>
+      <Button Width="200" Content="Save" Command="{Binding SaveDeviceCommand}"></Button>
+      <Button Width="200" Content="Cancel" Command="{Binding CancelDeviceCommand}" Margin="20 0 20 0"></Button>
     </StackPanel>
   </Grid>
 </UserControl>

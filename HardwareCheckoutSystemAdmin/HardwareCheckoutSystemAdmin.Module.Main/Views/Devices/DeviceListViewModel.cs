@@ -21,7 +21,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
   {
     public IRegionManager RegionManager { get; set; }
     private readonly IDeviceService _devices;
-    private readonly IShellService _service;
+    private readonly IShellService _shellService;
     private readonly IEventAggregator _eventAggregator;
     private ShellView _addDeviceView;
 
@@ -34,10 +34,10 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 
     public DelegateCommand AddDeviceCommand => new DelegateCommand(AddDeviceAction);
 
-    public DeviceListViewModel(IDeviceService devices, IShellService service, IEventAggregator eventAggregator)
+    public DeviceListViewModel(IDeviceService devices, IShellService shellService, IEventAggregator eventAggregator)
     {
       _devices = devices;
-      _service = service;
+      _shellService = shellService;
       _eventAggregator = eventAggregator;
 
       DeviceItems = new List<DeviceItem>();
@@ -52,22 +52,26 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 
     private void UpdateDevices()
     {
-      // To refresh the datagrid need to use DeviceItems setter method
-      //DeviceItems.Clear();
+      // To refresh the datagrid need to use the DeviceItems setter method
+      //DeviceItems.Clear(); this method does not call the setter
       DeviceItems = new List<DeviceItem>();
       LoadDevices();
     }
 
     private void AddDeviceAction()
     {
-      _addDeviceView = _service.ShowShell(nameof(AddDeviceView));
+      _addDeviceView = _shellService.ShowShell(nameof(AddDeviceView));
       _eventAggregator.GetEvent<UpdateDevicesEvent>().Subscribe(AddDeviceEventHandler);
     }
 
     private void AddDeviceEventHandler(UpdateDevicesEventArgs args)
     {
       _addDeviceView.Close();
-      UpdateDevices();
+
+      if (args != null)
+      {
+        UpdateDevices();
+      }
       _eventAggregator.GetEvent<UpdateDevicesEvent>().Unsubscribe(AddDeviceEventHandler);
     }
   }
