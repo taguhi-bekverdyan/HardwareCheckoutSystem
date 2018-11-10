@@ -12,7 +12,7 @@ namespace HardwareCheckoutSystemAdmin.Models
   {
     #region Properties
     [Key, ValidGuid]
-    public Guid Id{ get; set; }
+    public Guid Id { get; set; }
     public string SerialNumber { get; set; }
     public Guid CategoryId { get; set; }
     public Category Category { get; set; }

@@ -24,6 +24,8 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
 
       //TODO: Always drop DB before migration
 
+      //context.Users.Add(new User { Id = Guid.NewGuid(), FirstName = "Admin" });
+
       //List<Category> categories = new List<Category> {
       //  new Category { Id = Guid.NewGuid(), Name = "Desktop Computers"},
       //  new Category { Id = Guid.NewGuid(), Name = "Servers" },
@@ -33,8 +35,6 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
       //  new Category { Id = Guid.NewGuid(), Name = "Printers and Scanners" },
       //  new Category { Id = Guid.NewGuid(), Name = "Laptops" } };
       //context.Categories.AddRange(categories);
-
-      //context.Users.Add(new User { Id = Guid.NewGuid(), FirstName = "Admin" });
 
       //List<Brand> brands = new List<Brand> {
       //  new Brand { Id = Guid.NewGuid(), Name = "Dell"},

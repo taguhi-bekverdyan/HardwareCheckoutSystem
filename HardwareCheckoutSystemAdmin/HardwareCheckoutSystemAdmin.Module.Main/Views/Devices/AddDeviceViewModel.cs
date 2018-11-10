@@ -9,25 +9,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 {
   public class AddDeviceViewModel : BindableBase, IRegionManagerAware
   {
     private readonly IDeviceService _devices;
+    private readonly IBrandService _brands;
+    private readonly ICategoryService _categories;
     public IRegionManager RegionManager { get; set; }
     public Device Device { get; set; }
+    public Brand SelectedBrand { get; set; }
+    public Category SelectedCategory { get; set; }
+    public List<Brand> Brands { get; set; }
+    public List<Category> Categories { get; set; }
     public DelegateCommand SaveDeviceCommand => new DelegateCommand(SaveDeviceAction);
 
-    public AddDeviceViewModel(IDeviceService devices)
+    public AddDeviceViewModel(IDeviceService devices, IBrandService brands, ICategoryService category)
     {
       _devices = devices;
+      _brands = brands;
+      _categories = category;
+
+      SetCategories();
+      SetBrands();
       Device = new Device();
+    }
+
+    private async void SetBrands()
+    {
+      Brands = await _brands.FindAll();
+    }
+
+    private async void SetCategories()
+    {
+      Categories = await _categories.FindAll();
     }
 
     private async void SaveDeviceAction()
     {
+      Device.Id = Guid.NewGuid();
+      Device.BrandId = SelectedBrand.Id;
+      Device.CategoryId = SelectedCategory.Id;
       await _devices.Insert(Device);
+      Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive).Close();      
     }
   }
 }
