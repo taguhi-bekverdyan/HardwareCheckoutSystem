@@ -4,7 +4,7 @@ using System.Reflection;
 using HardwareCheckoutSystemAdmin.Common.Prism;
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Data.Services;
-using HardwareCheckoutSystemAdmin.Views;
+using HardwareCheckoutSystemAdmin.Common.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Mvvm;

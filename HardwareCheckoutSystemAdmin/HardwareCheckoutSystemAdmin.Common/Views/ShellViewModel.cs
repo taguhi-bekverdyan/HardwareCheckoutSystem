@@ -1,15 +1,10 @@
-﻿using HardwareCheckoutSystemAdmin.Common;
-using HardwareCheckoutSystemAdmin.Common.Prism;
-using HardwareCheckoutSystemAdmin.Module.Main.Views;
-using Microsoft.Practices.Unity;
+﻿using HardwareCheckoutSystemAdmin.Common.Prism;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace HardwareCheckoutSystemAdmin.Views
+namespace HardwareCheckoutSystemAdmin.Common.Views
 {
-
-
-    public class ShellViewModel : BindableBase, IRegionManagerAware
+  public class ShellViewModel : BindableBase, IRegionManagerAware
     {
         private readonly IShellService _service;
 

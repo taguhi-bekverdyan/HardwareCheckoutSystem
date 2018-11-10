@@ -2,6 +2,7 @@
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -18,6 +19,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     private readonly IDeviceService _devices;
     private readonly IBrandService _brands;
     private readonly ICategoryService _categories;
+    private readonly IEventAggregator _eventAggreagator;
     public IRegionManager RegionManager { get; set; }
     public Device Device { get; set; }
     public Brand SelectedBrand { get; set; }
@@ -26,11 +28,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     public List<Category> Categories { get; set; }
     public DelegateCommand SaveDeviceCommand => new DelegateCommand(SaveDeviceAction);
 
-    public AddDeviceViewModel(IDeviceService devices, IBrandService brands, ICategoryService category)
+    public AddDeviceViewModel(IDeviceService devices, IBrandService brands, ICategoryService category, IEventAggregator eventAggregator)
     {
       _devices = devices;
       _brands = brands;
       _categories = category;
+      _eventAggreagator = eventAggregator;
 
       SetCategories();
       SetBrands();
@@ -53,7 +56,22 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
       Device.BrandId = SelectedBrand.Id;
       Device.CategoryId = SelectedCategory.Id;
       await _devices.Insert(Device);
-      Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive).Close();      
+      var x = _eventAggreagator.GetEvent<UpdateDevicesEvent>();
+      _eventAggreagator.GetEvent<UpdateDevicesEvent>().Publish(null);
+    }
+  }
+
+  public class UpdateDevicesEvent : PubSubEvent<UpdateDevicesEventArgs> { }
+
+  public class UpdateDevicesEventArgs
+  {
+    public string Message { get; set; }
+    public Device Device { get; set; }
+
+    public UpdateDevicesEventArgs(Device device, string message = "The devices was updated")
+    {
+      Message = message;
+      Device = device;
     }
   }
 }
