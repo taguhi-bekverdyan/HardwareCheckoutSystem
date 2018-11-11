@@ -85,28 +85,11 @@
       <DependentUpon>AddDeviceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Devices\AddDeviceViewModel.cs" />
-    <Compile Include="Views\Devices\DeleteDeviceView.xaml.cs">
-      <DependentUpon>DeleteDeviceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Devices\DeleteDeviceViewModel.xaml.cs">
-      <DependentUpon>DeleteDeviceViewModel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Devices\EditDeviceView.xaml.cs">
-      <DependentUpon>EditDeviceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Devices\EditDeviceViewModel.cs" />
-    <Compile Include="Views\xDeviceListViewModel.cs" />
+    <Compile Include="Views\Devices\UpdateDevicesEvent.cs" />
     <Compile Include="Views\Devices\DeviceListView.xaml.cs">
       <DependentUpon>DeviceListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Devices\DeviceListViewModel.cs" />
-    <Compile Include="Views\EditDeviceViewModel.cs" />
-    <Compile Include="Views\xDeviceListView.xaml.cs">
-      <DependentUpon>xDeviceListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\EditDeviceView.xaml.cs">
-      <DependentUpon>EditDeviceView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainModule.cs" />
     <Compile Include="Views\Menu\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
@@ -116,27 +99,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Devices\DeleteDeviceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Devices\DeleteDeviceViewModel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Devices\EditDeviceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\xDeviceListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Devices\DeviceListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\EditDeviceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

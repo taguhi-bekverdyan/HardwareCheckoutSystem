@@ -1,5 +1,4 @@
 ﻿using HardwareCheckoutSystemAdmin.Common.Prism;
-using HardwareCheckoutSystemAdmin.Common.Views;
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
 using Prism.Commands;
@@ -8,10 +7,6 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 {
@@ -66,19 +61,5 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     {
       _eventAggreagator.GetEvent<UpdateDevicesEvent>().Publish(null);
     }
-  }
-
-  public class UpdateDevicesEvent : PubSubEvent<UpdateDevicesEventArgs> { }
-
-  public class UpdateDevicesEventArgs
-  {
-    public string Message { get; set; }
-    public Device Device { get; set; }
-
-    public UpdateDevicesEventArgs(Device device, string message = "")
-    {
-      Message = message;
-      Device = device;
-    }
-  }
+  }  
 }
