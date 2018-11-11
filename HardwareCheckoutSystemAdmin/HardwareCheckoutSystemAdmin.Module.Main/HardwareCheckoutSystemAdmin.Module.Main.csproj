@@ -96,7 +96,6 @@
     </Compile>
     <Compile Include="Views\Devices\EditDeviceViewModel.cs" />
     <Compile Include="Views\xDeviceListViewModel.cs" />
-    <Compile Include="Views\Devices\DeviceItem.cs" />
     <Compile Include="Views\Devices\DeviceListView.xaml.cs">
       <DependentUpon>DeviceListView.xaml</DependentUpon>
     </Compile>

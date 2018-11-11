@@ -21,7 +21,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     private readonly IBrandService _brands;
     private readonly ICategoryService _categories;
     private readonly IEventAggregator _eventAggreagator;
-    private readonly IShellService _shellService;
 
     public IRegionManager RegionManager { get; set; }
     public Device Device { get; set; }
@@ -76,7 +75,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     public string Message { get; set; }
     public Device Device { get; set; }
 
-    public UpdateDevicesEventArgs(Device device, string message = "The devices was updated")
+    public UpdateDevicesEventArgs(Device device, string message = "")
     {
       Message = message;
       Device = device;

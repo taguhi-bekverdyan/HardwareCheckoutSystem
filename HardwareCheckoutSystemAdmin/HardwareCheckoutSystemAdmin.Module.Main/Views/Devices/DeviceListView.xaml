@@ -25,13 +25,14 @@
     </Grid.RowDefinitions>
     <Button Content="Add" Command="{Binding AddDeviceCommand}"/>
     <Button Content="Edit" Grid.Column="1" />
-    <Button Content="Delete" Grid.Column="2" />
+    <Button Content="Delete" Command="{Binding DeleteDeviceCommand}" Grid.Column="2"
+            IsEnabled="{Binding SelectedItems.Count, ElementName=dataGrid}"/>
     <Button Content="Brands" Grid.Column="4" />
     <Button Content="Categories" Grid.Column="5" />
     
-    <DataGrid Grid.Row="2" Grid.ColumnSpan="6" AutoGenerateColumns="False"
-              RowBackground="#FFCCCEFD" AlternatingRowBackground="White"
-              ItemsSource="{Binding DeviceItems}">
+    <DataGrid x:Name="dataGrid" Grid.Row="2" Grid.ColumnSpan="6" AutoGenerateColumns="False"
+              RowBackground="#FFCCCEFD" AlternatingRowBackground="White" CanUserAddRows="False"
+              ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice}">
       <DataGrid.Columns>
         <DataGridTextColumn Header="SN" Width="*" Binding="{Binding SerialNumber}"/>
         <DataGridTextColumn Header="Model" Width="*" Binding="{Binding Model}"/>
