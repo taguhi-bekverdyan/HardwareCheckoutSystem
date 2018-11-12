@@ -26,29 +26,36 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
 
       //context.Users.Add(new User { Id = Guid.NewGuid(), FirstName = "Admin" });
 
-      //List<Category> categories = new List<Category> {
-      //  new Category { Id = Guid.NewGuid(), Name = "Desktop Computers"},
-      //  new Category { Id = Guid.NewGuid(), Name = "Servers" },
-      //  new Category { Id = Guid.NewGuid(), Name = "Monitors" },
-      //  new Category { Id = Guid.NewGuid(), Name = "Accessories" },
-      //  new Category { Id = Guid.NewGuid(), Name = "Network Equipments" },
-      //  new Category { Id = Guid.NewGuid(), Name = "Printers and Scanners" },
-      //  new Category { Id = Guid.NewGuid(), Name = "Laptops" } };
-      //context.Categories.AddRange(categories);
+      if (context.Brands.Count() == 0)
+      {
+        List<Brand> brands = new List<Brand> {
+          new Brand { Id = Guid.NewGuid(), Name = "Dell"},
+          new Brand { Id = Guid.NewGuid(), Name = "Lenovo" },
+          new Brand { Id = Guid.NewGuid(), Name = "Acer" },
+          new Brand { Id = Guid.NewGuid(), Name = "Apple" },
+          new Brand { Id = Guid.NewGuid(), Name = "Toshiba" },
+          new Brand { Id = Guid.NewGuid(), Name = "Canon" },
+          new Brand { Id = Guid.NewGuid(), Name = "Logitec" },
+          new Brand { Id = Guid.NewGuid(), Name = "HP" },
+          new Brand { Id = Guid.NewGuid(), Name = "TP-Link" },
+          new Brand { Id = Guid.NewGuid(), Name = "D-Link" }
+        };
+        context.Brands.AddRange(brands);
+      }
 
-      //List<Brand> brands = new List<Brand> {
-      //  new Brand { Id = Guid.NewGuid(), Name = "Dell"},
-      //  new Brand { Id = Guid.NewGuid(), Name = "Lenovo" },
-      //  new Brand { Id = Guid.NewGuid(), Name = "Acer" },
-      //  new Brand { Id = Guid.NewGuid(), Name = "Apple" },
-      //  new Brand { Id = Guid.NewGuid(), Name = "Toshiba" },
-      //  new Brand { Id = Guid.NewGuid(), Name = "Canon" },
-      //  new Brand { Id = Guid.NewGuid(), Name = "Logitec" },
-      //  new Brand { Id = Guid.NewGuid(), Name = "HP" },
-      //  new Brand { Id = Guid.NewGuid(), Name = "TP-Link" },
-      //  new Brand { Id = Guid.NewGuid(), Name = "D-Link" }
-      //};
-      //context.Brands.AddRange(brands);
+      if (context.Categories.Count() == 0)
+      {
+        List<Category> categories = new List<Category> {
+          new Category { Id = Guid.NewGuid(), Name = "Desktop Computers"},
+          new Category { Id = Guid.NewGuid(), Name = "Servers" },
+          new Category { Id = Guid.NewGuid(), Name = "Monitors" },
+          new Category { Id = Guid.NewGuid(), Name = "Accessories" },
+          new Category { Id = Guid.NewGuid(), Name = "Network Equipments" },
+          new Category { Id = Guid.NewGuid(), Name = "Printers and Scanners" },
+          new Category { Id = Guid.NewGuid(), Name = "Laptops" }
+        };
+        context.Categories.AddRange(categories);
+      }
 
       //var brand1 = brands.FirstOrDefault(b => b.Name == "Desktop Computers");
       //var category1 = categories.FirstOrDefault(b => b.Name == "Dell");

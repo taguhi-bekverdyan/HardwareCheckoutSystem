@@ -8,6 +8,7 @@ using Prism.Regions;
 using System.Collections.ObjectModel;
 using HardwareCheckoutSystemAdmin.Common.Views;
 using System.Windows;
+using System;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 {
@@ -75,7 +76,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     private void UpdateDevices()
     {
       // To refresh the datagrid need to use the DeviceItems setter method
-      //DeviceItems.Clear(); this method does not call the setter
       Devices = new ObservableCollection<Device>();
       LoadDevices();
     }
@@ -104,7 +104,15 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     #region Edit Device
     private async void EditDeviceAction()
     {
+      var parameters = new NavigationParameters();
+      parameters.Add("SelectedDevice", SelectedDevice);
+      _addDeviceView = _shellService.ShowShell(nameof(AddDeviceView), parameters);
+      _eventAggregator.GetEvent<UpdateDevicesEvent>().Subscribe(EditDeviceEventHandler);
+    }
 
+    private void EditDeviceEventHandler(UpdateDevicesEventArgs obj)
+    {
+      //throw new NotImplementedException();
     }
     #endregion
 

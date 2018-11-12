@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 {
-  public class AddDeviceViewModel : BindableBase, IRegionManagerAware
+  public class AddDeviceViewModel : BindableBase, IRegionManagerAware, INavigationAware
   {
     private readonly IDeviceService _devices;
     private readonly IBrandService _brands;
@@ -60,6 +60,21 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     private void CancelDeviceAction()
     {
       _eventAggreagator.GetEvent<UpdateDevicesEvent>().Publish(null);
+    }
+
+    public void OnNavigatedTo(NavigationContext navigationContext)
+    {      
+      Device = navigationContext.Parameters["SelectedDevice"] as Device ?? null;
+    }
+
+    public bool IsNavigationTarget(NavigationContext navigationContext)
+    {
+      throw new NotImplementedException();
+    }
+
+    public void OnNavigatedFrom(NavigationContext navigationContext)
+    {
+      throw new NotImplementedException();
     }
   }  
 }

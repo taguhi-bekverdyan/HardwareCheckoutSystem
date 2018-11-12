@@ -24,7 +24,7 @@
       <RowDefinition Height="6*"/>
     </Grid.RowDefinitions>
     <Button Content="Add" Command="{Binding AddDeviceCommand}"/>
-    <Button Content="Edit" Command="{Binding EditDeviceCommand}" Grid.Column="1"/>
+    <Button Content="Edit" Command="{Binding EditDeviceCommand}" CommandParameter="{Binding SelectedDevice}" Grid.Column="1"/>
     <Button Content="Delete" Command="{Binding DeleteDeviceCommand}" Grid.Column="2"/>
     <Button Content="Brands" Grid.Column="4" />
     <Button Content="Categories" Grid.Column="5" />
