@@ -13,16 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Menu
+namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
 {
-  /// <summary>
-  /// Interaction logic for MenuView.xaml
-  /// </summary>
-  public partial class MenuView : UserControl
-  {
-    public MenuView()
+    /// <summary>
+    /// Логика взаимодействия для BrandPageView.xaml
+    /// </summary>
+    public partial class BrandPageView : UserControl
     {
-      InitializeComponent();
-    }  
-  }
+        public BrandPageView()
+        {
+            InitializeComponent();
+        }
+    }
 }

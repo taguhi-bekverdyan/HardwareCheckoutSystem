@@ -1,5 +1,6 @@
 ﻿using Prism.Mvvm;
 using Prism.Regions;
+using System.Drawing;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 {
@@ -30,6 +31,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+         
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using HardwareCheckoutSystemAdmin.Common;
 using HardwareCheckoutSystemAdmin.Common.Prism;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Brands;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Categorys;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Devices;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Users;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -15,18 +18,36 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Menu
 {
   public class MenuViewModel : BindableBase, IRegionManagerAware
   {
-    //private readonly IShellService _service;
-    public IRegionManager RegionManager { get ; set; }
+        private IShellService _service;
+
+        //private readonly IShellService _service;
+        public IRegionManager RegionManager { get ; set; }
     public DelegateCommand DeviceCommand => new DelegateCommand(OpenDevicesPageAction);
+    public DelegateCommand BrandCommand => new DelegateCommand(OpenBrandsPageAction);
+    public DelegateCommand CategoryCommand => new DelegateCommand(OpenCategorysPageAction);
+   public DelegateCommand UserCommand => new DelegateCommand(OpenUsersPageAction);
 
     private void OpenDevicesPageAction()
-    {
-      RegionManager.RequestNavigate(RegionNames.WindowContentRegion, nameof(DevicesPageView));
-    }
+  {
+    RegionManager.RequestNavigate(RegionNames.WindowContentRegion, nameof(DevicesPageView));
+  }
 
-    public MenuViewModel(IShellService service)
-    {
-      //_service = service;
-    }
+    private void OpenUsersPageAction()
+  {
+    _service.ShowShell(nameof(UserPageView));
+  }
+
+    private void OpenBrandsPageAction()
+  {
+     _service.ShowShell(nameof(BrandPageView));
+  }
+   private void OpenCategorysPageAction()
+  {
+    _service.ShowShell(nameof(CategoryPageView));
+  }
+   public MenuViewModel(IShellService service)
+  {
+    _service = service;
+  }
   }
 }

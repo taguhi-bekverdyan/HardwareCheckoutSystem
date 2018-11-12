@@ -64,6 +64,7 @@
       <HintPath>..\packages\System.Configuration.ConfigurationManager.4.4.1\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.6.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -81,6 +82,21 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalCommands.cs" />
+    <Compile Include="ImageConverter.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Brands\BrandPageView.xaml.cs">
+      <DependentUpon>BrandPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Brands\BrandPageViewModel.cs" />
+    <Compile Include="Views\Categorys\CategoryPageView.xaml.cs">
+      <DependentUpon>CategoryPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Categorys\CategoryPageViewModel.cs" />
     <Compile Include="Views\DeviceListViewModel.cs" />
     <Compile Include="Views\Devices\DeviceItem.cs" />
     <Compile Include="Views\Devices\DevicesPageView.xaml.cs">
@@ -99,6 +115,39 @@
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Menu\MenuViewModel.cs" />
+    <Compile Include="Views\Users\UserAddPageView.xaml.cs">
+      <DependentUpon>UserAddPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Users\UserAddPageViewModel.cs" />
+    <Compile Include="Views\Users\UserItem.cs" />
+    <Compile Include="Views\Users\UserPageView.xaml.cs">
+      <DependentUpon>UserPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Users\UserPageViewModel.cs" />
+    <Page Include="Themes\ButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ListboxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\TextboxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Brands\BrandPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Categorys\CategoryPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DeviceListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,15 +164,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Users\UserAddPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Users\UserPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -131,7 +183,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
@@ -161,5 +213,72 @@
       <Name>HardwareCheckoutSystemAdmin.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\device.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\request.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\response.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\users.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Apple-03.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Lenovo-logo_4822-r8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Canon_logo_vector.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\dell.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\hp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\intel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\lg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\samsung.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\core.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\headphones.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\keyboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\laptop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\monitor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\mouse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\server.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\wifi.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

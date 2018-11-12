@@ -142,9 +142,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Themes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\HardwareCheckoutSystemAdmin.Common\HardwareCheckoutSystemAdmin.Common.csproj">
       <Project>{eb90f234-a632-46b8-bdd5-71ffcab12500}</Project>

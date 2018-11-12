@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="HardwareCheckoutSystemAdmin.Module.Main.Views.Users.UserPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views.Users"
+             xmlns:local1="clr-namespace:HardwareCheckoutSystemAdmin.Models;assembly=HardwareCheckoutSystemAdmin.Models"
+             xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:codeg="clr-namespace:System;assembly=mscorlib"
+             xmlns:common="clr-namespace:HardwareCheckoutSystemAdmin.Common;assembly=HardwareCheckoutSystemAdmin.Common"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ObjectDataProvider  MethodName="GetValues" ObjectType="{x:Type codeg:Enum}" x:Key="myenum">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type Type="local1:Permission"></x:Type>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="1" Content="add" Command="{Binding AddCommand}"></Button>
+        <DataGrid Grid.Row="0"  AutoGenerateColumns="False"
+              RowBackground="#FFCCCEFD" AlternatingRowBackground="White"
+              ItemsSource="{Binding UserItems}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="FirstName" Width="*" Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="LastName" Width="*" Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="Address" Width="*" Binding="{Binding Address}"/>
+                <DataGridTextColumn Header="Birthdate" Width="*" Binding="{Binding Birthdate}"/>
+                <DataGridComboBoxColumn Header="Permission" Width="*"
+                                        ItemsSource="{Binding Source={StaticResource myenum}}"
+                                        SelectedValueBinding="{Binding Permission}"
+                                        DisplayMemberPath="{Binding Permission}"/>
+                <DataGridTextColumn Header="TelNumber" Width="*" Binding="{Binding TelNumber}"/>
+                <DataGridTextColumn Header="AvatarImage" Width="*" Binding="{Binding AvatarImage}"/>
+                <DataGridTextColumn Header="Occupation" Width="*" Binding="{Binding Occupation}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
