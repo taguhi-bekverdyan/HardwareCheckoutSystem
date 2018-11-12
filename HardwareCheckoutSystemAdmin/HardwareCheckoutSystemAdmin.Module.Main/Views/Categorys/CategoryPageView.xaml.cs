@@ -13,16 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Menu
+namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categorys
 {
-  /// <summary>
-  /// Interaction logic for MenuView.xaml
-  /// </summary>
-  public partial class MenuView : UserControl
-  {
-    public MenuView()
+    /// <summary>
+    /// Логика взаимодействия для CategoryPageView.xaml
+    /// </summary>
+    public partial class CategoryPageView : UserControl
     {
-      InitializeComponent();
-    }  
-  }
+        public CategoryPageView()
+        {
+            InitializeComponent();
+        }
+    }
 }

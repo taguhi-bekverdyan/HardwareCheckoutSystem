@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="HardwareCheckoutSystemAdmin.Module.Main.Views.Brands.BrandPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views.Brands"
+             xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:common="clr-namespace:HardwareCheckoutSystemAdmin.Common;assembly=HardwareCheckoutSystemAdmin.Common"
+             mvvm:ViewModelLocator.AutoWireViewModel="True">
+    <!--d:DataContext="{d:DesignInstance local:BrandPageViewModel}"-->
+    <!--
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Themes/Theme.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="CadetBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" Width="100" Height="60" Command="{Binding DelateCommand}">
+                <StackPanel>
+                    <Image Stretch="Uniform" Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Resources/delete.png" RenderTransformOrigin="0,0" Height="38" Width="93"/>
+                    <TextBlock HorizontalAlignment="Center" Foreground="MidnightBlue" FontFamily="Corsiva" FontStyle="Italic" FontSize="10">D e l e t e</TextBlock>
+                </StackPanel>
+            </Button>
+        <TextBox  Height="40" Grid.Column="1"  Text="{Binding BrandName}"></TextBox>
+        <Button Grid.Column="2" Width="100" Height="60"  Command="{Binding AddCommand}">
+            <StackPanel>
+                <Image Stretch="Uniform" Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Resources/add.png" RenderTransformOrigin="0,0" Height="38" Width="93"/>
+                <TextBlock HorizontalAlignment="Center" Foreground="MidnightBlue" FontFamily="Corsiva" FontStyle="Italic" FontSize="10">A d d</TextBlock>
+            </StackPanel>
+        </Button>
+        <ListBox  Grid.Column="1" Grid.Row="1" ItemsSource="{Binding BrandNames}" SelectedItem="{Binding SelectedBrandItem}"></ListBox>
+    </Grid>
+</UserControl>
