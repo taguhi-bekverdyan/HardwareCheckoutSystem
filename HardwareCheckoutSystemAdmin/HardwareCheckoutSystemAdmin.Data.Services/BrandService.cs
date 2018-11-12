@@ -11,17 +11,6 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 {
   public class BrandService : IBrandService
   {
-    public async Task Delete(Guid key)
-    {
-      using (var context = new DataContext())
-      {
-        var brandToDelete = (from d in context.Brands
-                              where d.Id == key
-                              select d).FirstOrDefault();
-        context.Brands.Remove(brandToDelete);
-        await context.SaveChangesAsync();
-      }
-    }
 
     public async Task<List<Brand>> FindAll()
     {
@@ -47,8 +36,19 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         await context.SaveChangesAsync();
       }
     }
+        public async Task Delete(Guid key)
+        {
+            using (var context = new DataContext())
+            {
+                var brandToDelete = (from d in context.Brands
+                                      where d.Id == key
+                                      select d).FirstOrDefault();
+                context.Brands.Remove(brandToDelete);
+                await context.SaveChangesAsync();
+            }
+        }
 
-    public async Task Update(Brand brand)
+        public async Task Update(Brand brand)
     {
       using (var context = new DataContext())
       {

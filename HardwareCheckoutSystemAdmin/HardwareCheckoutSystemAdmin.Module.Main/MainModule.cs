@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HardwareCheckoutSystemAdmin.Common;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Brands;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Categorys;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Devices;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Menu;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Users;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
@@ -32,6 +35,10 @@ namespace HardwareCheckoutSystemAdmin.Module.Main
 
       //register views
       _unityContainer.RegisterType(typeof(object), typeof(DeviceListView), nameof(DeviceListView));
+     _unityContainer.RegisterType(typeof(object), typeof(BrandPageView), nameof(BrandPageView));
+      _unityContainer.RegisterType(typeof(object), typeof(CategoryPageView), nameof(CategoryPageView));
+      _unityContainer.RegisterType(typeof(object), typeof(UserPageView), nameof(UserPageView));
+      _unityContainer.RegisterType(typeof(object), typeof(UserAddPageView), nameof(UserAddPageView));
       _unityContainer.RegisterType(typeof(object), typeof(AddDeviceView), nameof(AddDeviceView));
     }
   }

@@ -22,10 +22,6 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
       //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
       //  to avoid creating duplicate seed data.
 
-      //TODO: Always drop DB before migration
-
-      //context.Users.Add(new User { Id = Guid.NewGuid(), FirstName = "Admin" });
-
       if (context.Brands.Count() == 0)
       {
         List<Brand> brands = new List<Brand> {
@@ -56,23 +52,6 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
         };
         context.Categories.AddRange(categories);
       }
-
-      //var brand1 = brands.FirstOrDefault(b => b.Name == "Desktop Computers");
-      //var category1 = categories.FirstOrDefault(b => b.Name == "Dell");
-
-      //  context.Devices.AddOrUpdate(new List<Device>() {
-      //     new Device{
-      //       Id = Guid.NewGuid(),
-      //       Brand = brand1,
-      //       Category = category1,
-      //       SerialNumber = "QB0456464",
-      //       Description = "New laptop description",
-      //       Status = DeviceStatus.InStock,
-      //       Permission = Permission.Level2
-      //     }
-      //}.ToArray());
-
-
     }
   }
 }
