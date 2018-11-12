@@ -35,7 +35,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 
       SetCategories();
       SetBrands();
-      Device = new Device();
     }
 
     private async void SetBrands()
@@ -64,7 +63,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 
     public void OnNavigatedTo(NavigationContext navigationContext)
     {      
-      Device = navigationContext.Parameters["SelectedDevice"] as Device ?? null;
+      Device = navigationContext.Parameters["SelectedDevice"] as Device ?? new Device();
     }
 
     public bool IsNavigationTarget(NavigationContext navigationContext)
