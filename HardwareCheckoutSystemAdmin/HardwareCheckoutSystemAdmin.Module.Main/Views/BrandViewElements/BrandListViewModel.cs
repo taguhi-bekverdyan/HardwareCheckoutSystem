@@ -22,6 +22,13 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
             set { SetProperty(ref _name, value); }
         }
 
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { SetProperty(ref _isBusy, value); }
+        }
+
 
         private List<BrandViewItem> _brands = new List<BrandViewItem>();
         public List<BrandViewItem> Brands
@@ -96,7 +103,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
 
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
+            IsBusy = true;
            await UpdateData();
+            IsBusy = false;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -111,12 +120,13 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
 
         private async Task UpdateData()
         {
-            Brands = new List<BrandViewItem>();
+            List<BrandViewItem> brands = new List<BrandViewItem>();
             List<Brand> temp = await _brandService.FindAll();
             foreach (var item in temp)
             {
-                Brands.Add(new BrandViewItem(item));
+                brands.Add(new BrandViewItem(item));
             }
+            Brands = brands;
         }
     }
 }

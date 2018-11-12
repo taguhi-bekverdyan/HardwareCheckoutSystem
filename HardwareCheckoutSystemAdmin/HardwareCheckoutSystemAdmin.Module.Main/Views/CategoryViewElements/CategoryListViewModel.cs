@@ -22,6 +22,13 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
         }
 
 
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { SetProperty(ref _isBusy, value); }
+        }
+
         private List<CategoryViewItem> _categories = new List<CategoryViewItem>();
         public List<CategoryViewItem> Categories
         {
@@ -90,7 +97,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
 
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
+            IsBusy = true;
             await UpdateData();
+            IsBusy = false;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -105,12 +114,13 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
 
         private async Task UpdateData()
         {
-            Categories = new List<CategoryViewItem>();
+            List<CategoryViewItem> categories = new List<CategoryViewItem>();
             List<Category> temp = await _categoryService.FindAll();
             foreach (var item in temp)
             {
-                Categories.Add(new CategoryViewItem(item));
+                categories.Add(new CategoryViewItem(item));
             }
+            Categories = categories;
         }
 
     }

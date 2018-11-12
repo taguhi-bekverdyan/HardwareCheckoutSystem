@@ -35,10 +35,12 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 
         public async Task<List<Category>> FindAll()
         {
-            using (DataContext context = new DataContext())
-            {
-                return await context.Categories.ToListAsync();
-            }
+            return await Task<List<Category>>.Run(()=> {
+                using (DataContext context = new DataContext())
+                {
+                    return context.Categories.ToListAsync();
+                }
+            });
         }
 
         public async Task<Category> FindCategoryById(Guid id)

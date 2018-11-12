@@ -31,10 +31,12 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 
         public async Task<List<Brand>> FindAll()
         {
-            using (DataContext context = new DataContext())
-            {
-                return await context.Brands.ToListAsync();
-            }
+            return await Task<List<Brand>>.Run(()=> {
+                using (DataContext context = new DataContext())
+                {
+                    return context.Brands.ToListAsync();
+                }
+            });            
         }
 
         public async Task<Brand> FindBrandById(Guid id)
