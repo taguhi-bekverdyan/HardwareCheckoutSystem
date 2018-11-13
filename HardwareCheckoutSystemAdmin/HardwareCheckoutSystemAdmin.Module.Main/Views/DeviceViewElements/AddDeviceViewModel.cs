@@ -8,11 +8,17 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Prism.Events;
 using HardwareCheckoutSystemAdmin.Common.Prism;
+using System.Windows;
+using System.Windows.Forms;
+using System.IO;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 {
     class AddDeviceViewModel:BindableBase, INavigationAware
     {
+        #region Private fields
+
+        
         private readonly IEventAggregator _eventAggregator;
         private readonly IShellService _shellService;
         private readonly IBrandService _brandService;
@@ -22,6 +28,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 
         private Mode _mode;
         private Guid _selectedDeviceId;
+
+        #endregion
+
+        #region Props
+
+
 
         private string _serialNumber;
         public string SerialNumber
@@ -112,6 +124,22 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             }
         }
 
+        private string _imagePath;
+        public string ImagePath
+        {
+            get { return _imagePath; }
+            set
+            {
+                SetProperty(ref _imagePath, value);
+                AddDevice.RaiseCanExecuteChanged();
+            }
+        }
+
+        #endregion
+
+        #region Ctors
+
+        
         public AddDeviceViewModel(IBrandService brandService,
             ICategoryService categoryService,
             IDeviceService deviceService,
@@ -125,9 +153,13 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             _shellService = shellService;
             AddDevice = new DelegateCommand(AddDeviceAction,CanAdd);
             Cancel = new DelegateCommand(CancelAction);
+            ChooseImage = new DelegateCommand(ChooseImageAction);
         }
+        #endregion
 
+        #region Commands
 
+       
         public DelegateCommand AddDevice { get; private set; }
         private async void AddDeviceAction()
         {
@@ -141,6 +173,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
                 device.Description = Description;
                 device.Permission = Permission;
                 device.SerialNumber = SerialNumber;
+                device.Image = GetBytesFromImage(ImagePath);
                 await _deviceService.Insert(device);
             }
             else if(_mode == Mode.Edit)
@@ -152,6 +185,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
                 device.Description = Description;
                 device.Permission = Permission;
                 device.SerialNumber = SerialNumber;
+                device.Image = GetBytesFromImage(ImagePath);
                 await _deviceService.Update(device);
             }
             _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Publish(new DeviceAddedOrEditedEventArgs{Device = device});           
@@ -163,6 +197,22 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Publish(new DeviceAddedOrEditedEventArgs { Device = null });
         }
 
+        public DelegateCommand ChooseImage { get; private set; }
+        private void ChooseImageAction()
+        {
+            OpenFileDialog fileChooser = new OpenFileDialog();
+            fileChooser.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+            fileChooser.FilterIndex = 1;
+            fileChooser.Multiselect = true;
+
+            if (fileChooser.ShowDialog() == DialogResult.OK)
+            {
+                //System.Windows.MessageBox.Show(fileChooser.FileName);
+                ImagePath = fileChooser.FileName;
+            }
+
+        }
+
         private bool CanAdd()
         {
             if (SelectedBrand != null && SelectedCategory != null &&
@@ -172,7 +222,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             }
             return false;
         }
+        #endregion
 
+        #region Navigation
+
+        
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
             throw new NotImplementedException();
@@ -194,9 +248,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
                 Description = string.Empty;
                 Model = string.Empty;
                 SerialNumber = string.Empty;
+                ImagePath = string.Empty;
             }
             else
             {
+                ImagePath = string.Empty;
                 Description = device.Description;
                 Model = device.Model;
                 SerialNumber = device.SerialNumber;
@@ -211,6 +267,17 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             Brands = await _brandService.FindAll();
             Categories = await _categoryService.FindAll();
         }
+        #endregion
+
+        #region Helpers
+        private byte[] GetBytesFromImage(string path)
+        {
+            if (path != string.Empty) {
+                return File.ReadAllBytes(path);
+            }
+            return null;
+        }
+        #endregion
 
     }
 
@@ -220,4 +287,5 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
     {
         public Device Device { get; set; }
     }
+
 }

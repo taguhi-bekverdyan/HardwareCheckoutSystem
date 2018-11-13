@@ -76,7 +76,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             param = new NavigationParameters { { "request", new DeviceParameter(Mode.Add,null) } };
             
             _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Subscribe(DeviceAddedEventHandler, ThreadOption.UIThread);
-            _addDeviceView = _shellService.ShowShell(nameof(AddDeviceView), 450, 450,param);
+            _addDeviceView = _shellService.ShowShell(nameof(AddDeviceView), 450, 520,param);
             //todo change
             SelectedDevice = null;
         }
@@ -97,7 +97,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             NavigationParameters param;
             param = new NavigationParameters { { "request", new DeviceParameter(Mode.Edit, SelectedDevice) } };
             _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Subscribe(DeviceAddedEventHandler, ThreadOption.UIThread);
-            _addDeviceView = _shellService.ShowShell(nameof(AddDeviceView), 450, 450, param);
+            _addDeviceView = _shellService.ShowShell(nameof(AddDeviceView), 450, 520, param);
             SelectedDevice = null;
         }
 

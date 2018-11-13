@@ -10,7 +10,7 @@
              Background="#212224"
              xmlns:mvvm="http://prismlibrary.com/"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
-             d:DesignHeight="450" d:DesignWidth="450">
+             d:DesignHeight="500" d:DesignWidth="450">
     <UserControl.Resources>
         <ObjectDataProvider
              x:Key="dataFromEnum" MethodName="GetValues"
@@ -56,18 +56,33 @@
         <ComboBox Height="30" ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                   SelectedItem="{Binding Permission,Mode=TwoWay}"/>
 
+        <Grid Grid.ColumnSpan="2" Margin="0 5 0 0" Height="60">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Image" FontSize="15" Grid.Column="0"/>
+            <TextBox IsReadOnly="True" Grid.Row="1" Margin="0 0 5 0"
+                     Text="{Binding ImagePath}"/>
+            <Button Grid.Column="1" Grid.Row="1" Content="Choose Image" Margin="5 0 0 0"
+                    Command="{Binding ChooseImage}"/>
+        </Grid>
+
         <Grid Height="35" Margin="0 5 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Margin="5" Content="Ok" Command="{Binding AddDevice}" 
-                    Style="{StaticResource ResourceKey=CircleButton}"/>
-            <Button Grid.Column="1" Margin="5" Content="Cancel" Command="{Binding Cancel}"
-                    Style="{StaticResource ResourceKey=CircleButton}"/>
+            <Button  Grid.Row="1" Content="Save" Command="{Binding AddDevice}" 
+                    Margin="0 0 5 0"/>
+            <Button Grid.Column="1"  Grid.Row="1" Content="Cancel" Command="{Binding Cancel}"
+                    Margin="5 0 0 0"/>
 
         </Grid>
-
     </StackPanel>
 </UserControl>

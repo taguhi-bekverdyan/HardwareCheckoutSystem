@@ -54,11 +54,28 @@
         </Grid>
 
         <extToolkit1:BusyIndicator Grid.Row="1" BusyContent="Loading..." IsBusy="{Binding IsBusy}">
-            <DataGrid Margin="10" IsReadOnly="True"
+            <DataGrid Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
                   CanUserAddRows="False" ItemsSource="{Binding Devices,Mode=TwoWay}"
                   SelectedItem="{Binding SelectedDevice,Mode=TwoWay}">
-            
-        </DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Image" Width="SizeToCells" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding BitmapImage}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Serial Number" Binding="{Binding SerialNumber}" />
+                    <DataGridTextColumn Header="Category" Binding="{Binding Category}" />
+                    <DataGridTextColumn Header="Brand" Binding="{Binding Brand}" />
+                    <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+                    <DataGridTextColumn Header="Max Period" Binding="{Binding MaxPeriod}" />
+                    <DataGridTextColumn Header="Permission" Binding="{Binding Permission}" />
+                </DataGrid.Columns>
+                
+            </DataGrid>
         </extToolkit1:BusyIndicator>
     </Grid>
 </UserControl>

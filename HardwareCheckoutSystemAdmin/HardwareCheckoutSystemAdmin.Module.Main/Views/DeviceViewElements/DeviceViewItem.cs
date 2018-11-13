@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 {
@@ -21,6 +23,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         public Permission Permission { get; set; }
         public byte[] Image { get; set; }
 
+        public BitmapSource BitmapImage { get; set; }
+
         public DeviceViewItem(Device d)
         {
             _id = d.Id;
@@ -31,7 +35,22 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             Description = d.Description;
             MaxPeriod = d.MaxPeriod;
             Status = d.Status;
+            GetImage(d);
             Permission = d.Permission;
+
+        }
+
+        private void GetImage(Device d)
+        {
+            if (d.Image == null || d.Image.Length == 0)
+            {
+                return;
+            }
+            //BitmapSource bitmapSource = 
+            //    BitmapSource.Create(2, 2, 300, 300, PixelFormats.Indexed8, BitmapPalettes.Gray256, byteArrayIn, 2);
+
+            BitmapImage = BitmapSource.Create(2,2,300,300, PixelFormats.Indexed8,
+                BitmapPalettes.Gray256, d.Image, 2);
         }
 
         public DeviceViewItem()
