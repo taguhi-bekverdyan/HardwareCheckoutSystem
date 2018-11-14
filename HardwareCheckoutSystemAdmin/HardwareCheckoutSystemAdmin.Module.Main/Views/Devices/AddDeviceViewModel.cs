@@ -23,6 +23,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         private readonly ICategoryService _icategoryservice;
         private readonly IShellService _ishellservice;
         private ViewMode mode;
+        private Device device;
 
         public AddDeviceViewModel(IEventAggregator eventaggregator, IDeviceService deviceservice, IShellService shellservice, IBrandService brandservice, ICategoryService categoryService)
         {
@@ -141,6 +142,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             SelectedCategory = null;
             Permission = Permission.Other;
             SelectedBrand = null;
+            SerialNumber = null;
         }
 
         private DelegateCommand _AddNewDeviceCommand;
@@ -148,8 +150,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 
         public void AddNewDeviceAction()
         {
-
-            Device device = new Device();
             device.Permission = Permission;
             device.Model = Model;
             device.SerialNumber = SerialNumber;
@@ -162,6 +162,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             }
             else
             {
+                device.Id = new Guid();
                 _ideviceservice.Insert(device);
             }
             _ieventaggregator.GetEvent<DeviceAddedOrEditedEvent>().Publish(new DeviceAddedOrEditedEventArgs { Device = device });
@@ -173,7 +174,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             FindBrands();
             FindCategories();
             var param = (Param<DeviceViewItem>)navigationContext.Parameters["request"];
-            var device = param._ViewItem;
+            device = new Device(param._ViewItem);
             mode = param._ViewMode;
             if (param._ViewMode.Equals(ViewMode.Edit))
             {

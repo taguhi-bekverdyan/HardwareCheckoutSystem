@@ -7,6 +7,7 @@ using HardwareCheckoutSystemAdmin.Module.Main.Views;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Brands;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Categories;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Devices;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Users;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
@@ -40,6 +41,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main
             _unityContainer.RegisterType(typeof(object), typeof(AddDeviceView), nameof(AddDeviceView));
             _unityContainer.RegisterType(typeof(object), typeof(AddCategoryView), nameof(AddCategoryView));
             _unityContainer.RegisterType(typeof(object), typeof(CategoriesView), nameof(CategoriesView));
+            _unityContainer.RegisterType(typeof(object), typeof(AddUserView), nameof(AddUserView));
+            _unityContainer.RegisterType(typeof(object), typeof(UsersView), nameof(UsersView));
         }
     }
 }

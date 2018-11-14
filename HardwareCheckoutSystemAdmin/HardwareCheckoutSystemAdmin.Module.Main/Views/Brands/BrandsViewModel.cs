@@ -84,7 +84,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
         {
             NavigationParameters param;
             param = new NavigationParameters { { "request", new Param<Brand>(ViewMode.Add,new Brand()) } };
-            _ishellservice.ShowShell(nameof(AddBrandView), param);
+            _ishellservice.ShowShell(nameof(AddBrandView), param, 280,200);
         }
 
         private DelegateCommand _EditBrandCommand;
@@ -94,7 +94,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
         {
             NavigationParameters param;
             param = new NavigationParameters { { "request",new Param<Brand>(ViewMode.Edit,SelectedBrand) } };
-            _ishellservice.ShowShell(nameof(AddBrandView), param);
+            _ishellservice.ShowShell(nameof(AddBrandView), param,280,200);
 
         }
 

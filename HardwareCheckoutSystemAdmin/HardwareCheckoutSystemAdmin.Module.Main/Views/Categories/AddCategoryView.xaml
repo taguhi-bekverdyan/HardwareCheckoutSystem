@@ -10,7 +10,7 @@
              mc:Ignorable="d"
         d:DataContext="{d:DesignInstance local:AddCategoryView}"
              d:DesignHeight="40" d:DesignWidth="90">
-    <Grid Margin="3">
+    <Grid Background="AliceBlue" Margin="3">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -20,16 +20,17 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Margin="10">Name</TextBlock>
-            <TextBox Text="{Binding Name,Mode=TwoWay}" Grid.Column="1" Margin="10" ></TextBox>
+            <TextBlock  VerticalAlignment="Center" FontSize="18" Grid.Column="0" Margin="10">Name</TextBlock>
+            <TextBox VerticalAlignment="Center" FontSize="18" Text="{Binding Name,Mode=TwoWay}" Grid.Column="1" Margin="10" ></TextBox>
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Command="{Binding AddCategoryCommand}" Grid.Column="1">Add</Button>
-            <Button Command="{Binding CancelAddingCategoryCommand}" Grid.Column="0">Cancel</Button>
+            <Line Grid.ColumnSpan="2"  X1="0" X2="250" Stroke="Blue" />
+            <Button  FontSize="10" Command="{Binding CacnelAddingCategoryCommand}"  Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="15"  Content="Cancel" Background="#FFB70F0F" ></Button>
+            <Button FontSize="10" Grid.Column="1"    Command="{Binding AddCategoryCommand}"  Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="15"  Content="Add" Background="Green" ></Button>
         </Grid>
     </Grid>
 </UserControl>

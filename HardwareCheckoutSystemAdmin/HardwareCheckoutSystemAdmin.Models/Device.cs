@@ -18,18 +18,22 @@ namespace HardwareCheckoutSystemAdmin.Models
         public DeviceStatus Status { get; set; }
         public Permission Permission { get; set; }
         public DateTime MaxPeriod { get; set; }
+        public Device(DeviceViewItem deviceviewitem)
+        {
+            Id = new Guid();
+            BrandId = deviceviewitem.BrandId;
+            CategoryId = deviceviewitem.CategoryId;
+            Description = deviceviewitem.Description;
+            SerialNumber = deviceviewitem.SerialNumber;
+            Model = deviceviewitem.Model;
+            //Status = deviceviewitem.Status;
+            Permission = deviceviewitem.Permission;
+            //MaxPeriod = deviceviewitem.MaxPeriod;
+            //Image = deviceviewitem.Image;
+        }
+
         public Device()
         {
-            //this.Id = new Guid();
-            //this.BrandId = deviceviewitem.BrandId;
-            //this.CategoryId = deviceviewitem.CategoryId;
-            //this.Description = deviceviewitem.Description;
-            //this.SerialNumber = deviceviewitem.SerialNumber;
-            //this.Model = deviceviewitem.Model;
-            //this.Status = deviceviewitem.Status;
-            //this.Permission = deviceviewitem.Permission;
-            //this.MaxPeriod = deviceviewitem.MaxPeriod;
-            //this.Image = deviceviewitem.Image;
 
         }
 

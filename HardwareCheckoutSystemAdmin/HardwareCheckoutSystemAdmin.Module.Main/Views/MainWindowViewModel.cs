@@ -2,6 +2,7 @@
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Brands;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Categories;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Devices;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Users;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -27,7 +28,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
             //include new user control in region
             //var parameters = new NavigationParameters { { "request", new PartsPickerRequest(vendorId.Value) } };
 
-            _ishellservice.ShowShell(nameof(DevicesView));
+            _ishellservice.ShowShell(nameof(DevicesView),550,550);
 
         }
 
@@ -36,7 +37,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 
         public void BrandsAction()
         {
-            _ishellservice.ShowShell(nameof(BrandsView));
+            _ishellservice.ShowShell(nameof(BrandsView),300,450);
         }
 
         private DelegateCommand _CategoriesCommand;
@@ -44,9 +45,32 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 
         public void CategoriesAction()
         {
-            _ishellservice.ShowShell(nameof(CategoriesView));
+            _ishellservice.ShowShell(nameof(CategoriesView),300,450);
         }
 
+        private DelegateCommand _UsersCommand;
+        public DelegateCommand UsersCommand => _UsersCommand ?? (_UsersCommand = new DelegateCommand(UsersAction));
+
+        public void UsersAction()
+        {
+            _ishellservice.ShowShell(nameof(UsersView),550,550);
+        }
+
+        private DelegateCommand _ResponsesCommand;
+        public DelegateCommand ResponsesCommand => _ResponsesCommand ?? (_ResponsesCommand = new DelegateCommand(ResponsesAction));
+
+        public void ResponsesAction()
+        {
+            //_ishellservice.ShowShell(nameof(ResponsesView));
+        }
+
+        private DelegateCommand _RequestsCommand;
+        public DelegateCommand RequestsCommand => _RequestsCommand ?? (_RequestsCommand = new DelegateCommand(RequestsAction));
+
+        public void RequestsAction()
+        {
+            //_ishellservice.ShowShell(nameof(CategoriesView));
+        }
     }
 }
 

@@ -77,7 +77,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
 
         public void AddCategoryAction()
         {
-            _ishellservice.ShowShell(nameof(AddCategoryView));
+            _ishellservice.ShowShell(nameof(AddCategoryView),280,200);
 
         }
 
@@ -87,7 +87,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
         public void EditCategoryAction()
         {
             NavigationParameters CategoryToEdit = new NavigationParameters { { "request_for_edit", SelectedCategory } };
-            _ishellservice.ShowShell(nameof(AddCategoryView));
+            _ishellservice.ShowShell(nameof(AddCategoryView),280,200);
 
         }
 

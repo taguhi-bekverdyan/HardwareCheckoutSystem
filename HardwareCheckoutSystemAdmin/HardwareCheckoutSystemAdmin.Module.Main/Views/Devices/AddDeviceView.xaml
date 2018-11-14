@@ -11,7 +11,7 @@
              mvvm:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance local:AddDeviceView}"   
       mc:Ignorable="d" 
-      d:DesignHeight="350" d:DesignWidth="650">
+      d:DesignHeight="450" d:DesignWidth="550">
     <UserControl.Resources>
         <ObjectDataProvider x:Key="DataFromEnum" MethodName="GetValues"
                         ObjectType="{x:Type sys:Enum}">
@@ -20,8 +20,10 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="AliceBlue" TextBlock.FontSize="18"> 
         <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -33,23 +35,26 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Margin="10">SerialNumber</TextBlock>
-        <TextBox x:Name="SN" Text="{Binding SerialNumber,Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="10" ></TextBox>
-        <TextBlock Grid.Row="1" Grid.Column="0" Margin="10">Model</TextBlock>
-        <TextBox Text="{Binding Model,Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="10" ></TextBox>
-        <TextBlock Grid.Row="2" Grid.Column="0" Margin="10">Permission</TextBlock>
-        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Source={StaticResource DataFromEnum}}"  SelectedItem="{Binding SelectedPermission,Mode=TwoWay}" ></ComboBox>
-        <TextBlock Grid.Column="0" Grid.Row="3">Categories</TextBlock>
-        <TextBlock Grid.Column="1" Grid.Row="3">Brands</TextBlock>
-        <ComboBox ItemsSource="{Binding Path=Categories}" DisplayMemberPath="Name"  SelectedValuePath="Name"  SelectedItem="{Binding SelectedCategory,Mode=TwoWay}"  Grid.Column="0" Grid.Row="4"></ComboBox>
-        <ComboBox ItemsSource="{Binding Path=Brands}" DisplayMemberPath="Name"  SelectedValuePath="Name"  SelectedItem="{Binding SelectedBrand,Mode=TwoWay}" Grid.Column="1" Grid.Row="4"></ComboBox>
-        <Grid Grid.Row="5">
+        <Line Grid.Column="1" Grid.RowSpan="8"  Y1="0" Y2="430" Stroke="Blue" />
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" >SerialNumber</TextBlock>
+        <TextBox FontSize="18" Width="80" Text="{Binding SerialNumber,Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="10"  VerticalAlignment="Center" ></TextBox>
+        <TextBlock Grid.Row="1" Grid.Column="0" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" >Model</TextBlock>
+        <TextBox FontSize="18" Width="80" Text="{Binding Model,Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" ></TextBox>
+        <TextBlock Grid.Row="3" Grid.Column="0" Margin="10" HorizontalAlignment="Center"  VerticalAlignment="Center" >Permission</TextBlock>
+        <ComboBox FontSize="18" Width="80" Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Source={StaticResource DataFromEnum}}"  SelectedItem="{Binding SelectedPermission,Mode=TwoWay}" Margin="10" VerticalAlignment="Center" ></ComboBox>
+        <TextBlock Grid.Column="0" Grid.Row="2" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" >Describtion</TextBlock>
+        <TextBox FontSize="18" Width="80" Text="{Binding Describtion,Mode=TwoWay}" Margin="10" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center"  VerticalAlignment="Center"  />
+        <TextBlock  Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" >Brands</TextBlock>
+        <ComboBox FontSize="18"  Width="80" ItemsSource="{Binding Path=Brands}" DisplayMemberPath="Name"  SelectedValuePath="Name"  SelectedItem="{Binding SelectedBrand,Mode=TwoWay}" Margin="10" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center"  VerticalAlignment="Center" ></ComboBox>
+        <TextBlock  Grid.Column="0" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" >Categories</TextBlock>
+        <ComboBox FontSize="18" Width="80" ItemsSource="{Binding Path=Categories}" DisplayMemberPath="Name"  SelectedValuePath="Name"  SelectedItem="{Binding SelectedCategory,Mode=TwoWay}" Margin="10" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center"  VerticalAlignment="Center" ></ComboBox>
+        <Grid Grid.Row="7" Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition />
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Margin="5" Grid.Column="1">Add</Button>
-            <Button Margin="5" Grid.Column="0">Cancel</Button>
+            <Button  FontSize="13" Command="{Binding CacnelAddingDeviceCommand}"  Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="5"  Content="Cancel" Background="#FFB70F0F" ></Button>
+            <Button Grid.Column="1"   FontSize="13" Command="{Binding AddDeviceCommand}"  Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="5"  Content="Add" Background="Green" ></Button>
         </Grid>
     </Grid>
 </UserControl>

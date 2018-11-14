@@ -16,11 +16,30 @@ namespace HardwareCheckoutSystemAdmin
             _container = container;
             _regionManager = regionManager;
         }
-       
 
-        public ShellView ShowShell(string uri, int w, int h, NavigationParameters navigationParameters)
+        public void ShowShell(string uri)
         {
-            ShellView shell = _container.Resolve<ShellView>();
+            var shell = _container.Resolve<ShellView>();
+            var scopedRegion = _regionManager.CreateRegionManager();
+            RegionManager.SetRegionManager(shell, scopedRegion);
+            RegionManagerAware.SetRegionManagerAware(shell, scopedRegion);
+            scopedRegion.RequestNavigate(RegionNames.WindowContentRegion, uri);
+            shell.Show();
+        }
+
+        public void ShowShell(string uri, NavigationParameters navigationParameters)
+        {
+            var shell = _container.Resolve<ShellView>();
+            var scopedRegion = _regionManager.CreateRegionManager();
+            RegionManager.SetRegionManager(shell, scopedRegion);
+            RegionManagerAware.SetRegionManagerAware(shell, scopedRegion);
+            scopedRegion.RequestNavigate(RegionNames.WindowContentRegion, uri, navigationParameters);
+            shell.Show();
+        }
+
+        public void ShowShell(string uri, NavigationParameters navigationParameters, int w, int h)
+        {
+            var shell = _container.Resolve<ShellView>();
             var scopedRegion = _regionManager.CreateRegionManager();
             RegionManager.SetRegionManager(shell, scopedRegion);
             RegionManagerAware.SetRegionManagerAware(shell, scopedRegion);
@@ -28,33 +47,28 @@ namespace HardwareCheckoutSystemAdmin
             shell.Width = w;
             shell.Height = h;
             shell.Show();
-            return shell;
         }
 
-        
-
-        void IShellService.ShowShell(string uri)
+        public void ShowShell(string uri, int w, int h)
         {
-            ShellView shell = _container.Resolve<ShellView>();
+            var shell = _container.Resolve<ShellView>();
             var scopedRegion = _regionManager.CreateRegionManager();
             RegionManager.SetRegionManager(shell, scopedRegion);
             RegionManagerAware.SetRegionManagerAware(shell, scopedRegion);
             scopedRegion.RequestNavigate(RegionNames.WindowContentRegion, uri);
-
+            shell.Width = w;
+            shell.Height = h;
             shell.Show();
-            return shell;
         }
 
-        void IShellService.ShowShell(string uri, NavigationParameters navigationParameters)
-        {
-            ShellView shell = _container.Resolve<ShellView>();
-            var scopedRegion = _regionManager.CreateRegionManager();
-
-            RegionManager.SetRegionManager(shell, scopedRegion);
-            RegionManagerAware.SetRegionManagerAware(shell, scopedRegion);
-            scopedRegion.RequestNavigate(RegionNames.WindowContentRegion, uri, navigationParameters);
-            shell.Show();
-            return shell;
-        }
+        //public void CloseShell(string uri)
+        //{
+        //    var shell = _container.Resolve<ShellView>();
+        //    var scopedRegion = _regionManager.CreateRegionManager();
+        //    RegionManager.SetRegionManager(shell, scopedRegion);
+        //    RegionManagerAware.SetRegionManagerAware(shell, scopedRegion);
+        //    scopedRegion.RequestNavigate(RegionNames.WindowContentRegion, uri);
+        //    shell.Close();
+        //}
     }
 }

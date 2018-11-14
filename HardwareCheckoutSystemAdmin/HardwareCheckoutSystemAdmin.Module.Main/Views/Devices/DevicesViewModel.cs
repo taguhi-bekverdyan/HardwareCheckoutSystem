@@ -67,7 +67,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         {
             NavigationParameters param;
             param = new NavigationParameters { { "request", new Param<DeviceViewItem>(ViewMode.Edit, SelectedItem) } };
-            _ishellservice.ShowShell(nameof(AddDeviceView), param);
+            _ishellservice.ShowShell(nameof(AddDeviceView), param, 450, 450);
             _ieventaggregator.GetEvent<DeviceAddedOrEditedEvent>().Subscribe(DeviceAddedOrEditedEventHandler, ThreadOption.UIThread);
 
         }
@@ -80,14 +80,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             NavigationParameters param;
             param = new NavigationParameters { { "request", new Param<DeviceViewItem>(ViewMode.Add, new DeviceViewItem()) } };
             _ieventaggregator.GetEvent<DeviceAddedOrEditedEvent>().Subscribe(DeviceAddedOrEditedEventHandler, ThreadOption.UIThread);
-            _ishellservice.ShowShell(nameof(AddDeviceView), param);
+            _ishellservice.ShowShell(nameof(AddDeviceView), param, 450,450);
         }
         private DelegateCommand _OpenBrandsCommand;
         public DelegateCommand OpenBrandsCommand => _OpenBrandsCommand ?? (_OpenBrandsCommand = new DelegateCommand(OpenBrandsAction));
 
         public void OpenBrandsAction()
         {
-            _ishellservice.ShowShell(nameof(BrandsViewModel));
+            _ishellservice.ShowShell(nameof(BrandsView),350,450);
         }
 
         private DelegateCommand _OpenCategoriesCommand;
@@ -95,7 +95,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 
         public void OpenCategoriesAction()
         {
-            _ishellservice.ShowShell(nameof(CategoriesView));
+            _ishellservice.ShowShell(nameof(CategoriesView), 350, 450);
+            //_ishellservice.CloseShell(nameof(MainWindowView));
         }
 
         private DelegateCommand _DeleteDeviceCommand;

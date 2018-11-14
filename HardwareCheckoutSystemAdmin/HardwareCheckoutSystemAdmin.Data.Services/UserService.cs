@@ -65,6 +65,18 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
                 await context.SaveChangesAsync();
             }
         }
+
+        public async Task DeleteBySerialNumber(string serialnumber)
+        {
+            using (var context = new DataContext())
+            {
+                var userToDelete = (from d in context.Users
+                                    where d.SerialNumber == serialnumber
+                                    select d).FirstOrDefault();
+                context.Users.Remove(userToDelete);
+                await context.SaveChangesAsync();
+            }
+        }
         #endregion
     }
 }

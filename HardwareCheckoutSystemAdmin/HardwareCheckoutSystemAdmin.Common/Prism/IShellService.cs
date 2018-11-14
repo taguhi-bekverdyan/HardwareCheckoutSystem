@@ -10,6 +10,9 @@ namespace HardwareCheckoutSystemAdmin.Common.Prism
     public interface IShellService
     {
         void ShowShell(string uri);
+        void ShowShell(string uri, NavigationParameters navigationParameters, int w, int h);
+        void ShowShell(string uri, int w, int h);
         void ShowShell(string uri, NavigationParameters navigationParameters);
+        //void CloseShell(string uri);
     }
 }

@@ -9,16 +9,16 @@
              mvvm:ViewModelLocator.AutoWireViewModel="True" 
              mc:Ignorable="d"
         d:DataContext="{d:DesignInstance local:BrandsView}"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="250">
 
-    <Grid  Background="Azure" Margin="5">
+    <Grid   Background="Azure" Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
-        <DataGrid  SelectedItem="{Binding SelectedBrand,Mode=TwoWay}" ItemsSource="{Binding Brands}"  Grid.Row="1" x:Name="datagrid" AutoGenerateColumns="False"  >
+        <DataGrid IsReadOnly="True" Background="LightGray" RowBackground="LightYellow" AlternatingRowBackground="LightBlue"  SelectedItem="{Binding SelectedBrand,Mode=TwoWay}" ItemsSource="{Binding Brands}"  Grid.Row="1" x:Name="datagrid" AutoGenerateColumns="False"  >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                <DataGridTextColumn Width="300" Header="Categories" Binding="{Binding Name}" />
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="0">
@@ -27,13 +27,12 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <!--<Line Grid.Column="2"  Y1="0" Y2="45" Stroke="Blue" />
-            <Line Grid.Column="3" Y1="0" Y2= "45" Stroke="Blue"/>
-            <Line Grid.Column="4" Y1="0" Y2= "45" Stroke="Blue"/>-->
+            <Line Grid.Column="2"  Y1="0" Y2="55" Stroke="Blue" />
+            <Line Grid.Column="1" Y1="0" Y2= "55" Stroke="Blue"/>
 
             <Button FontSize="13" Command="{Binding EditBrandCommand}" Content="Edit" x:Name="ButtonEdit" Style="{StaticResource RoundCorner}"   FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="1" Background="#FFB7B713" Foreground="Black"  ></Button>
             <Button FontSize="13" Command="{Binding DeleteBrandCommand}"  x:Name="ButtonDelete" Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="2"  Content="Delete" Background="#FFB70F0F" ></Button>
-            <Button FontSize="13" Command="{Binding AddBrandCommand}" x:Name="ButtonAdd" Margin="8" Grid.Column="0"  Style="{StaticResource GreenButtonAdd}" ></Button>
+            <Button FontSize="13" Command="{Binding AddBrandCommand}" Content="Add" x:Name="ButtonAdd" Margin="8" Grid.Column="0"  Style="{StaticResource RoundCorner}" Background="Green" ></Button>
         </Grid>
     </Grid>
 </UserControl>

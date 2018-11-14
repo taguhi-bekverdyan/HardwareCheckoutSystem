@@ -88,6 +88,7 @@
     <Compile Include="Prism\IShellService.cs" />
     <Compile Include="Prism\RegionManagerAware.cs" />
     <Compile Include="Prism\RegionManagerAwareBehavior.cs" />
+    <Compile Include="RegionNames.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

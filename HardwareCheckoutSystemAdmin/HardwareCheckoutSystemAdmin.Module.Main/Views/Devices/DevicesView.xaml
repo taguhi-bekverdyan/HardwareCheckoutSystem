@@ -9,13 +9,13 @@
              mvvm:ViewModelLocator.AutoWireViewModel="True"
         d:DataContext="{d:DesignInstance local:DevicesView}"
         mc:Ignorable="d">
-    <Grid >
-        <Grid  Background="Azure" Margin="5">
+    <Grid>
+        <Grid  Background="AliceBlue" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="6*"/>
             </Grid.RowDefinitions>
-            <DataGrid  SelectedItem="{Binding SelectedDevice,Mode=TwoWay}" ItemsSource="{Binding Devices}"  Grid.Row="1" x:Name="datagrid" AutoGenerateColumns="False"  >
+            <DataGrid  IsReadOnly="True"  Background="LightGray" RowBackground="LightYellow" AlternatingRowBackground="LightBlue" SelectedItem="{Binding SelectedDevice,Mode=TwoWay}" ItemsSource="{Binding Devices}"  Grid.Row="1" x:Name="datagrid" AutoGenerateColumns="False"  >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="SerialNumber" Binding="{Binding Name}" />
                     <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
@@ -36,12 +36,12 @@
                 <Line Grid.Column="2"  Y1="0" Y2="40" Stroke="Blue" />
                 <Line Grid.Column="3" Y1="0" Y2= "40" Stroke="Blue"/>
                 <Line Grid.Column="4" Y1="0" Y2= "40" Stroke="Blue"/>
-                <Line Grid.Column="1" Y1="0" Y2="40" Stroke="Blue"></Line>
+                <Line Grid.Column="1" Y1="0" Y2="40" Stroke="Blue"/>
 
-                <Button FontSize="13" Command="{Binding EditDeviceCommand}" Content="Edit"  Style="{StaticResource RoundCorner}"   FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="2" Background="#FFB7B713" Foreground="Black"  ></Button>
+                <Button FontSize="13" Command="{Binding EditDeviceCommand}" Content="Edit"  Style="{StaticResource RoundCorner}"   FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="3" Background="#FFB7B713" Foreground="Black"  ></Button>
                 <Button Margin="5" Background="Bisque" FontSize="13" Command="{Binding OpenBrandsCommand}" Content="Brands" Style="{StaticResource RoundCorner}" Grid.Column="0"></Button>
                 <Button Margin="5" Background="Chartreuse" FontSize="13" Command="{Binding OpenCategoriesCommand}" Grid.Column="1" Style="{StaticResource RoundCorner}" Content="Categories"></Button>
-                <Button  FontSize="13" Command="{Binding DeleteDeviceCommand}"  x:Name="ButtonDelete" Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="3"  Content="Delete" Background="#FFB70F0F" ></Button>
+                <Button  FontSize="13" Command="{Binding DeleteDeviceCommand}"  x:Name="ButtonDelete" Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="2"  Content="Delete" Background="#FFB70F0F" ></Button>
                 <Button  FontSize="13" Command="{Binding AddDeviceCommand}"  Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="4"  Content="Add" Background="Green" ></Button>
             </Grid>
         </Grid>
