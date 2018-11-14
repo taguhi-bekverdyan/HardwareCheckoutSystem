@@ -11,6 +11,9 @@ using HardwareCheckoutSystemAdmin.Common.Prism;
 using System.Windows;
 using System.Windows.Forms;
 using System.IO;
+using System.Windows.Media.Imaging;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 {
@@ -273,7 +276,13 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         private byte[] GetBytesFromImage(string path)
         {
             if (path != string.Empty) {
-                return File.ReadAllBytes(path);
+                //return File.ReadAllBytes(path);
+                Bitmap image = new Bitmap(path);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    image.Save(ms,ImageFormat.Png);
+                    return ms.ToArray();
+                }
             }
             return null;
         }

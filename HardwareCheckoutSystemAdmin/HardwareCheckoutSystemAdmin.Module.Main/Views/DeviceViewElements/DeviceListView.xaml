@@ -58,7 +58,7 @@
                   CanUserAddRows="False" ItemsSource="{Binding Devices,Mode=TwoWay}"
                   SelectedItem="{Binding SelectedDevice,Mode=TwoWay}">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Image" Width="SizeToCells" IsReadOnly="True">
+                    <DataGridTemplateColumn Header="Image" Width="100" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding BitmapImage}"/>

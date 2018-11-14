@@ -14,12 +14,14 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         
         public async Task Delete(Device device)
         {
-            using (DataContext context = new DataContext())
-            {
-                context.Devices.Attach(device);
-                context.Devices.Remove(device);
-                await context.SaveChangesAsync();
-            }
+            await Task.Run(()=> {
+                using (DataContext context = new DataContext())
+                {
+                    context.Devices.Attach(device);
+                    context.Devices.Remove(device);
+                    context.SaveChanges();
+                }
+            });
         }
 
         public async Task DeleteDeviceById(Guid id)
@@ -52,46 +54,57 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         }
 
         public async Task<Device> FindDeviceById(Guid id)
-        {          
-            using (DataContext context = new DataContext())
-            {
-                return await context.Devices
-                    .Include((d) => d.Brand)
-                    .Include((d) => d.Category)
-                    .FirstOrDefaultAsync(d => d.Id == id);
-            }           
+        {
+            return await Task<Device>.Run(()=> {
+                using (DataContext context = new DataContext())
+                {
+                    return context.Devices
+                        .Include((d) => d.Brand)
+                        .Include((d) => d.Category)
+                        .FirstOrDefault(d => d.Id == id);
+                }
+            });                     
         }
 
         public async Task<Device> FindDeviceBySerialNumber(string sn)
         {
-            using (DataContext context = new DataContext())
-            {
-                return await context.Devices
-                    .Include((d) => d.Brand)
-                    .Include((d) => d.Category)
-                    .FirstOrDefaultAsync(d => d.SerialNumber == sn);
-            }
+            return await Task<Device>.Run(()=>{
+                using (DataContext context = new DataContext())
+                {
+                    return context.Devices
+                        .Include((d) => d.Brand)
+                        .Include((d) => d.Category)
+                        .FirstOrDefault(d => d.SerialNumber == sn);
+                }
+            });
         }
 
         public async Task Insert(Device newDevice)
         {
-            using (DataContext context = new DataContext())
-            {
-                context.Devices.Add(newDevice);
-                await context.SaveChangesAsync();
-            }
+            await Task.Run(()=> {
+                using (DataContext context = new DataContext())
+                {
+                    context.Devices.Add(newDevice);
+                    context.SaveChanges();
+                }
+            });
+
         }
 
         public async Task Update(Device device)
         {
-            using (DataContext context = new DataContext()) {
-                Device temp = await context.Devices.FirstOrDefaultAsync(d=>d.Id == device.Id);
-                if (temp != null)
-                {                   
-                    context.Entry(temp).CurrentValues.SetValues(device);
-                    await context.SaveChangesAsync();
+            await Task.Run(()=> {
+                using (DataContext context = new DataContext())
+                {
+                    Device temp = context.Devices.FirstOrDefault(d => d.Id == device.Id);
+                    if (temp != null)
+                    {
+                        context.Entry(temp).CurrentValues.SetValues(device);
+                        context.SaveChanges();
+                    }
                 }
-            }
+            });
+
         }
     }
 }

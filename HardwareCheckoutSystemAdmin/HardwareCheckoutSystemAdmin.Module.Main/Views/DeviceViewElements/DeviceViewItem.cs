@@ -2,6 +2,7 @@
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,11 +47,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             {
                 return;
             }
-            //BitmapSource bitmapSource = 
-            //    BitmapSource.Create(2, 2, 300, 300, PixelFormats.Indexed8, BitmapPalettes.Gray256, byteArrayIn, 2);
 
-            BitmapImage = BitmapSource.Create(2,2,300,300, PixelFormats.Indexed8,
-                BitmapPalettes.Gray256, d.Image, 2);
+            BitmapImage = (BitmapSource)new ImageSourceConverter().ConvertFrom(d.Image);
+
         }
 
         public DeviceViewItem()
