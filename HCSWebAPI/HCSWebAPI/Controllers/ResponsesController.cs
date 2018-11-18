@@ -40,7 +40,7 @@ namespace HCSWebAPI.Controllers
     }
 
     // GET: api/Responses/5
-    [HttpGet("{id}", Name = "Get")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
       try
