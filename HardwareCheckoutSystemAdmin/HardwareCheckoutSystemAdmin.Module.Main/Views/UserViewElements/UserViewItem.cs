@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
 {
@@ -18,6 +20,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
         public Permission Permission { get; set; }
         public byte[] AvatarImage { get; set; }
         public string Occupation { get; set; }
+
+        public BitmapSource BitmapImage { get; set; }
 
 
         public UserViewItem()
@@ -34,8 +38,18 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             Birthdate = user.Birthdate;
             TelNumber = user.TelNumber;
             Permission = user.Permission;
-            AvatarImage = user.AvatarImage;
+            GetImage(user);
             Occupation = user.Occupation;
+        }
+
+        private void GetImage(User user)
+        {
+            if (user.AvatarImage == null || user.AvatarImage.Length == 0)
+            {
+                return;
+            }
+
+            BitmapImage = (BitmapSource)new ImageSourceConverter().ConvertFrom(user.AvatarImage);
         }
 
         public static explicit operator User(UserViewItem item)

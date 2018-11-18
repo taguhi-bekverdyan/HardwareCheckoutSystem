@@ -7,9 +7,13 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
 {
@@ -94,6 +98,27 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             }
         }
 
+        private byte[] _avatarimage;
+        public byte[] AvatarImage
+        {
+            get { return _avatarimage; }
+            set
+            {
+                SetProperty(ref _avatarimage, value);
+            }
+        }
+
+        private string _imagePath;
+        public string ImagePath
+        {
+            get { return _imagePath; }
+            set
+            {
+                SetProperty(ref _imagePath, value);
+                AddUser.RaiseCanExecuteChanged();
+            }
+        }
+
 
 
         #endregion
@@ -112,6 +137,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
 
             AddUser = new DelegateCommand(AddUserAction);
             Cancel = new DelegateCommand(CancelAction);
+            ChooseImage = new DelegateCommand(ChooseImageAction);
 
         }
         #endregion
@@ -153,6 +179,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             Permission = _user.Permission;
             TelNumber = _user.TelNumber;
             Occupation = _user.Occupation;
+            AvatarImage = _user.AvatarImage;
+           // AvatarImage = GetBytesFromImage(ImagePath);
         }
         private void SetData()
         {
@@ -163,12 +191,28 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             _user.Permission = Permission;
             _user.TelNumber = TelNumber;
             _user.Occupation = Occupation;
+            _user.AvatarImage = GetBytesFromImage(ImagePath);
         }
 
         private void CallbackAction()
         {
             _eventAggregator.GetEvent<UserAddOrEditEvent>()
                 .Publish(new Object());
+        }
+
+        private byte[] GetBytesFromImage(string path)
+        {
+            if (path != string.Empty)
+            {
+                //return File.ReadAllBytes(path);
+                Bitmap image = new Bitmap(path);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    image.Save(ms, ImageFormat.Png);
+                    return ms.ToArray();
+                }
+            }
+            return null;
         }
         #endregion
 
@@ -196,6 +240,22 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
         private void CancelAction()
         {
             CallbackAction();
+        }
+
+        public DelegateCommand ChooseImage { get; private set; }
+        private void ChooseImageAction()
+        {
+            OpenFileDialog fileChooser = new OpenFileDialog();
+            fileChooser.Filter = "AvatarImage files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+            fileChooser.FilterIndex = 1;
+            fileChooser.Multiselect = true;
+
+            if (fileChooser.ShowDialog() == DialogResult.OK)
+            {
+                //System.Windows.MessageBox.Show(fileChooser.FileName);
+                ImagePath = fileChooser.FileName;
+            }
+
         }
 
         #endregion

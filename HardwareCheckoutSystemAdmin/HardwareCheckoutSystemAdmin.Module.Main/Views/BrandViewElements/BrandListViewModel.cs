@@ -71,8 +71,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
             await UpdateData();
             Name = null;
 
-            //Brand newbrand = (Brand)(new BrandViewItem());
-            //await _brandService.Insert(newbrand);
         }
 
         public DelegateCommand UpdateBrand { get; private set; }

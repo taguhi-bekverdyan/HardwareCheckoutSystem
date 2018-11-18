@@ -45,9 +45,9 @@
                     Command="{Binding DeleteDevice}" Style="{StaticResource CircleButton}"/>
 
             <Button Width="80" Height="40" Grid.Column="4" Content="Brands"
-                    Command="{Binding OpenCategories}" Style="{StaticResource CircleButton}"/>
-            <Button Width="80" Height="40" Grid.Column="5" Content="Categories"
                     Command="{Binding OpenBrands}" Style="{StaticResource CircleButton}"/>
+            <Button Width="80" Height="40" Grid.Column="5" Content="Categories"
+                    Command="{Binding OpenCategories}" Style="{StaticResource CircleButton}"/>
 
 
 

@@ -46,9 +46,25 @@
         </Grid>
 
         <extToolkit1:BusyIndicator Grid.Row="1" BusyContent="Loading..." IsBusy="{Binding IsBusy}">
-            <DataGrid Margin="10" IsReadOnly="True"
-                  CanUserAddRows="False" ItemsSource="{Binding Users}"
+            <DataGrid Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
+                  CanUserAddRows="False" ItemsSource="{Binding Users, Mode=TwoWay}"
                   SelectedItem="{Binding SelectedUser,Mode=TwoWay}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="AvatarImage" Width="100" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding BitmapImage}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" />
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
+                    <DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate}" />
+                    <DataGridTextColumn Header="TelNumber" Binding="{Binding TelNumber}" />
+                    <DataGridTextColumn Header="Permission" Binding="{Binding Permission}" />
+                    <DataGridTextColumn Header="Occupation" Binding="{Binding Occupation}" />
+                </DataGrid.Columns>
 
             </DataGrid>
         </extToolkit1:BusyIndicator>

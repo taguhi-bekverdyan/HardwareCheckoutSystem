@@ -68,7 +68,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
         public void AddUserAction()
         {
             NavigationParameters param = new NavigationParameters { { "request", new UserParameter(Mode.Add, null) } };
-            _addUserView = _shellService.ShowShell(nameof(AddUserView),450,450,param);
+            _addUserView = _shellService.ShowShell(nameof(AddUserView),450,520,param);
             _eventAggregator.GetEvent<UserAddOrEditEvent>()
                 .Subscribe(UserAddedEventHandler, ThreadOption.UIThread);
         }
@@ -86,7 +86,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
         public void UpdateUserAction()
         {
             NavigationParameters param = new NavigationParameters { { "request", new UserParameter(Mode.Edit, SelectedUser) } };
-            _addUserView = _shellService.ShowShell(nameof(AddUserView), 450, 450, param);
+            _addUserView = _shellService.ShowShell(nameof(AddUserView), 450, 520, param);
             _eventAggregator.GetEvent<UserAddOrEditEvent>()
                 .Subscribe(UserAddedEventHandler, ThreadOption.UIThread);
         }
