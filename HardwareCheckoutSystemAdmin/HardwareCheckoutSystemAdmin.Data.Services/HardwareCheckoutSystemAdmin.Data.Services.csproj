@@ -53,6 +53,8 @@
     <Compile Include="RequestService.cs" />
     <Compile Include="ResponseService.cs" />
     <Compile Include="UserService.cs" />
+    <Compile Include="WebAPI\IRestService.cs" />
+    <Compile Include="WebAPI\RestService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HardwareCheckoutSystemAdmin.Data.Infrastucture\HardwareCheckoutSystemAdmin.Data.Infrastructure.csproj">

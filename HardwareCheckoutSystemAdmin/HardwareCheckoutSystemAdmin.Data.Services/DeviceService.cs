@@ -1,16 +1,29 @@
 ﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
+using HardwareCheckoutSystemAdmin.Data.WebAPI;
 using HardwareCheckoutSystemAdmin.Models;
+using RestSharp;
+using RestSharp.Authenticators;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace HardwareCheckoutSystemAdmin.Data.Services
 {
   public class DeviceService : IDeviceService
   {
+    private readonly IRestService _restService;
+    private readonly RestRequest _restRequest;
+
+    public DeviceService(IRestService restService)
+    {
+      _restService = restService;
+      _restRequest = new RestRequest();
+    }
+
     #region [CREATE]
     public async Task Insert(Device device)
     {
@@ -25,10 +38,18 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
     #region [READ]
     public async Task<List<Device>> FindAll()
     {
-      using (var context = new DataContext())
-      {
-        return await context.Devices.Include(d => d.Brand).Include(d => d.Category).ToListAsync();
-      }
+      _restRequest.Resource = "api/devices";
+
+      //List<Device> list = new List<Device>();
+      //var asyncHandle = _restService.Client.ExecuteAsync<List<Device>>(_restRequest, response =>
+      //{
+      //  list = response.Data;
+      //});
+
+      //Thread.Sleep(1000);
+      //return list;
+
+      return _restService.Client.Execute<List<Device>>(_restRequest).Data;
     }
 
     public async Task<Device> FindById(Guid deviceId)

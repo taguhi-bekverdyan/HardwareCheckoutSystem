@@ -25,9 +25,9 @@ namespace HCSWebAPI.Services
     #endregion
 
     #region [READ]
-    public async Task<List<Device>> FindAll()
+    public List<Device> FindAll()
     {
-      return await _context.Devices.Include(d => d.Brand).Include(d => d.Category).ToListAsync();
+      return _context.Devices.Include(d => d.Brand).Include(d => d.Category).ToList();
     }
 
     public async Task<Device> FindById(Guid deviceId)

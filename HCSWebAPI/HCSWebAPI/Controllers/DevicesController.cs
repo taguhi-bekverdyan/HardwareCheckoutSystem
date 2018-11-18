@@ -58,11 +58,11 @@ namespace HCSWebAPI.Controllers
 
     // GET: api/Devices
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public IActionResult Get()
     {
       try
       {
-        var devices = await _service.FindAll();
+        var devices = _service.FindAll();
         if (devices != null)
         {
           return Ok(devices);

@@ -62,7 +62,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     #region Methods
 
     /// <summary>
-    /// Load all devices from database
+    /// Load all devices by rest request
     /// </summary>
     private async void LoadDevices()
     {
