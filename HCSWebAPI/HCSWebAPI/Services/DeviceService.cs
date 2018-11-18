@@ -13,7 +13,7 @@ namespace HCSWebAPI.Services
 
     public DeviceService(DataContext context)
     {
-      this._context = context;
+      _context = context;
     }
 
     #region [CREATE]
