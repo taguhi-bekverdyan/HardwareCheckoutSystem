@@ -1,5 +1,6 @@
 ﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,83 +10,118 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 {
     public class BrandService : IBrandService
     {
+        private const string EndPoint = @"https://localhost:44350/api/";
+        private readonly RestClient _client;
+
+        public BrandService()
+        {
+            _client = new RestClient(EndPoint);
+        }
+
         public async Task Delete(Brand brand)
         {
-            using (DataContext context = new DataContext())
-            {
-                context.Brands.Attach(brand);
-                context.Brands.Remove(brand);
-                await context.SaveChangesAsync();
-            }
+            await DeleteBrandById(brand.Id);
         }
 
-        public async Task DeleteBrandById(Guid id)
+        public Task DeleteBrandById(Guid id)
         {
-            using (DataContext context = new DataContext())
-            {
-                Brand brand = await FindBrandById(id);
-                await Delete(brand);
-            }
-        }
-
-
-        public async Task<List<Brand>> FindAll()
-        {
-            return await Task<List<Brand>>.Run(()=> {
-                using (DataContext context = new DataContext())
+            return Task.Factory.StartNew(() => {
+                try
                 {
-                    return context.Brands.ToListAsync();
+                    RestRequest request = new RestRequest("brands/{guid}", Method.DELETE);
+                    request.AddUrlSegment("guid",id.ToString());
+
+                    IRestResponse response = _client.Execute(request);
                 }
-            });            
-        }
-
-        public async Task<Brand> FindBrandById(Guid id)
-        {
-            using (DataContext context = new DataContext())
-            {
-                return await context.Brands                  
-                    .FirstOrDefaultAsync(d => d.Id == id);
-            }
-        }
-
-
-
-        public async Task<Brand> FindBrandByIdAsync(Guid id)
-        {
-            using (DataContext context = new DataContext())
-            {
-                return await context.Brands.FirstOrDefaultAsync(b => b.Id == id);
-            }
-        }
-
-        public async Task<Brand> FindBrandByName(string name)
-        {
-            using (DataContext context = new DataContext())
-            {
-                return await context.Brands.FirstOrDefaultAsync(b => b.Name == name);
-            }
-        }
-
-        public async Task Insert(Brand brand)
-        {
-            using (DataContext context = new DataContext())
-            {
-                context.Brands.Add(brand);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        public async Task Update(Brand brand)
-        {
-            using (DataContext context = new DataContext())
-            {
-                Brand temp = await context.Brands.FirstOrDefaultAsync(d => d.Id == brand.Id);
-                if (temp != null)
+                catch (Exception)
                 {
-                    context.Entry(temp).CurrentValues.SetValues(brand);
-                    await context.SaveChangesAsync();
+
                 }
-            }
+            });
+        }
+
+
+        public Task<List<Brand>> FindAll()
+        {
+            return Task<List<Brand>>.Factory.StartNew(()=> {
+                RestRequest request = new RestRequest("brands", Method.GET);
+                IRestResponse<List<Brand>> response = _client.Execute<List<Brand>>(request);
+                return response.Data;
+            });               
+        }
+
+        public Task<Brand> FindBrandById(Guid id)
+        {
+            return Task<Brand>.Factory.StartNew(() =>
+            {
+                try
+                {
+                    RestRequest request = new RestRequest("brands/{guid}", Method.GET);
+                    request.AddUrlSegment("guid", id.ToString());
+
+                    IRestResponse<Brand> response = _client.Execute<Brand>(request);
+                    return response.Data;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            });
+        }
+
+        public Task<Brand> FindBrandByName(string name)
+        {
+            return Task<Brand>.Factory.StartNew(()=> {
+                try
+                {
+                    RestRequest request = new RestRequest("brands/byName/{name}", Method.GET);
+                    request.AddUrlSegment("name",name);
+
+                    IRestResponse<Brand> response = _client.Execute<Brand>(request);
+                    return response.Data;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            });
+        }
+
+        public Task Insert(Brand brand)
+        {
+            return Task.Factory.StartNew(()=> {
+                try
+                {
+                    RestRequest request = new RestRequest("brands", Method.POST);
+                    request.RequestFormat = DataFormat.Json;
+                    request.AddBody(new { name = brand.Name});
+
+                    IRestResponse response = _client.Execute(request);
+                }
+                catch (Exception)
+                {
+
+                }
+            });
+        }
+
+        public Task Update(Brand brand)
+        {
+            return Task.Factory.StartNew(()=> {
+                try
+                {
+                    RestRequest request = new RestRequest("brands/{guid}",Method.PUT);
+                    request.AddUrlSegment("guid",brand.Id);
+                    request.RequestFormat = DataFormat.Json;
+                    request.AddBody(new { name = brand.Name});
+
+                    IRestResponse response = _client.Execute(request);
+                }
+                catch (Exception)
+                {
+
+                }
+            });
         }
     }
 }
