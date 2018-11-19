@@ -2,6 +2,7 @@
 using HardwareCheckoutSystemAdmin.Data.Services;
 using HardwareCheckoutSystemAdmin.Models;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.HelperClasses;
+using HardwareCheckoutSystemAdmin.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -20,13 +21,13 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
         private readonly IUserService _iuserservice;
         private readonly IShellService _ishellservice;
         private readonly IEventAggregator _ieventaggregator;
+        private ShellView addUserView;
 
         public UsersViewModel(IEventAggregator eventaggregator, IUserService userservice, IShellService shellservice)
         {
             _iuserservice = userservice;
             _ieventaggregator = eventaggregator;
             _ishellservice = shellservice;
-            UpdateUsersData();
         }
 
         #region [TYPES]
@@ -62,7 +63,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
         {
             NavigationParameters param;
             param = new NavigationParameters { { "request", new Param<UserViewItem>(ViewMode.Edit, SelectedItem) } };
-            _ishellservice.ShowShell(nameof(AddUserView), param,450,450);
+            addUserView=_ishellservice.ShowShell(nameof(AddUserView), param,450,450);
             _ieventaggregator.GetEvent<UserAddedOrEditedEvent>().Subscribe(UserAddedOrEditedEventHandler, ThreadOption.UIThread);
 
         }
@@ -81,17 +82,17 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
         private DelegateCommand _DeleteUserCommand;
         public DelegateCommand DeleteUserCommand => _DeleteUserCommand ?? (_DeleteUserCommand = new DelegateCommand(DeleteUserAction));
 
-        public void DeleteUserAction()
+        public async void DeleteUserAction()
         {
-            _iuserservice.DeleteBySerialNumber(SelectedItem.SerialNumber);
-            UpdateUsersData();
+            await _iuserservice.DeleteBySerialNumber(SelectedItem.SerialNumber);
+            await UpdateUsersData();
         }
 
         #endregion
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            UpdateUsersData();
+            await UpdateUsersData();
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
@@ -99,7 +100,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
 
         }
 
-        private async void UpdateUsersData()
+        private async Task UpdateUsersData()
         {
             Users = new List<UserViewItem>();
             var temp = await _iuserservice.FindAll();
@@ -109,9 +110,10 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
             }
         }
 
-        private void UserAddedOrEditedEventHandler(UserAddedOrEditedEventArgs args)
+        private async void UserAddedOrEditedEventHandler(UserAddedOrEditedEventArgs args)
         {
-            UpdateUsersData();
+            addUserView.Close();
+            await UpdateUsersData();
             _ieventaggregator.GetEvent<UserAddedOrEditedEvent>().Unsubscribe(UserAddedOrEditedEventHandler);
 
         }

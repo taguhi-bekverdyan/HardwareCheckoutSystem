@@ -74,8 +74,8 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
                 await context.SaveChangesAsync();
             }
         }
-        #endregion
-        #region [DELETEbyNAME]
+
+
         public async Task Delete(Brand brand)
         {
             using (var context = new DataContext())

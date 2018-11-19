@@ -2,7 +2,9 @@
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Data.Services;
 using HardwareCheckoutSystemAdmin.Models;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Categories;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.HelperClasses;
+using HardwareCheckoutSystemAdmin.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -21,12 +23,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
         private readonly IUserService _iuserservice;
         private readonly IShellService _ishellservice;
         private ViewMode mode;
+        private ShellView addUserView;
 
         public AddUserViewModel(IEventAggregator eventaggregator, IUserService userservice, IShellService shellservice)
         {
             _ieventaggregator = eventaggregator;
             _iuserservice = userservice;
             _ishellservice = shellservice;
+            addUserView = _ishellservice.ShowShell(nameof(AddCategoryView));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -97,17 +101,13 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
             set { SetProperty(ref _datebirth, value); }
         }
 
-        //TODO Bind from string to datetime
 
         private DelegateCommand _CancelAddingUserCommand;
         public DelegateCommand CancelAddingUserCommand => _CancelAddingUserCommand ?? (_CancelAddingUserCommand = new DelegateCommand(CancelAddingUserAction));
 
         public void CancelAddingUserAction()
         {
-            FirstName = null;
-            LastName = null;
-            Permission = Permission.Other;
-            SerialNumber = null;
+            addUserView.Close();
         }
 
         private DelegateCommand _AddNewUserCommand;

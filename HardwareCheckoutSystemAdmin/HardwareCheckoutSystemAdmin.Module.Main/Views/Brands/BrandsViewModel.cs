@@ -2,7 +2,9 @@
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.HelperClasses;
+using HardwareCheckoutSystemAdmin.Views;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -10,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static HardwareCheckoutSystemAdmin.Module.Main.Views.Brands.AddBrandViewModel;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
 {
@@ -17,11 +20,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
     {
         private readonly IShellService _ishellservice;
         private readonly IBrandService _ibrandservice;
+        private readonly IEventAggregator _ieventaggregator;
+        private ShellView addBrandView;
 
-        public BrandsViewModel(IShellService shellservice, IBrandService brandservice)
+        public BrandsViewModel(IShellService shellservice, IBrandService brandservice, IEventAggregator eventaggregator)
         {
             _ishellservice = shellservice;
             _ibrandservice = brandservice;
+            _ieventaggregator = eventaggregator;
             Brands = new List<Brand>();
             FindAll();
         }
@@ -36,7 +42,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
             throw new NotImplementedException();
         }
 
-        public void OnNavigatedToAsync(NavigationContext navigationContext)
+        public void OnNavigatedTo(NavigationContext navigationContext)
         {
             throw new NotImplementedException();
         }
@@ -84,7 +90,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
         {
             NavigationParameters param;
             param = new NavigationParameters { { "request", new Param<Brand>(ViewMode.Add,new Brand()) } };
-            _ishellservice.ShowShell(nameof(AddBrandView), param, 280,200);
+            _ieventaggregator.GetEvent<BrandAddedOrEditedEvent>().Subscribe(BrandAddedOrEditedEventHandler, ThreadOption.UIThread);
+            addBrandView = _ishellservice.ShowShell(nameof(AddBrandView), param, 280, 200);
         }
 
         private DelegateCommand _EditBrandCommand;
@@ -94,13 +101,17 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
         {
             NavigationParameters param;
             param = new NavigationParameters { { "request",new Param<Brand>(ViewMode.Edit,SelectedBrand) } };
-            _ishellservice.ShowShell(nameof(AddBrandView), param,280,200);
+            _ieventaggregator.GetEvent<BrandAddedOrEditedEvent>().Subscribe(BrandAddedOrEditedEventHandler, ThreadOption.UIThread);
+            addBrandView = _ishellservice.ShowShell(nameof(AddBrandView), param, 280, 200);
 
         }
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+
+        private void BrandAddedOrEditedEventHandler(BrandAddedOrEditedEventArgs args)
         {
-            throw new NotImplementedException();
+            addBrandView.Close();
+            FindAll();
+            _ieventaggregator.GetEvent<BrandAddedOrEditedEvent>().Unsubscribe(BrandAddedOrEditedEventHandler);
         }
     }
 }

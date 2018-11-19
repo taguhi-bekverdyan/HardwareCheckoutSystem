@@ -103,10 +103,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ShellService.cs" />
-    <Compile Include="Views\ShellViewModel.cs" />
-    <Compile Include="Views\ShellView.xaml.cs">
-      <DependentUpon>ShellView.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
@@ -137,27 +133,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\DictionaryForFVButtons.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ShellView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Themes\ImagesForButtons\edit.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Themes\ImagesForButtons\add.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Themes\ImagesForButtons\delete.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\HardwareCheckoutSystemAdmin.Common\HardwareCheckoutSystemAdmin.Common.csproj">
       <Project>{eb90f234-a632-46b8-bdd5-71ffcab12500}</Project>
       <Name>HardwareCheckoutSystemAdmin.Common</Name>
@@ -174,6 +149,27 @@
       <Project>{4048393a-4f85-400c-9a63-dab2e576cdb5}</Project>
       <Name>HardwareCheckoutSystemAdmin.Module.Main</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\DictionaryForFVButtons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\ImagesForButtons\add.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\ImagesForButtons\delete.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\ImagesForButtons\edit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

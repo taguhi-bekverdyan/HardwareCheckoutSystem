@@ -1,7 +1,10 @@
 ﻿using HardwareCheckoutSystemAdmin.Common.Prism;
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.HelperClasses;
+using HardwareCheckoutSystemAdmin.Views;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -16,21 +19,20 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
     {
         private readonly IShellService _ishellservice;
         private readonly ICategoryService _icategoryservice;
+        private readonly IEventAggregator _ieventaggregator;
+        private Category category;
+        private ViewMode mode;
+       
 
-        public AddCategoryViewModel(IShellService shellservice, ICategoryService categoryservice)
+        public AddCategoryViewModel(IShellService shellservice, ICategoryService categoryservice, IEventAggregator eventaggregator)
         {
             _ishellservice = shellservice;
             _icategoryservice = categoryservice;
-
+            _ieventaggregator = eventaggregator;
+        
         }
 
-        //private Category _newcategory;
-        //public Category NewCategory
-        //{
-        //    get { return _newcategory; }
-
-        //    set { SetProperty(ref _newcategory, value); }
-        //}
+        
 
         private string _name;
         public string Name
@@ -52,8 +54,17 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            Category CategoryToEdit = (Category)navigationContext.Parameters["request_for_edit"];
-            Name = CategoryToEdit.Name;
+            var param = (Param<Category>)navigationContext.Parameters["request"];
+            category = param._ViewItem;
+            mode = param._ViewMode;
+            if (param._ViewMode.Equals(ViewMode.Edit))
+            {
+                Name = category.Name;
+            }
+            else
+            {
+                Name = null;
+            }
         }
 
         private DelegateCommand _AddCategoryCommand;
@@ -61,9 +72,20 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
 
         public void AddCategoryAction()
         {
-            var NewCategory = new Category(Name);
-            _icategoryservice.Insert(NewCategory);
-            _ishellservice.ShowShell(nameof(AddCategoryView));
+           
+            if (mode == ViewMode.Add)
+            {
+                category = new Category(Name);
+                _icategoryservice.Insert(category);
+            }
+            else
+            {
+                category.Name = Name;
+                _icategoryservice.Update(category);
+            }
+           
+            _ieventaggregator.GetEvent<CategoryAddedOrEditedEvent>().Publish(new CategoryAddedOrEditedEventArgs { Category = category });
+
         }
 
         private DelegateCommand _CancelAddingCategoryCommand;
@@ -71,7 +93,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
 
         public void CancelAddingCategoryAction()
         {
-            //TODO
+            //addCategoryView.Close();
+        }
+
+        public class CategoryAddedOrEditedEvent : PubSubEvent<CategoryAddedOrEditedEventArgs> { }
+
+        public class CategoryAddedOrEditedEventArgs
+        {
+            public Category Category { get; set; }
         }
     }
 }

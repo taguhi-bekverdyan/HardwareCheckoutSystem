@@ -3,6 +3,7 @@ using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Data.Services;
 using HardwareCheckoutSystemAdmin.Models;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.HelperClasses;
+using HardwareCheckoutSystemAdmin.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -23,6 +24,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         private readonly ICategoryService _icategoryservice;
         private readonly IShellService _ishellservice;
         private ViewMode mode;
+        private ShellView addDeviceView;
         private Device device;
 
         public AddDeviceViewModel(IEventAggregator eventaggregator, IDeviceService deviceservice, IShellService shellservice, IBrandService brandservice, ICategoryService categoryService)
@@ -32,10 +34,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             _ishellservice = shellservice;
             _ibrandservice = brandservice;
             _icategoryservice = categoryService;
+            addDeviceView =  _ishellservice.ShowShell(nameof(AddDeviceView));
             Brands = new List<Brand>();
-            FindBrands();
             Categories = new List<Category>();
-            FindCategories();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -72,7 +73,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             set { SetProperty(ref _selectedbrand, value); }
         }
 
-        public async void FindBrands()
+        public async Task FindBrands()
         {
             Brands = await _ibrandservice.FindAll();
         }
@@ -93,7 +94,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             set { SetProperty(ref _selectedcategory, value); }
         }
 
-        public async void FindCategories()
+        public async Task FindCategories()
         {
             Categories = await _icategoryservice.FindAll();
         }
@@ -137,12 +138,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 
         public void CancelAddingDeviceAction()
         {
-            Model = null;
-            Describtion = null;
-            SelectedCategory = null;
-            Permission = Permission.Other;
-            SelectedBrand = null;
-            SerialNumber = null;
+            addDeviceView.Close();
         }
 
         private DelegateCommand _AddNewDeviceCommand;
@@ -169,10 +165,10 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         }
 
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            FindBrands();
-            FindCategories();
+            await FindBrands();
+            await FindCategories();
             var param = (Param<DeviceViewItem>)navigationContext.Parameters["request"];
             device = new Device(param._ViewItem);
             mode = param._ViewMode;

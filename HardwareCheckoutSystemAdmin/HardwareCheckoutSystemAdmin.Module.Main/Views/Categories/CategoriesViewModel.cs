@@ -2,7 +2,10 @@
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Categories;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.HelperClasses;
+using HardwareCheckoutSystemAdmin.Views;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -10,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static HardwareCheckoutSystemAdmin.Module.Main.Views.Categories.AddCategoryViewModel;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
 {
@@ -17,11 +21,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
     {
         private readonly IShellService _ishellservice;
         private readonly ICategoryService _icategoryservice;
+        private readonly IEventAggregator _ieventaggregator;
+        private ShellView addCategoryView;
 
-        public CategoriesViewModel(IShellService shellservice, ICategoryService categoryservice)
+        public CategoriesViewModel(IShellService shellservice, ICategoryService categoryservice, IEventAggregator eventaggregator)
         {
             _ishellservice = shellservice;
             _icategoryservice = categoryservice;
+            _ieventaggregator = eventaggregator;
             Categories = new List<Category>();
             FindAll();
         }
@@ -36,7 +43,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
             throw new NotImplementedException();
         }
 
-        public void OnNavigatedToAsync(NavigationContext navigationContext)
+        public void OnNavigatedTo(NavigationContext navigationContext)
         {
             throw new NotImplementedException();
         }
@@ -77,7 +84,10 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
 
         public void AddCategoryAction()
         {
-            _ishellservice.ShowShell(nameof(AddCategoryView),280,200);
+            NavigationParameters param;
+            param = new NavigationParameters { { "request", new Param<Category>(ViewMode.Add, new Category()) } };
+            _ieventaggregator.GetEvent<CategoryAddedOrEditedEvent>().Subscribe(CategoryAddedOrEditedEventHandler, ThreadOption.UIThread);
+            addCategoryView = _ishellservice.ShowShell(nameof(AddCategoryView),param,280,200);
 
         }
 
@@ -86,14 +96,18 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
 
         public void EditCategoryAction()
         {
-            NavigationParameters CategoryToEdit = new NavigationParameters { { "request_for_edit", SelectedCategory } };
-            _ishellservice.ShowShell(nameof(AddCategoryView),280,200);
-
+            NavigationParameters param;
+            param = new NavigationParameters { { "request", new Param<Category>(ViewMode.Add, SelectedCategory) } };
+            _ieventaggregator.GetEvent<CategoryAddedOrEditedEvent>().Subscribe(CategoryAddedOrEditedEventHandler, ThreadOption.UIThread);
+           addCategoryView= _ishellservice.ShowShell(nameof(AddCategoryView),param,280,200);
         }
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        private void CategoryAddedOrEditedEventHandler(CategoryAddedOrEditedEventArgs args)
         {
-            throw new NotImplementedException();
+            addCategoryView.Close();
+            FindAll();
+            _ieventaggregator.GetEvent<CategoryAddedOrEditedEvent>().Unsubscribe(CategoryAddedOrEditedEventHandler);
         }
+
     }
 }

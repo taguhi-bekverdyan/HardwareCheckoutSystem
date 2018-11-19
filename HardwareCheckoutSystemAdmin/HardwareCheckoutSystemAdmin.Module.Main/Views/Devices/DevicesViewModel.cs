@@ -5,6 +5,7 @@ using HardwareCheckoutSystemAdmin.Models;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Brands;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.Categories;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.HelperClasses;
+using HardwareCheckoutSystemAdmin.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -23,6 +24,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         private readonly ICategoryService _icategoryservice;
         private readonly IShellService _ishellservice;
         private readonly IEventAggregator _ieventaggregator;
+        private ShellView addDeviceView;
 
         public DevicesViewModel(IEventAggregator eventaggregator, IDeviceService deviceservice, IShellService shellservice, IBrandService brandservice, ICategoryService categoryService)
         {
@@ -31,7 +33,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             _ishellservice = shellservice;
             _ibrandservice = brandservice;
             _icategoryservice = categoryService;
-            UpdateDevicesData();
         }
 
         #region [TYPES]
@@ -67,8 +68,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         {
             NavigationParameters param;
             param = new NavigationParameters { { "request", new Param<DeviceViewItem>(ViewMode.Edit, SelectedItem) } };
-            _ishellservice.ShowShell(nameof(AddDeviceView), param, 450, 450);
-            _ieventaggregator.GetEvent<DeviceAddedOrEditedEvent>().Subscribe(DeviceAddedOrEditedEventHandler, ThreadOption.UIThread);
+            addDeviceView = _ishellservice.ShowShell(nameof(AddDeviceView), param, 450, 450);
+            _ieventaggregator.GetEvent<DeviceAddedOrEditedEvent>().Subscribe(DeviceAddedOrEditedEventHandlerAsync, ThreadOption.UIThread);
 
         }
 
@@ -79,8 +80,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         {
             NavigationParameters param;
             param = new NavigationParameters { { "request", new Param<DeviceViewItem>(ViewMode.Add, new DeviceViewItem()) } };
-            _ieventaggregator.GetEvent<DeviceAddedOrEditedEvent>().Subscribe(DeviceAddedOrEditedEventHandler, ThreadOption.UIThread);
-            _ishellservice.ShowShell(nameof(AddDeviceView), param, 450,450);
+            _ieventaggregator.GetEvent<DeviceAddedOrEditedEvent>().Subscribe(DeviceAddedOrEditedEventHandlerAsync, ThreadOption.UIThread);
+           addDeviceView = _ishellservice.ShowShell(nameof(AddDeviceView), param, 450,450);
         }
         private DelegateCommand _OpenBrandsCommand;
         public DelegateCommand OpenBrandsCommand => _OpenBrandsCommand ?? (_OpenBrandsCommand = new DelegateCommand(OpenBrandsAction));
@@ -96,23 +97,22 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         public void OpenCategoriesAction()
         {
             _ishellservice.ShowShell(nameof(CategoriesView), 350, 450);
-            //_ishellservice.CloseShell(nameof(MainWindowView));
         }
 
         private DelegateCommand _DeleteDeviceCommand;
-        public DelegateCommand DeleteDeviceCommand => _DeleteDeviceCommand ?? (_DeleteDeviceCommand = new DelegateCommand(DeleteDeviceAction));
+        public DelegateCommand DeleteDeviceCommand => _DeleteDeviceCommand ?? (_DeleteDeviceCommand = new DelegateCommand(DeleteDeviceActionAsync));
 
-        public void DeleteDeviceAction()
+        public async void DeleteDeviceActionAsync()
         {
-            _ideviceservice.DeleteBySerialNumber(SelectedItem.SerialNumber);
-            UpdateDevicesData();
+            await _ideviceservice.DeleteBySerialNumber(SelectedItem.SerialNumber);
+            await UpdateDevicesData();
         }
 
         #endregion
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            UpdateDevicesData();
+            await UpdateDevicesData();
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
@@ -120,26 +120,31 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 
         }
 
-        private async void UpdateDevicesData()
-        {
-            Devices = new List<DeviceViewItem>();
-            var temp = await _ideviceservice.FindAll();
-            foreach (var i in temp)
-            {
-                Devices.Add(new DeviceViewItem(i));
-            }
-        }
-
-        private void DeviceAddedOrEditedEventHandler(DeviceAddedOrEditedEventArgs args)
-        {
-            UpdateDevicesData();
-            _ieventaggregator.GetEvent<DeviceAddedOrEditedEvent>().Unsubscribe(DeviceAddedOrEditedEventHandler);
-            
-        }
-
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
             throw new NotImplementedException();
         }
+
+        private async Task  UpdateDevicesData()
+        {
+            List<DeviceViewItem> _Devices = new List<DeviceViewItem>();
+            var temp = await _ideviceservice.FindAll();
+            foreach (var item in temp)
+            {
+                _Devices.Add(new DeviceViewItem(item));
+            }
+            Devices = _Devices;
+        }
+
+        
+
+        private async void DeviceAddedOrEditedEventHandlerAsync(DeviceAddedOrEditedEventArgs args)
+        {
+            addDeviceView.Close();
+            await UpdateDevicesData();
+            _ieventaggregator.GetEvent<DeviceAddedOrEditedEvent>().Unsubscribe(DeviceAddedOrEditedEventHandlerAsync);
+        }
+
+       
     }
 }

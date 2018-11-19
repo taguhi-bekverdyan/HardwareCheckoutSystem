@@ -2,7 +2,9 @@
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.HelperClasses;
+using HardwareCheckoutSystemAdmin.Views;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -19,16 +21,19 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
     {
         private readonly IShellService _ishellservice;
         private readonly IBrandService _ibrandservice;
+        private readonly IEventAggregator _ieventaggregator;
         private ViewMode mode;
         private Brand brand;
 
-        public AddBrandViewModel(IShellService shellservice, IBrandService brandservice)
+        public AddBrandViewModel(IShellService shellservice, IBrandService brandservice , IEventAggregator eventaggregator)
         {
             _ishellservice = shellservice;
             _ibrandservice = brandservice;
+            _ieventaggregator = eventaggregator;
 
         }
 
+        #region[TYPESANDNAVIGATION]
         private string _name;
         public string Name
         {
@@ -44,7 +49,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
+           
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
@@ -62,11 +67,15 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
             }
         }
 
+        #endregion
+
+        #region[BUTTONS]
         private DelegateCommand _AddBrandCommand;
         public DelegateCommand AddBrandCommand => _AddBrandCommand ?? (_AddBrandCommand = new DelegateCommand(AddBrandAction));
 
         public void AddBrandAction()
         {
+
             if (mode == ViewMode.Edit)
             {
                 brand.Name = Name;
@@ -74,10 +83,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
             }
             else
             {
-                var newbrand = new Brand();
-                newbrand.Name = Name;
-                _ibrandservice.Insert(newbrand);
+                brand = new Brand(Name);
+                _ibrandservice.Insert(brand);
             }
+
+            _ieventaggregator.GetEvent<BrandAddedOrEditedEvent>().Publish(new BrandAddedOrEditedEventArgs { Brand = brand });
         }
 
         private DelegateCommand _CancelAddingBrandCommand;
@@ -85,7 +95,16 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
 
         public void CancelAddingBrandAction()
         {
-            //TODO
+            //_ieventaggregator.GetEvent<BrandAddedOrEditedEvent>().Publish(new BrandAddedOrEditedEventArgs {  });
+        }
+        #endregion
+
+
+        public class BrandAddedOrEditedEvent : PubSubEvent<BrandAddedOrEditedEventArgs> { }
+
+        public class BrandAddedOrEditedEventArgs
+        {
+            public Brand Brand { get; set; }
         }
     }
 }
