@@ -104,7 +104,16 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
             IsBusy = true;
-           await UpdateData();
+            try
+            {
+                await UpdateData();
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show(e.Message);
+            }
+           
             IsBusy = false;
         }
 
