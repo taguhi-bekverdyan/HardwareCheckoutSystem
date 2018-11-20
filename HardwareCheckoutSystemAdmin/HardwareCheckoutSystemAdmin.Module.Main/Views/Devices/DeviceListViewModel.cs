@@ -66,8 +66,16 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     /// </summary>
     private async void LoadDevices()
     {
-      var devices = await _devices.FindAll();
-      Devices.AddRange(devices);
+      try
+      {
+        var devices = await _devices.FindAll();
+        Devices.AddRange(devices);
+      }
+      catch (Exception e)
+      {
+        MessageBox.Show(e.Message);
+      }
+
     }
 
     /// <summary>

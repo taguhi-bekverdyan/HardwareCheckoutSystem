@@ -40,16 +40,8 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
     {
       _restRequest.Resource = "api/devices";
 
-      //List<Device> list = new List<Device>();
-      //var asyncHandle = _restService.Client.ExecuteAsync<List<Device>>(_restRequest, response =>
-      //{
-      //  list = response.Data;
-      //});
-
-      //Thread.Sleep(1000);
-      //return list;
-
-      return _restService.Client.Execute<List<Device>>(_restRequest).Data;
+      var response = await _restService.Client.ExecuteTaskAsync<List<Device>>(_restRequest);
+      return CheckResponseStatus(response);         
     }
 
     public async Task<Device> FindById(Guid deviceId)
@@ -96,5 +88,18 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
       }
     }
     #endregion
+
+    private List<Device> CheckResponseStatus(IRestResponse<List<Device>> response)
+    {
+      if (response.IsSuccessful)
+      {
+        return response.Data;
+      }
+      else
+      {
+        string message = response.ErrorMessage;
+        throw new Exception("Server Error: " + message);
+      }
+    }
   }
 }

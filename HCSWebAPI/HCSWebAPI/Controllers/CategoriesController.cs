@@ -18,6 +18,25 @@ namespace HCSWebAPI.Controllers
     public CategoriesController(DataContext context)
     {
       _service = new CategoryService(context);
+
+      Seed(context);
+    }
+
+    private void Seed(DataContext context)
+    {
+      if (context.Categories.Count() == 0)
+      {
+        List<Category> categories = new List<Category> {
+          new Category { Id = Guid.NewGuid(), Name = "Desktop Computers"},
+          new Category { Id = Guid.NewGuid(), Name = "Servers" },
+          new Category { Id = Guid.NewGuid(), Name = "Monitors" },
+          new Category { Id = Guid.NewGuid(), Name = "Accessories" },
+          new Category { Id = Guid.NewGuid(), Name = "Network Equipments" },
+          new Category { Id = Guid.NewGuid(), Name = "Printers and Scanners" },
+          new Category { Id = Guid.NewGuid(), Name = "Laptops" }
+        };
+        context.Categories.AddRange(categories);
+      }
     }
 
     // GET: api/Categories

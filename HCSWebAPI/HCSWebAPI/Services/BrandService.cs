@@ -31,6 +31,7 @@ namespace HCSWebAPI.Services
       _context.Brands.Add(brand);
       await _context.SaveChangesAsync();
     }
+
     public async Task Delete(Guid key)
     {
       var brandToDelete = (from d in _context.Brands
