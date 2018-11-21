@@ -10,16 +10,14 @@ namespace HardwareCheckoutSystemAdmin.Models
     public class DeviceViewItem
     {
         public string SerialNumber { get; set; }
-        public Guid CategoryId { get; set; }
         public Category Category { get; set; }
-        public Guid BrandId { get; set; }
         public Brand Brand { get; set; }
         public string Model { get; set; }
-        //public byte[] Image { get; set; }
+        public byte[] Image { get; set; }
         public string Description { get; set; }
-        //public DeviceStatus Status { get; set; }
+        public DeviceStatus Status { get; set; }
         public Permission Permission { get; set; }
-        //public DateTime MaxPeriod { get; set; }
+        public DateTime MaxPeriod { get; set; }
 
         public DeviceViewItem()
         {
@@ -32,10 +30,10 @@ namespace HardwareCheckoutSystemAdmin.Models
             this.Description = device.Description;
             this.SerialNumber = device.SerialNumber;
             this.Model = device.Model;
-            //this.Status = device.Status;
+            this.Status = device.Status;
             this.Permission = device.Permission;
-            //this.MaxPeriod = device.MaxPeriod;
-            //this.Image = device.Image;
+            this.MaxPeriod = device.MaxPeriod;
+            this.Image = device.Image;
         }
 
 
