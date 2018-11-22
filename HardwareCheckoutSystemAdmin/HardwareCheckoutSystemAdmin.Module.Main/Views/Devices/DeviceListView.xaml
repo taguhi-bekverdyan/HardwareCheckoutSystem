@@ -26,8 +26,8 @@
     <Button Content="Add" Command="{Binding AddDeviceCommand}"/>
     <Button Content="Edit" Command="{Binding EditDeviceCommand}" CommandParameter="{Binding SelectedDevice}" Grid.Column="1"/>
     <Button Content="Delete" Command="{Binding DeleteDeviceCommand}" Grid.Column="2"/>
-    <Button Content="Brands" Grid.Column="4" />
-    <Button Content="Categories" Grid.Column="5" />
+    <Button Content="Brands" Command="{Binding OpenBrandsCommand}" Grid.Column="4" />
+    <Button Content="Categories" Command="{Binding OpenCategoriesCommand}" Grid.Column="5" />
     
     <DataGrid x:Name="dataGrid" Grid.Row="2" Grid.ColumnSpan="6" AutoGenerateColumns="False"
               RowBackground="#FFCCCEFD" AlternatingRowBackground="White" CanUserAddRows="False" IsReadOnly="True"

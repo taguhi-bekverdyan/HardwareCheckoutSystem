@@ -5,59 +5,73 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
+using HardwareCheckoutSystemAdmin.Data.Services.Helpers;
+using HardwareCheckoutSystemAdmin.Data.WebAPI;
 using HardwareCheckoutSystemAdmin.Models;
+using RestSharp;
 
 namespace HardwareCheckoutSystemAdmin.Data.Services
 {
   public class CategoryService : ICategoryService
   {
-    public async Task Delete(Guid key)
+    private readonly IRestService _restService;
+    private RestRequest _restRequest;
+
+    public CategoryService(IRestService restService)
     {
-      using (var context = new DataContext())
-      {
-        var categoryToDelete = (from d in context.Categories
-                              where d.Id == key
-                              select d).FirstOrDefault();
-        context.Categories.Remove(categoryToDelete);
-        await context.SaveChangesAsync();
-      }
+      _restService = restService;
     }
 
+    #region [READ]
     public async Task<List<Category>> FindAll()
     {
-      using (var context = new DataContext())
-      {
-        return await context.Categories.ToListAsync();
-      }
+      _restRequest = new RestRequest("api/categories", Method.GET);
+      var response = await _restService.Client.ExecuteTaskAsync<List<Category>>(_restRequest);
+
+      return Helper.CheckResponseStatus(response);
     }
 
     public async Task<Category> FindById(Guid categoryId)
     {
-      using (var context = new DataContext())
-      {
-        return await context.Categories.FirstOrDefaultAsync(d => d.Id == categoryId);
-      }
+      _restRequest = new RestRequest($"api/categories/{categoryId}", Method.GET);
+      var response = await _restService.Client.ExecuteTaskAsync<Category>(_restRequest);
+
+      return Helper.CheckResponseStatus(response);
     }
 
+    #endregion
+
+    #region [CREATE]
     public async Task Insert(Category category)
     {
-      using (var context = new DataContext())
-      {
-        context.Categories.Add(category);
-        await context.SaveChangesAsync();
-      }
-    }
+      _restRequest = new RestRequest("api/categories", Method.POST);
+      _restRequest.AddJsonBody(category);
+      var response = await _restService.Client.ExecuteTaskAsync<Category>(_restRequest);
 
+      Helper.CheckResponseStatus(response);
+    }
+    #endregion
+
+
+    #region [UPDATE]
     public async Task Update(Category category)
     {
-      using (var context = new DataContext())
-      {
-        var categoryToUpdate = (from d in context.Categories
-                              where d.Id == category.Id
-                              select d).FirstOrDefault();
-        categoryToUpdate = category;
-        await context.SaveChangesAsync();
-      }
+      _restRequest = new RestRequest("api/categories", Method.PUT);
+      _restRequest.AddJsonBody(category);
+      var response = await _restService.Client.ExecuteTaskAsync<Category>(_restRequest);
+
+      Helper.CheckResponseStatus(response);
     }
+    #endregion
+
+    #region [DELETE]
+    public async Task Delete(Guid id)
+    {
+      _restRequest = new RestRequest($"api/categories/{id}", Method.DELETE);
+      var response = await _restService.Client.ExecuteTaskAsync<Category>(_restRequest);
+
+      Helper.CheckResponseStatus(response);
+    }
+    #endregion    
   }
 }

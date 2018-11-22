@@ -11,6 +11,8 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Unity;
 using HardwareCheckoutSystemAdmin.Data.WebAPI;
+using System.Windows;
+using HardwareCheckoutSystemAdmin.Properties;
 
 namespace HardwareCheckoutSystemAdmin
 {
@@ -45,7 +47,7 @@ namespace HardwareCheckoutSystemAdmin
       Container.RegisterType<IRequestService, RequestService>(new ContainerControlledLifetimeManager());
       Container.RegisterType<IResponseService, ResponseService>(new ContainerControlledLifetimeManager());
       Container.RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager());
-      Container.RegisterType<IRestService, RestService>(new InjectionConstructor("https://localhost:5001"));
+      Container.RegisterType<IRestService, RestService>(new InjectionConstructor(Resources.baseUrl));
     }
 
     protected override System.Windows.DependencyObject CreateShell()

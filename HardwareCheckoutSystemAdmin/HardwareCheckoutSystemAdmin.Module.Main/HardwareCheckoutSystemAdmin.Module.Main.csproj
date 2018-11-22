@@ -101,6 +101,7 @@
       <DependentUpon>AddDeviceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Devices\AddDeviceViewModel.cs" />
+    <Compile Include="Views\Devices\SaveMode.cs" />
     <Compile Include="Views\Devices\UpdateDevicesEvent.cs" />
     <Compile Include="Views\Devices\DeviceListView.xaml.cs">
       <DependentUpon>DeviceListView.xaml</DependentUpon>

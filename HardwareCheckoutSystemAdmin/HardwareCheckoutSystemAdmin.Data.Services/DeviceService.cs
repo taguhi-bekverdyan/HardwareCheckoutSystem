@@ -10,96 +10,77 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using HardwareCheckoutSystemAdmin.Data.Services.Helpers;
 
 namespace HardwareCheckoutSystemAdmin.Data.Services
 {
   public class DeviceService : IDeviceService
   {
     private readonly IRestService _restService;
-    private readonly RestRequest _restRequest;
+    private RestRequest _restRequest;
 
     public DeviceService(IRestService restService)
     {
       _restService = restService;
-      _restRequest = new RestRequest();
     }
-
-    #region [CREATE]
-    public async Task Insert(Device device)
-    {
-      using (var context = new DataContext())
-      {
-        context.Devices.Add(device);
-        await context.SaveChangesAsync();
-      }
-    }
-    #endregion
 
     #region [READ]
     public async Task<List<Device>> FindAll()
     {
-      _restRequest.Resource = "api/devices";
-
+      _restRequest = new RestRequest("api/devices", Method.GET);
       var response = await _restService.Client.ExecuteTaskAsync<List<Device>>(_restRequest);
-      return CheckResponseStatus(response);         
+
+      return Helper.CheckResponseStatus(response);
     }
 
     public async Task<Device> FindById(Guid deviceId)
     {
-      using (var context = new DataContext())
-      {
-        return await context.Devices.Include(d => d.Brand).Include(d => d.Category).FirstOrDefaultAsync(d => d.Id == deviceId);
-      }
+      _restRequest = new RestRequest($"api/devices/{deviceId}", Method.GET);
+      var response = await _restService.Client.ExecuteTaskAsync<Device>(_restRequest);
+
+      return Helper.CheckResponseStatus(response);
     }
 
-    public async Task<Device> FindBySn(string sn)
+    public async Task<Device> FindBySn(string deviceSn)
     {
-      using (var context = new DataContext())
-      {
-        return await context.Devices.Include(d => d.Brand).Include(d => d.Category).FirstOrDefaultAsync(d => d.SerialNumber == sn);
-      }
+      _restRequest = new RestRequest($"api/devices/by-sn/{deviceSn}", Method.GET);
+      var response = await _restService.Client.ExecuteTaskAsync<Device>(_restRequest);
+
+      return Helper.CheckResponseStatus(response);
     }
     #endregion
+
+    #region [CREATE]
+    public async Task Insert(Device device)
+    {
+      _restRequest = new RestRequest("api/devices", Method.POST);
+      _restRequest.AddJsonBody(device);
+      var response = await _restService.Client.ExecuteTaskAsync<Device>(_restRequest);
+
+      Helper.CheckResponseStatus(response);
+    }
+    #endregion
+
 
     #region [UPDATE]
     public async Task Update(Device device)
     {
-      using (var context = new DataContext())
-      {
-        var deviceToUpdate = (from d in context.Devices
-                              where d.Id == device.Id
-                              select d).FirstOrDefault();
-        deviceToUpdate = device;
-        await context.SaveChangesAsync();
-      }
+      _restRequest = new RestRequest("api/devices", Method.PUT);
+      _restRequest.AddJsonBody(device);
+      var response = await _restService.Client.ExecuteTaskAsync<Device>(_restRequest);
+
+      Helper.CheckResponseStatus(response);
     }
     #endregion
 
     #region [DELETE]
-    public async Task Delete(Guid key)
+    public async Task Delete(Guid id)
     {
-      using (var context = new DataContext())
-      {
-        var deviceToDelete = (from d in context.Devices
-                              where d.Id == key
-                              select d).FirstOrDefault();
-        context.Devices.Remove(deviceToDelete);
-        await context.SaveChangesAsync();
-      }
-    }
-    #endregion
+      _restRequest = new RestRequest($"api/devices/{id}", Method.DELETE);
+      var response = await _restService.Client.ExecuteTaskAsync<Device>(_restRequest);
 
-    private List<Device> CheckResponseStatus(IRestResponse<List<Device>> response)
-    {
-      if (response.IsSuccessful)
-      {
-        return response.Data;
-      }
-      else
-      {
-        string message = response.ErrorMessage;
-        throw new Exception("Server Error: " + message);
-      }
+      Helper.CheckResponseStatus(response);
     }
+    #endregion    
   }
 }

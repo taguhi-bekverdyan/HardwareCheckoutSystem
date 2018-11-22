@@ -1,5 +1,8 @@
 ﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
+using HardwareCheckoutSystemAdmin.Data.Services.Helpers;
+using HardwareCheckoutSystemAdmin.Data.WebAPI;
 using HardwareCheckoutSystemAdmin.Models;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,53 +14,54 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 {
   public class BrandService : IBrandService
   {
+    private readonly IRestService _restService;
+    private RestRequest _restRequest;
+
+    public BrandService(IRestService restService)
+    {
+      _restService = restService;
+    }
 
     public async Task<List<Brand>> FindAll()
     {
-      using (var context = new DataContext())
-      {
-        return await context.Brands.ToListAsync();
-      }
+      _restRequest = new RestRequest("api/brands", Method.GET);
+      var response = await _restService.Client.ExecuteTaskAsync<List<Brand>>(_restRequest);
+
+      return Helper.CheckResponseStatus(response);
     }
 
     public async Task<Brand> FindById(Guid brandId)
     {
-      using (var context = new DataContext())
-      {
-        return await context.Brands.FirstOrDefaultAsync(d => d.Id == brandId);
-      }
+      _restRequest = new RestRequest($"api/brands/{brandId}", Method.GET);
+      var response = await _restService.Client.ExecuteTaskAsync<Brand>(_restRequest);
+
+      return Helper.CheckResponseStatus(response);
     }
 
     public async Task Insert(Brand brand)
     {
-      using (var context = new DataContext())
-      {
-        context.Brands.Add(brand);
-        await context.SaveChangesAsync();
-      }
-    }
-        public async Task Delete(Guid key)
-        {
-            using (var context = new DataContext())
-            {
-                var brandToDelete = (from d in context.Brands
-                                      where d.Id == key
-                                      select d).FirstOrDefault();
-                context.Brands.Remove(brandToDelete);
-                await context.SaveChangesAsync();
-            }
-        }
+      _restRequest = new RestRequest("api/brands", Method.POST);
+      _restRequest.AddJsonBody(brand);
+      var response = await _restService.Client.ExecuteTaskAsync<Brand>(_restRequest);
 
-        public async Task Update(Brand brand)
+      Helper.CheckResponseStatus(response);
+    }
+
+    public async Task Delete(Guid id)
     {
-      using (var context = new DataContext())
-      {
-        var brandToUpdate = (from d in context.Brands
-                              where d.Id == brand.Id
-                              select d).FirstOrDefault();
-        brandToUpdate = brand;
-        await context.SaveChangesAsync();
-      }
+      _restRequest = new RestRequest($"api/brands/{id}", Method.DELETE);
+      var response = await _restService.Client.ExecuteTaskAsync<Brand>(_restRequest);
+
+      Helper.CheckResponseStatus(response);
+    }
+
+    public async Task Update(Brand brand)
+    {
+      _restRequest = new RestRequest("api/brands", Method.PUT);
+      _restRequest.AddJsonBody(brand);
+      var response = await _restService.Client.ExecuteTaskAsync<Brand>(_restRequest);
+
+      Helper.CheckResponseStatus(response);
     }
   }
 }

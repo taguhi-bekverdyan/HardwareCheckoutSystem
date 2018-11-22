@@ -9,6 +9,8 @@ using System.Collections.ObjectModel;
 using HardwareCheckoutSystemAdmin.Common.Views;
 using System.Windows;
 using System;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Brands;
+using HardwareCheckoutSystemAdmin.Module.Main.Views.Categorys;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 {
@@ -19,6 +21,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     private readonly IShellService _shellService;
     private readonly IEventAggregator _eventAggregator;
     private ShellView _addDeviceView;
+    //private ShellView _openBrandsView;
+    //private ShellView _openCategoriesView;
     #endregion
 
     #region Constructor
@@ -33,7 +37,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     }
     #endregion
 
-    #region Properties
+    #region DependencyProperties
 
     private Device _selectedDevice;
     public Device SelectedDevice
@@ -51,15 +55,28 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         SetProperty(ref _deviceItems, value);
       }
     }
+
+    #endregion
+
+    #region Commands
+
     public DelegateCommand AddDeviceCommand => new DelegateCommand(AddDeviceAction);
     public DelegateCommand EditDeviceCommand => new DelegateCommand(EditDeviceAction, CanEditOrDeleteDevice)
       .ObservesProperty(() => SelectedDevice);
     public DelegateCommand DeleteDeviceCommand => new DelegateCommand(DeleteDeviceAction, CanEditOrDeleteDevice)
       .ObservesProperty(() => SelectedDevice);
+    public DelegateCommand OpenBrandsCommand => new DelegateCommand(OpenBrandsAction);
+    public DelegateCommand OpenCategoriesCommand => new DelegateCommand(OpenCategoriesAction);
 
     #endregion
 
     #region Methods
+
+    private bool CanEditOrDeleteDevice()
+    {
+      if (SelectedDevice != null) return true;
+      return false;
+    }
 
     /// <summary>
     /// Load all devices by rest request
@@ -90,9 +107,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
     #endregion
 
     #region Add Device
+
     private void AddDeviceAction()
     {
-      _addDeviceView = _shellService.ShowShell(nameof(AddDeviceView));
+      var parameters = new NavigationParameters();
+      parameters.Add("Mode", SaveMode.Add);
+      _addDeviceView = _shellService.ShowShell(nameof(AddDeviceView), parameters);
       _eventAggregator.GetEvent<UpdateDevicesEvent>().Subscribe(AddDeviceEventHandler);
     }
 
@@ -107,24 +127,32 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
       _eventAggregator.GetEvent<UpdateDevicesEvent>().Unsubscribe(AddDeviceEventHandler);
       SelectedDevice = null;
     }
+
     #endregion
 
     #region Edit Device
-    private async void EditDeviceAction()
+
+    private void EditDeviceAction()
     {
       var parameters = new NavigationParameters();
       parameters.Add("SelectedDevice", SelectedDevice);
+      parameters.Add("Mode", SaveMode.Edit);
       _addDeviceView = _shellService.ShowShell(nameof(AddDeviceView), parameters);
       _eventAggregator.GetEvent<UpdateDevicesEvent>().Subscribe(EditDeviceEventHandler);
     }
 
-    private void EditDeviceEventHandler(UpdateDevicesEventArgs obj)
+    private void EditDeviceEventHandler(UpdateDevicesEventArgs args)
     {
-      //throw new NotImplementedException();
+      _addDeviceView.Close();
+      UpdateDevices();
+      _eventAggregator.GetEvent<UpdateDevicesEvent>().Unsubscribe(EditDeviceEventHandler);
+      SelectedDevice = null;
     }
+
     #endregion
 
     #region Delete Device
+
     private async void DeleteDeviceAction()
     {
       _eventAggregator.GetEvent<UpdateDevicesEvent>().Subscribe(DeleteDeviceEventHandler);
@@ -135,14 +163,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         await _devices.Delete(SelectedDevice.Id);
         _eventAggregator.GetEvent<UpdateDevicesEvent>().Publish(new UpdateDevicesEventArgs(SelectedDevice));
       }
-      _eventAggregator.GetEvent<UpdateDevicesEvent>().Unsubscribe(DeleteDeviceEventHandler);
-      SelectedDevice = null;
-    }
-
-    private bool CanEditOrDeleteDevice()
-    {
-      if (SelectedDevice != null) return true;
-      return false;
+      else _eventAggregator.GetEvent<UpdateDevicesEvent>().Publish(null);
     }
 
     private void DeleteDeviceEventHandler(UpdateDevicesEventArgs args)
@@ -151,7 +172,30 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
       {
         UpdateDevices();
       }
+      _eventAggregator.GetEvent<UpdateDevicesEvent>().Unsubscribe(DeleteDeviceEventHandler);
+      SelectedDevice = null;
     }
-    #endregion    
+
+    #endregion
+
+    #region OpenBrands
+
+    private void OpenBrandsAction()
+    {
+      //_openBrandsView = _shellService.ShowShell(nameof(BrandPageView));
+      _shellService.ShowShell(nameof(BrandPageView));
+    }
+
+    #endregion
+
+    #region OpenCategories
+
+    private void OpenCategoriesAction()
+    {
+      //_openCategoriesView = _shellService.ShowShell(nameof(CategoryPageView));
+      _shellService.ShowShell(nameof(CategoryPageView));
+    }
+
+    #endregion
   }
 }

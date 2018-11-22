@@ -14,15 +14,7 @@ namespace HCSWebAPI.Services
     public DeviceService(DataContext context)
     {
       _context = context;
-    }
-
-    #region [CREATE]
-    public async Task Insert(Device device)
-    {
-      _context.Devices.Add(device);
-      await _context.SaveChangesAsync();
-    }
-    #endregion
+    }    
 
     #region [READ]
     public async Task<List<Device>> FindAll()
@@ -41,13 +33,18 @@ namespace HCSWebAPI.Services
     }
     #endregion
 
+    #region [CREATE]
+    public async Task Insert(Device device)
+    {
+      _context.Devices.Add(device);
+      await _context.SaveChangesAsync();
+    }
+    #endregion
+
     #region [UPDATE]
     public async Task Update(Device device)
     {
-      var deviceToUpdate = (from d in _context.Devices
-                            where d.Id == device.Id
-                            select d).FirstOrDefault();
-      deviceToUpdate = device;
+      _context.Update(device);
       await _context.SaveChangesAsync();
     }
     #endregion
