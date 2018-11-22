@@ -38,27 +38,44 @@
             </Grid.ColumnDefinitions>
 
             <Button Width="80" Height="40" Grid.Column="0" Content="Edit"
-                    Command="{Binding UpdateDevice}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding UpdateDevice}" />
             <Button Width="80" Height="40" Grid.Column="1" Content="Add"
-                    Command="{Binding AddDevice}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding AddDevice}"/>
             <Button Width="80" Height="40" Grid.Column="2" Content="Delete"
-                    Command="{Binding DeleteDevice}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding DeleteDevice}" />
 
             <Button Width="80" Height="40" Grid.Column="4" Content="Brands"
-                    Command="{Binding OpenBrands}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding OpenCategories}" />
             <Button Width="80" Height="40" Grid.Column="5" Content="Categories"
-                    Command="{Binding OpenCategories}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding OpenBrands}"/>
 
 
 
         </Grid>
 
         <extToolkit1:BusyIndicator Grid.Row="1" BusyContent="Loading..." IsBusy="{Binding IsBusy}">
-            <DataGrid Margin="10" IsReadOnly="True"
+            <DataGrid Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
                   CanUserAddRows="False" ItemsSource="{Binding Devices,Mode=TwoWay}"
                   SelectedItem="{Binding SelectedDevice,Mode=TwoWay}">
-            
-        </DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Image" Width="100" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding BitmapImage}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Serial Number" Binding="{Binding SerialNumber}" />
+                    <DataGridTextColumn Header="Category" Binding="{Binding Category}" />
+                    <DataGridTextColumn Header="Brand" Binding="{Binding Brand}" />
+                    <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+                    <DataGridTextColumn Header="Max Period" Binding="{Binding MaxPeriod}" />
+                    <DataGridTextColumn Header="Permission" Binding="{Binding Permission}" />
+                </DataGrid.Columns>
+                
+            </DataGrid>
         </extToolkit1:BusyIndicator>
     </Grid>
 </UserControl>

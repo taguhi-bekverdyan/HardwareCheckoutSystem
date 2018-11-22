@@ -1,5 +1,6 @@
 ﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,73 +12,101 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 {
     public class CategoryService : ICategoryService
     {
+
+        private const string EndPoint = @"https://localhost:44350/api/";
+        private readonly RestClient _client;
+
+        public CategoryService()
+        {
+            _client = new RestClient(EndPoint);
+        }
+
         public async Task Delete(Category category)
         {
-            using (DataContext context = new DataContext())
-            {
-                if (category != null)
-                {
-                    context.Categories.Attach(category);
-                    context.Categories.Remove(category);
-                    await context.SaveChangesAsync();
-                }
-            }
+            await DeleteCategoryById(category.Id);
         }
 
         public async Task DeleteCategoryById(Guid id)
         {
-            using (DataContext context = new DataContext())
+            RestRequest request = new RestRequest("categories/{guid}", Method.DELETE);
+            request.AddUrlSegment("guid", id.ToString());
+
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+            if (!response.IsSuccessful)
             {
-                Category category = await FindCategoryById(id);
-                await Delete(category);
+                throw new Exception(response.ErrorMessage);
             }
         }
 
         public async Task<List<Category>> FindAll()
         {
-            return await Task<List<Category>>.Run(()=> {
-                using (DataContext context = new DataContext())
-                {
-                    return context.Categories.ToListAsync();
-                }
-            });
+            var request = new RestRequest("categories", Method.GET);
+            IRestResponse<List<Category>> response = await _client.ExecuteTaskAsync<List<Category>>(request);
+            if (!response.IsSuccessful)
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+            else
+            {
+                return response.Data;
+            }
         }
 
-        public async Task<Category> FindCategoryById(Guid id)
+        public async Task<Category> FindCategoryByIdAsync(Guid id)
         {
-            using (DataContext context = new DataContext())
+            var request = new RestRequest("categories/{guid}", Method.GET);
+            request.AddUrlSegment("guid",id.ToString());
+
+            IRestResponse<Category> response = await _client.ExecuteTaskAsync<Category>(request);
+            if (!response.IsSuccessful)
             {
-                return await context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+                throw new Exception(response.ErrorMessage);
+            }
+            else
+            {
+                return response.Data;
             }
         }
 
         public async Task<Category> FindCategoryByName(string name)
         {
-            using (DataContext context = new DataContext())
+            var request = new RestRequest("categories/byName/{name}", Method.GET);
+            request.AddUrlSegment("name", name);
+
+            IRestResponse<Category> response = await _client.ExecuteTaskAsync<Category>(request);
+            if (!response.IsSuccessful)
             {
-                return await context.Categories.FirstOrDefaultAsync(c => c.Name == name);
+                throw new Exception(response.ErrorMessage);
+            }
+            else
+            {
+                return response.Data;
             }
         }
 
         public async Task Insert(Category category)
         {
-            using (DataContext context = new DataContext())
+            var request = new RestRequest("categories", Method.POST);
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(category);
+
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+            if (!response.IsSuccessful)
             {
-                context.Categories.Add(category);
-                await context.SaveChangesAsync();
+                throw new Exception(response.ErrorMessage);
             }
         }
 
         public async Task Update(Category category)
         {
-            using (DataContext context = new DataContext())
+            var request = new RestRequest("categories", Method.PUT);
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(category);
+
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+            if (!response.IsSuccessful)
             {
-                Category temp = await context.Categories.FirstOrDefaultAsync(d => d.Id == category.Id);
-                if (temp != null)
-                {
-                    context.Entry(temp).CurrentValues.SetValues(category);
-                    await context.SaveChangesAsync();
-                }
+                throw new Exception(response.ErrorMessage);
             }
         }
     }

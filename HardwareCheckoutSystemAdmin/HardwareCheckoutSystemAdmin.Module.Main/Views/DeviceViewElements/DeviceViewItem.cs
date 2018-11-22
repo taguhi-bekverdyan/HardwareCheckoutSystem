@@ -2,9 +2,12 @@
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 {
@@ -21,6 +24,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         public Permission Permission { get; set; }
         public byte[] Image { get; set; }
 
+        public BitmapSource BitmapImage { get; set; }
+
         public DeviceViewItem(Device d)
         {
             _id = d.Id;
@@ -31,7 +36,20 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             Description = d.Description;
             MaxPeriod = d.MaxPeriod;
             Status = d.Status;
+            GetImage(d);
             Permission = d.Permission;
+
+        }
+
+        private void GetImage(Device d)
+        {
+            if (d.Image == null || d.Image.Length == 0)
+            {
+                return;
+            }
+
+            BitmapImage = (BitmapSource)new ImageSourceConverter().ConvertFrom(d.Image);
+
         }
 
         public DeviceViewItem()

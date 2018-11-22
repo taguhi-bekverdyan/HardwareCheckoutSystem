@@ -1,9 +1,11 @@
-﻿using HardwareCheckoutSystemAdmin.Models.HelperAttributes;
+﻿using HardwareCheckoutSystemWebApi.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace HardwareCheckoutSystemAdmin.Models
+namespace HardwareCheckoutSystemWebApi.Models
 {
     public class Brand:IEquatable<Brand>
     {
@@ -12,6 +14,11 @@ namespace HardwareCheckoutSystemAdmin.Models
         public string Name { get; set; }
 
         public ICollection<Device> Devices { get; set; }
+
+        public Brand()
+        {
+            Id = Guid.NewGuid();
+        }
 
         public bool Equals(Brand other)
         {

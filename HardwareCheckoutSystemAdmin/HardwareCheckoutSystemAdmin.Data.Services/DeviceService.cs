@@ -6,91 +6,107 @@ using System.Text;
 using System.Threading.Tasks;
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
+using RestSharp;
 
 namespace HardwareCheckoutSystemAdmin.Data.Services
 {
     public class DeviceService : IDeviceService
     {
-        
+
+        private const string EndPoint = @"https://localhost:44350/api/";
+        private readonly RestClient _client;
+
+        public DeviceService()
+        {
+            _client = new RestClient(EndPoint);
+        }
+
         public async Task Delete(Device device)
         {
-            using (DataContext context = new DataContext())
-            {
-                context.Devices.Attach(device);
-                context.Devices.Remove(device);
-                await context.SaveChangesAsync();
-            }
+            await DeleteDeviceById(device.Id);
         }
 
         public async Task DeleteDeviceById(Guid id)
         {
-            using (DataContext context = new DataContext())
+            RestRequest request = new RestRequest("devices/{guid}", Method.DELETE);
+            request.AddUrlSegment("guid", id.ToString());
+
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+            if (!response.IsSuccessful)
             {
-                Device device = await FindDeviceById(id);
-                await Delete(device);
+                throw new Exception(response.ErrorMessage);
             }
         }
 
         public async Task<List<Device>> FindAll()
         {
-            //using (DataContext context = new DataContext())
-            //{
-            //    return await context.Devices
-            //        .Include((d) => d.Brand)
-            //        .Include((d) => d.Category)
-            //        .ToListAsync();
-            //}
-            return await Task<List<Device>>.Run(()=> {
-                using (DataContext context = new DataContext())
-                {
-                    return context.Devices
-                        .Include((d) => d.Brand)
-                        .Include((d) => d.Category)
-                        .ToListAsync();
-                }
-            });
+            var request = new RestRequest("devices", Method.GET);
+            IRestResponse<List<Device>> response = await _client.ExecuteTaskAsync<List<Device>>(request);
+            if (!response.IsSuccessful)
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+            else
+            {
+                return response.Data;
+            }
         }
 
         public async Task<Device> FindDeviceById(Guid id)
-        {          
-            using (DataContext context = new DataContext())
+        {
+            var request = new RestRequest("devices/{guid}", Method.GET);
+            request.AddUrlSegment("guid", id.ToString());
+
+            IRestResponse<Device> response = await _client.ExecuteTaskAsync<Device>(request);
+            if (!response.IsSuccessful)
             {
-                return await context.Devices
-                    .Include((d) => d.Brand)
-                    .Include((d) => d.Category)
-                    .FirstOrDefaultAsync(d => d.Id == id);
-            }           
+                throw new Exception(response.ErrorMessage);
+            }
+            else
+            {
+                return response.Data;
+            }
         }
 
         public async Task<Device> FindDeviceBySerialNumber(string sn)
         {
-            using (DataContext context = new DataContext())
+            var request = new RestRequest("categories/serialNumber/{sn}", Method.GET);
+            request.AddUrlSegment("sn", sn);
+
+            IRestResponse<Device> response = await _client.ExecuteTaskAsync<Device>(request);
+            if (!response.IsSuccessful)
             {
-                return await context.Devices
-                    .Include((d) => d.Brand)
-                    .Include((d) => d.Category)
-                    .FirstOrDefaultAsync(d => d.SerialNumber == sn);
+                throw new Exception(response.ErrorMessage);
+            }
+            else
+            {
+                return response.Data;
             }
         }
 
         public async Task Insert(Device newDevice)
         {
-            using (DataContext context = new DataContext())
+            var request = new RestRequest("devices", Method.POST);
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(newDevice);
+
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+            if (!response.IsSuccessful)
             {
-                context.Devices.Add(newDevice);
-                await context.SaveChangesAsync();
+                throw new Exception(response.ErrorMessage);
             }
         }
 
         public async Task Update(Device device)
         {
-            using (DataContext context = new DataContext()) {
-                Device temp = await context.Devices.FirstOrDefaultAsync(d=>d.Id == device.Id);
-                if (temp != null)
-                {                   
-                    context.Entry(temp).CurrentValues.SetValues(device);
-                    await context.SaveChangesAsync();
-                }
+            var request = new RestRequest("devices", Method.PUT);
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(device);
+
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+            if (!response.IsSuccessful)
+            {
+                throw new Exception(response.ErrorMessage);
             }
         }
     }

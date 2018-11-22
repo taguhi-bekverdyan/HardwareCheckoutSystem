@@ -30,7 +30,7 @@
 
         <Label Content="Brand" Grid.Column="0" Grid.Row="0" Margin="10" VerticalAlignment="Center" FontSize="30"/>
         <Button Width="80" Height="40" Grid.Column="1" Grid.Row="0" Content="Delete"
-                    Command="{Binding DeleteBrand}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding DeleteBrand}"/>
 
         <extToolkit1:BusyIndicator Margin="10" Grid.Row="1" Grid.ColumnSpan="2" BusyContent="Loading..."
                                    IsBusy="{Binding IsBusy}">
@@ -43,6 +43,6 @@
         
         <TextBox Width="280" Height="40" Grid.Row="2" Text="{Binding Name, Mode=TwoWay}"/>
         <Button Width="80" Height="40" Grid.Column="1" Grid.Row="2" Content="Add"
-                    Command="{Binding AddBrand}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding AddBrand}"/>
     </Grid>
 </UserControl>

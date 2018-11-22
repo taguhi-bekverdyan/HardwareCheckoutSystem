@@ -35,11 +35,11 @@
             </Grid.ColumnDefinitions>
 
             <Button Width="80" Height="40" Grid.Column="0" Content="Edit"
-                    Command="{Binding UpdateUser}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding UpdateUser}" />
             <Button Width="80" Height="40" Grid.Column="1" Content="Add"
-                    Command="{Binding AddUser}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding AddUser}" />
             <Button Width="80" Height="40" Grid.Column="2" Content="Delete"
-                    Command="{Binding DeleteUser}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding DeleteUser}" />
 
 
 
