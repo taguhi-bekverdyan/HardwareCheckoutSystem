@@ -92,7 +92,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
       {
         MessageBox.Show(e.Message);
       }
-
     }
 
     /// <summary>
@@ -160,7 +159,15 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 
       if (dialogResult == MessageBoxResult.Yes)
       {
-        await _devices.Delete(SelectedDevice.Id);
+        try
+        {
+          await _devices.Delete(SelectedDevice.Id);
+        }
+        catch (Exception e)
+        {
+          MessageBox.Show(e.Message);
+        }
+        
         _eventAggregator.GetEvent<UpdateDevicesEvent>().Publish(new UpdateDevicesEventArgs(SelectedDevice));
       }
       else _eventAggregator.GetEvent<UpdateDevicesEvent>().Publish(null);

@@ -122,21 +122,28 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 
     private async void SaveDeviceAction()
     {
-      if (Device.Id == Guid.Empty) Device.Id = Guid.NewGuid();
-      switch (_mode)
+      try
       {
-        case SaveMode.Add:
-          await _devices.Insert(Device);
-          break;
-        case SaveMode.Edit:
-          Device.Brand = null;
-          Device.Category = null;
-          await _devices.Update(Device);
-          break;
-        default:
-          break;
+        if (Device.Id == Guid.Empty) Device.Id = Guid.NewGuid();
+        switch (_mode)
+        {
+          case SaveMode.Add:
+            await _devices.Insert(Device);
+            break;
+          case SaveMode.Edit:
+            Device.Brand = null;
+            Device.Category = null;
+            await _devices.Update(Device);
+            break;
+          default:
+            break;
+        }
+        _eventAggreagator.GetEvent<UpdateDevicesEvent>().Publish(new UpdateDevicesEventArgs(Device));
       }
-      _eventAggreagator.GetEvent<UpdateDevicesEvent>().Publish(new UpdateDevicesEventArgs(Device));
+      catch (Exception e)
+      {
+        MessageBox.Show(e.Message);
+      }
     }
 
     #endregion
