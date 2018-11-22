@@ -28,6 +28,13 @@ namespace HardwareCheckoutSystemWebApi.Models
         public Category Category { get; set; }
         public Guid BrandId { get; set; }
         public Brand Brand { get; set; }
+
+        public Device()
+        {
+            Id = Guid.NewGuid();
+        }
+
+
     }
 
     public enum DeviceStatus

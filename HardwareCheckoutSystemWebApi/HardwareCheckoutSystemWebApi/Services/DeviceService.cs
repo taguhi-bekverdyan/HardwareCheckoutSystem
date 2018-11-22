@@ -35,8 +35,15 @@ namespace HardwareCheckoutSystemWebApi.Services
 
         public Task<List<Device>> FindAll()
         {
+            /*
+             return context.Devices
+                        .Include((d) => d.Brand)
+                        .Include((d) => d.Category)
+                        .FirstOrDefault(d => d.Id == id);
+             */
             return Task<List<Device>>.Factory.StartNew(()=> {
                 return _context.Devices.ToList();
+                        
             });
         }
 
@@ -62,12 +69,13 @@ namespace HardwareCheckoutSystemWebApi.Services
             });
         }
 
-        public async Task Update(Device device)
+        public async Task<bool> Update(Device device)
         {
             Device item = await FindDeviceById(device.Id);
-            if (item == null) { return; }
+            if (item == null) { return false; }
             _context.Entry(item).CurrentValues.SetValues(device);
             await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

@@ -61,12 +61,13 @@ namespace HardwareCheckoutSystemWebApi.Services
             });
         }
 
-        public async Task Update(Brand brand)
+        public async Task<bool> Update(Brand brand)
         {
             Brand item = await FindBrandById(brand.Id);
-            if (item == null) { return; }
+            if (item == null) { return false; }
             _context.Entry(item).CurrentValues.SetValues(brand);
             await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

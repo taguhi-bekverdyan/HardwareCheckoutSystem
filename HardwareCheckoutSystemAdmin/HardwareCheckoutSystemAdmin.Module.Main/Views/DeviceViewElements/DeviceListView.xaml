@@ -38,16 +38,16 @@
             </Grid.ColumnDefinitions>
 
             <Button Width="80" Height="40" Grid.Column="0" Content="Edit"
-                    Command="{Binding UpdateDevice}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding UpdateDevice}" />
             <Button Width="80" Height="40" Grid.Column="1" Content="Add"
-                    Command="{Binding AddDevice}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding AddDevice}"/>
             <Button Width="80" Height="40" Grid.Column="2" Content="Delete"
-                    Command="{Binding DeleteDevice}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding DeleteDevice}" />
 
             <Button Width="80" Height="40" Grid.Column="4" Content="Brands"
-                    Command="{Binding OpenCategories}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding OpenCategories}" />
             <Button Width="80" Height="40" Grid.Column="5" Content="Categories"
-                    Command="{Binding OpenBrands}" Style="{StaticResource CircleButton}"/>
+                    Command="{Binding OpenBrands}"/>
 
 
 

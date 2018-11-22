@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HardwareCheckoutSystemWebApi.Context.Models;
+using HardwareCheckoutSystemWebApi.Models;
+using HardwareCheckoutSystemWebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,36 +15,116 @@ namespace HardwareCheckoutSystemWebApi.Controllers
     [ApiController]
     public class DevicesController : Controller
     {
-        // GET: api/<controller>
+
+        private readonly DeviceService _service;
+
+        public DevicesController(DataContext context)
+        {
+            _service = new DeviceService(context);
+        }
+
+        #region GET
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> FindAll()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var result = await _service.FindAll();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500,e);
+            }
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{guid}")]
+        public async Task<IActionResult> FindById([FromRoute]Guid guid)
         {
-            return "value";
+            try
+            {
+                Device device = await _service.FindDeviceById(guid);
+                if (device == null) { return NotFound(); }
+                return Ok(device);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500,e);
+            }
         }
 
-        // POST api/<controller>
+        [HttpGet("serialNumber/{sn}")]
+        public async Task<IActionResult> FindBySerialNumber([FromRoute]string sn)
+        {
+            try
+            {
+                Device device = await _service.FindDeviceBySerialNumber(sn);
+                if (device == null) { return NotFound(); }
+                return Ok(device);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500,e);
+            }
+        }
+
+        #endregion
+
+        #region POST
+
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<IActionResult> Create([FromBody]Device device)
         {
+            try
+            {
+                await _service.Insert(device);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500,e);
+            }
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        #endregion
+
+        #region PUT
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody]Device device)
         {
+            try
+            {
+                if (await _service.Update(device))
+                {
+                    return Ok(device);
+                }
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500,e);
+            }
         }
 
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        #endregion
+
+        #region DELETE
+        [HttpDelete("{guid}")]
+        public async Task<IActionResult> Delete([FromRoute]Guid guid)
         {
+            try
+            {
+                await _service.DeleteDeviceById(guid);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500,e);
+            }
         }
+
+        #endregion
     }
 }

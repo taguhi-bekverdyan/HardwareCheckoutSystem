@@ -105,16 +105,16 @@ namespace HardwareCheckoutSystemWebApi.Controllers
         #endregion
 
         #region PUT
-        [HttpPut("{guid}")]
-        public async Task<IActionResult> Update([FromRoute]Guid guid,[FromBody]Brand brand)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody]Brand brand)
         {
             try
             {
-                Brand result = await _service.FindBrandById(guid);
-                if (result == null) { return NotFound(); }
-                result.Name = brand.Name;
-                await _service.Update(result);
-                return Ok(result);
+                if (await _service.Update(brand))
+                {
+                    return Ok(brand);
+                }
+                return NotFound();
             }
             catch (Exception e)
             {

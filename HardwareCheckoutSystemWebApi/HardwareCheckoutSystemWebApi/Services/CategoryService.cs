@@ -68,12 +68,13 @@ namespace HardwareCheckoutSystemWebApi.Services
             });
         }
 
-        public async Task Update(Category category)
+        public async Task<bool> Update(Category category)
         {
             Category item = await FindCategoryById(category.Id);
-            if (item == null) { return; }
+            if (item == null) { return false; }
             _context.Entry(item).CurrentValues.SetValues(category);
             await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

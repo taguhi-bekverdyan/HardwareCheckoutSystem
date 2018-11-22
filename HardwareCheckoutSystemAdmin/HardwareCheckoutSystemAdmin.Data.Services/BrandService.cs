@@ -113,10 +113,9 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         public Task Update(Brand brand)
         {
             return Task.Factory.StartNew(()=> {
-                RestRequest request = new RestRequest("brands/{guid}", Method.PUT);
-                request.AddUrlSegment("guid", brand.Id);
+                RestRequest request = new RestRequest("brands", Method.PUT);               
                 request.RequestFormat = DataFormat.Json;
-                request.AddBody(new { name = brand.Name });
+                request.AddBody(brand);
 
                 IRestResponse response = _client.Execute(request);
                 if (!response.IsSuccessful)

@@ -97,7 +97,7 @@ namespace HardwareCheckoutSystemWebApi.Controllers
             try
             {
                 await _service.Insert(category);
-                return NoContent();
+                return Ok();
             }
             catch (Exception e)
             {
@@ -109,16 +109,16 @@ namespace HardwareCheckoutSystemWebApi.Controllers
 
         #region PUT
 
-        [HttpPut("{guid}")]
-        public async Task<IActionResult> Update([FromRoute]Guid guid, [FromBody]Category category)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody]Category category)
         {
             try
             {
-                Category cat = await _service.FindCategoryById(guid);
-                if (cat == null) { return NotFound(); }
-                cat.Name = category.Name;
-                await _service.Update(cat);
-                return Ok(cat);
+                if (await _service.Update(category))
+                {
+                    return Ok(category);
+                }
+                return NotFound();
             }
             catch (Exception e)
             {
