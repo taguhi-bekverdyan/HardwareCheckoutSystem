@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using static HardwareCheckoutSystemAdmin.Module.Main.Views.Users.AddUserViewModel;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
@@ -102,11 +103,19 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
 
         private async Task UpdateUsersData()
         {
-            Users = new List<UserViewItem>();
-            var temp = await _iuserservice.FindAll();
-            foreach (var i in temp)
+            List<UserViewItem> _Users = new List<UserViewItem>();
+            try
             {
-                Users.Add(new UserViewItem(i));
+                var temp = await _iuserservice.FindAll();
+                foreach (var item in temp)
+                {
+                    _Users.Add(new UserViewItem(item));
+                }
+                Users = _Users;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
             }
         }
 

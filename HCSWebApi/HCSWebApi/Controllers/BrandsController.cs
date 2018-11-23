@@ -20,6 +20,7 @@ namespace HardwareCheckoutSystemWebApi.Controllers
 
 
 
+
         #region ctor
         public BrandsController(DataContext context)
         {
@@ -55,13 +56,15 @@ namespace HardwareCheckoutSystemWebApi.Controllers
             try
             {
                 Brand brand = await _service.FindById(guid);
+
                 if (brand == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(brand);
+              return Ok(brand);
             }
+
             catch (Exception e)
             {
                 return StatusCode(500, e);
@@ -69,7 +72,7 @@ namespace HardwareCheckoutSystemWebApi.Controllers
         }
 
         [HttpGet("byName/{name}", Name = "GetBrandByName")]
-        public async Task<IActionResult> GetBrandById([FromRoute]string name)
+        public async Task<IActionResult> GetBrandByName([FromRoute]string name)
         {
             try
             {
@@ -108,15 +111,14 @@ namespace HardwareCheckoutSystemWebApi.Controllers
 
         #region PUT
         [HttpPut("{guid}")]
-        public async Task<IActionResult> UpdateBrand([FromRoute]Guid guid, [FromBody]Brand brand)
+        public async Task<IActionResult> UpdateBrand([FromRoute]Guid guid)
         {
             try
             {
-                Brand result = await _service.FindById(guid);
-                if (result == null) { return NotFound(); }
-                result.Name = brand.Name;
-                await _service.Update(result);
-                return Ok(result);
+                Brand brand = await _service.FindById(guid);
+                if (brand == null) { return NotFound(); }
+                await _service.Update(brand);
+                return Ok(brand);
             }
             catch (Exception e)
             {
@@ -127,12 +129,27 @@ namespace HardwareCheckoutSystemWebApi.Controllers
         #endregion
 
         #region DELETE
-        [HttpDelete("{guid}")]
-        public async Task<IActionResult> DeleteBrand([FromRoute]Guid guid)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteBrand([FromBody]Brand brand)
         {
             try
             {
-                Brand result = await _service.FindById(guid);
+                if (brand == null) { return NotFound(); }
+                await _service.Delete(brand);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
+        }
+
+        [HttpDelete("{name}")]
+        public async Task<IActionResult> DeleteBrandByName([FromRoute]string name)
+        {
+            try
+            {
+                Brand result = await _service.FindByName(name);
                 if (result == null) { return NotFound(); }
                 await _service.Delete(result);
                 return NoContent();
@@ -142,7 +159,6 @@ namespace HardwareCheckoutSystemWebApi.Controllers
                 return StatusCode(500, e);
             }
         }
-
         #endregion
 
         #region Helpers

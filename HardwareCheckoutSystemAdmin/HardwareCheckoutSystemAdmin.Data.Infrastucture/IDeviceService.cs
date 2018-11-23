@@ -12,7 +12,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         Task<Device> FindById(Guid deviceId);
         Task<Device> FindBySn(string sn);
         Task Update(Device device);
-        Task Delete(Guid key);
+        Task Delete(Device device);
         Task DeleteBySerialNumber(string serialnumber);
     }
 }

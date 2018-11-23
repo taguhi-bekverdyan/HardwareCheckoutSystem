@@ -16,7 +16,7 @@ namespace HardwareCheckoutSystemAdmin.Models
         public Permission Permission { get; set; }
         public string Address { get; set; }
         public string TelNumber { get; set; }
-        //public byte[] AvatarImage { get; set; }
+        public byte[] AvatarImage { get; set; }
         public string SerialNumber { get; set; }
 
         public UserViewItem( User user)
@@ -28,6 +28,7 @@ namespace HardwareCheckoutSystemAdmin.Models
             Address = user.Address;
             TelNumber = user.TelNumber;
             SerialNumber = user.SerialNumber;
+            AvatarImage = AvatarImage;
 
         }
 

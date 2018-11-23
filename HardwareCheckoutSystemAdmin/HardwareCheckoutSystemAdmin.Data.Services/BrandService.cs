@@ -1,5 +1,6 @@
 ﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,89 +12,116 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 {
     public class BrandService : IBrandService
     {
+        private readonly IRestService _restService;
+
+        public BrandService(IRestService restservice)
+        {
+            _restService = restservice;
+        }
+
         #region [CREATE]
         public async Task Insert(Brand brand)
         {
-            using (var context = new DataContext())
-            {
-                context.Brands.Add(brand);
-                await context.SaveChangesAsync();
-            }
+            var request = new RestRequest("api/brands", Method.POST);
+            request.AddBody(brand);
+            var response = _restService.Client.Execute(request);
         }
+
         #endregion
 
         #region [READ]
         public async Task<List<Brand>> FindAll()
         {
-            using (var context = new DataContext())
+            var request = new RestRequest("api/brands", Method.GET);
+            var response = await _restService.Client.ExecuteTaskAsync<List<Brand>>(request);
+            if (response.IsSuccessful)
             {
-                return await context.Brands.ToListAsync();
+                return response.Data;
             }
-        }
+            else
+            {
+                string message = response.ErrorMessage;
+                throw new Exception("Server Error: " + message);
+            }
 
+        }
+        #endregion
+
+        #region [Name]
         public async Task<Brand> FindByName(string name)
         {
-            using (var context = new DataContext())
+            var request = new RestRequest("api/brands/byName/{name}", Method.GET);
+            request.AddParameter("{name}", name);
+            var response = await _restService.Client.ExecuteTaskAsync<Brand>(request);
+            if (response.IsSuccessful)
             {
-                return await context.Brands.FirstOrDefaultAsync(d => d.Name == name);
+                return response.Data;
+            }
+            else
+            {
+                string message = response.ErrorMessage;
+                throw new Exception("Server Error: " + message);
+            }
+
+        }
+        #endregion
+
+        #region[FIND]
+        public async Task<Brand> FindById(Guid Id)
+        {
+            var request = new RestRequest("api/brands/{guid}", Method.GET);
+            request.AddParameter("{guid}", Id);
+            var response = await _restService.Client.ExecuteTaskAsync<Brand>(request);
+            if (response.IsSuccessful)
+            {
+                return response.Data;
+            }
+            else
+            {
+                string message = response.ErrorMessage;
+                throw new Exception("Server Error: " + message);
             }
         }
 
-        public async Task<Brand> FindById(Guid brandId)
-        {
-            using (var context = new DataContext())
-            {
-                return await context.Brands.FirstOrDefaultAsync(d => d.Id == brandId);
-            }
-        }
+
         #endregion
 
         #region [UPDATE]
         public async Task Update(Brand brand)
         {
-            using (var context = new DataContext())
+            var request = new RestRequest("api/brands/{guid}", Method.PUT);
+            request.AddUrlSegment("{guid}", brand.Id);
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(brand);
+            IRestResponse response = _restService.Client.Execute(request);
+            if (!response.IsSuccessful)
             {
-                var deviceToUpdate = (from d in context.Brands
-                                      where d.Id == brand.Id
-                                      select d).FirstOrDefault();
-                deviceToUpdate = brand;
-                await context.SaveChangesAsync();
+                throw new Exception(response.ErrorMessage);
             }
         }
         #endregion
 
         #region [DELETE]
-        public async Task DeleteByKey(Guid key)
-        {
-            using (var context = new DataContext())
-            {
-                var brandToDelete = (from d in context.Brands
-                                     where d.Id == key
-                                     select d).FirstOrDefault();
-                context.Brands.Remove(brandToDelete);
-                await context.SaveChangesAsync();
-            }
-        }
-
-
         public async Task Delete(Brand brand)
         {
-            using (var context = new DataContext())
-            {
-                var brandToDelete = (from d in context.Brands
-                                     where d.Id == brand.Id
-                                     select d).FirstOrDefault();
-                context.Brands.Remove(brandToDelete);
-                await context.SaveChangesAsync();
-            }
+            await DeleteByName(brand.Name);
         }
 
+        public async Task DeleteByName(string name)
+        {
+            var request = new RestRequest("api/brands/{name}", Method.DELETE);
+            request.AddUrlSegment("name", name);
+            var response = _restService.Client.Execute(request);
+            if (!response.IsSuccessful)
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+            #endregion
 
 
-        #endregion
 
-
-
+        }
     }
-
 }
+
+

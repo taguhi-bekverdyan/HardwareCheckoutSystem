@@ -106,7 +106,7 @@ namespace HardwareCheckoutSystemWebApi.Controllers
 
         #region PUT
         [HttpPut("{guid}")]
-        public async Task<IActionResult> UpdateCategory([FromRoute]Guid guid, [FromBody]Category category)
+        public async Task<IActionResult> UpdateCategory([FromRoute]Guid guid)
         {
             try
             {
@@ -115,7 +115,6 @@ namespace HardwareCheckoutSystemWebApi.Controllers
                 {
                     return NotFound();
                 }
-                result.Name = category.Name;
                 await _service.Update(result);
                 return Ok(result);
             }
@@ -128,17 +127,13 @@ namespace HardwareCheckoutSystemWebApi.Controllers
         #endregion
 
         #region DELETE
-        [HttpDelete("{guid}")]
-        public async Task<IActionResult> DeleteCategory([FromRoute]Guid guid)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCategory([FromBody]Category category)
         {
             try
             {
-                Category result = await _service.FindById(guid);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                await _service.Delete(result);
+                if (category == null) { return NotFound(); }
+                await _service.Delete(category);
                 return NoContent();
             }
             catch (Exception e)
@@ -147,6 +142,24 @@ namespace HardwareCheckoutSystemWebApi.Controllers
             }
         }
 
+        [HttpDelete("name")]
+        public async Task<IActionResult> DeleteCategoryByName([FromBody]string name)
+        {
+            try
+            {
+                Category category = await _service.FindByName(name);
+                if (category == null)
+                {
+                    return NotFound();
+                }
+                await _service.Delete(category);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
+        }
         #endregion
 
         #region Helpers

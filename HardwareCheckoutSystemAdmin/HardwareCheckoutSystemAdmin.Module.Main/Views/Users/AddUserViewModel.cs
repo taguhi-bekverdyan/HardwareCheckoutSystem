@@ -11,6 +11,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,14 +24,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
         private readonly IUserService _iuserservice;
         private readonly IShellService _ishellservice;
         private ViewMode mode;
-        private ShellView addUserView;
 
         public AddUserViewModel(IEventAggregator eventaggregator, IUserService userservice, IShellService shellservice)
         {
             _ieventaggregator = eventaggregator;
             _iuserservice = userservice;
             _ishellservice = shellservice;
-            addUserView = _ishellservice.ShowShell(nameof(AddCategoryView));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -52,7 +51,13 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
             set { SetProperty(ref _serialnumber, value); }
         }
 
+        private byte[] _avatarimage;
+        public byte[] AvatarImage
+        {
+            get { return _avatarimage; }
 
+            set { SetProperty(ref _avatarimage, value); }
+        }
 
         private string _firstname;
         public string FirstName
@@ -107,7 +112,19 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
 
         public void CancelAddingUserAction()
         {
-            addUserView.Close();
+            _ieventaggregator.GetEvent<UserAddedOrEditedEvent>().Publish(new UserAddedOrEditedEventArgs { User = null });
+        }
+
+        private DelegateCommand _ChooseImageCommand;
+        public DelegateCommand ChooseImageCommand => _ChooseImageCommand ?? (_ChooseImageCommand = new DelegateCommand(ChooseImageAction));
+
+        public void ChooseImageAction()
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.DefaultExt = ".png";
+            dialog.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+            var result = dialog.ShowDialog();
+            AvatarImage = File.ReadAllBytes(dialog.FileName);
         }
 
         private DelegateCommand _AddNewUserCommand;
@@ -118,6 +135,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
             User user = new User();
             user.Id = new Guid();
             user.Permission = Permission;
+            user.AvatarImage = AvatarImage;
             user.LastName = LastName;
             user.SerialNumber = SerialNumber;
             user.Permission = Permission;

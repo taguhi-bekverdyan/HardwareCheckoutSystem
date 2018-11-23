@@ -29,10 +29,10 @@
             </Grid.ColumnDefinitions>
             <Line Grid.Column="2"  Y1="0" Y2="55" Stroke="Blue" />
             <Line Grid.Column="1" Y1="0" Y2= "55" Stroke="Blue"/>
-          
 
-            <Button FontSize="13" Command="{Binding EditCategoryCommand}" Content="Edit" x:Name="ButtonEdit" Style="{StaticResource RoundCorner}"   FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="1" Background="#FFB7B713" Foreground="Black"  ></Button>
-            <Button FontSize="13" Command="{Binding DeleteCategoryCommand}"  x:Name="ButtonDelete" Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="2"  Content="Delete" Background="#FFB70F0F" ></Button>
+
+            <Button FontSize="13" IsEnabled="{Binding ElementName=datagrid, Path=SelectedItems.Count}"  Command="{Binding EditCategoryCommand}" Content="Edit" x:Name="ButtonEdit" Style="{StaticResource RoundCorner}"   FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="1" Background="#FFB7B713" Foreground="Black"  ></Button>
+            <Button FontSize="13" IsEnabled="{Binding ElementName=datagrid, Path=SelectedItems.Count}"  Command="{Binding DeleteCategoryCommand}"  x:Name="ButtonDelete" Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="2"  Content="Delete" Background="#FFB70F0F" ></Button>
             <Button FontSize="13" Command="{Binding AddCategoryCommand}" x:Name="ButtonAdd" Background="Green" Content="Add" Margin="8" Grid.Column="0"  Style="{StaticResource RoundCorner}" ></Button>
         </Grid>
     </Grid>

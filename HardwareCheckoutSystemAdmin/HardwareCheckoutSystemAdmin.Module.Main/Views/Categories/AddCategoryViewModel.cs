@@ -93,7 +93,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
 
         public void CancelAddingCategoryAction()
         {
-            //addCategoryView.Close();
+            _ieventaggregator.GetEvent<CategoryAddedOrEditedEvent>().Publish(new CategoryAddedOrEditedEventArgs { Category = null });
         }
 
         public class CategoryAddedOrEditedEvent : PubSubEvent<CategoryAddedOrEditedEventArgs> { }

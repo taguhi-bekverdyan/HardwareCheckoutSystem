@@ -10,6 +10,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         private readonly ICategoryService _icategoryservice;
         private readonly IShellService _ishellservice;
         private ViewMode mode;
-        private ShellView addDeviceView;
         private Device device;
 
         public AddDeviceViewModel(IEventAggregator eventaggregator, IDeviceService deviceservice, IShellService shellservice, IBrandService brandservice, ICategoryService categoryService)
@@ -34,7 +34,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             _ishellservice = shellservice;
             _ibrandservice = brandservice;
             _icategoryservice = categoryService;
-            addDeviceView =  _ishellservice.ShowShell(nameof(AddDeviceView));
             Brands = new List<Brand>();
             Categories = new List<Category>();
         }
@@ -65,12 +64,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             set { SetProperty(ref _brands, value); }
         }
 
-        private Brand _selectedbrand;
-        public Brand SelectedBrand
+        private byte[] _image;
+        public byte[] Image
         {
-            get { return _selectedbrand; }
+            get { return _image; }
 
-            set { SetProperty(ref _selectedbrand, value); }
+            set { SetProperty(ref _image, value); }
         }
 
         public async Task FindBrands()
@@ -133,12 +132,48 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             set { SetProperty(ref _permission, value); }
         }
 
+        private DateTime _maxperiod;
+        public DateTime MaxPeriod
+        {
+            get { return _maxperiod; }
+
+            set { SetProperty(ref _maxperiod, value); }
+        }
+
+        private DeviceStatus _status;
+        public DeviceStatus Status
+        {
+            get { return _status; }
+
+            set { SetProperty(ref _status, value); }
+        }
+
+        private Brand _selectedbrand;
+        public Brand SelectedBrand
+        {
+            get { return _selectedbrand; }
+
+            set { SetProperty(ref _selectedbrand, value); }
+        }
+
         private DelegateCommand _CancelAddingDeviceCommand;
         public DelegateCommand CancelAddingDeviceCommand => _CancelAddingDeviceCommand ?? (_CancelAddingDeviceCommand = new DelegateCommand(CancelAddingDeviceAction));
 
         public void CancelAddingDeviceAction()
         {
-            addDeviceView.Close();
+            _ieventaggregator.GetEvent<DeviceAddedOrEditedEvent>().Publish(new DeviceAddedOrEditedEventArgs { Device = null });
+        }
+
+        private DelegateCommand _ChooseImageCommand;
+        public DelegateCommand ChooseImageCommand => _ChooseImageCommand ?? (_ChooseImageCommand = new DelegateCommand(ChooseImageAction));
+
+        public void ChooseImageAction()
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.DefaultExt = ".png";
+            dialog.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+            var result = dialog.ShowDialog();
+            Image = File.ReadAllBytes(dialog.FileName);
         }
 
         private DelegateCommand _AddNewDeviceCommand;
@@ -152,6 +187,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             device.Brand = SelectedBrand;
             device.Category = SelectedCategory;
             device.Description = Describtion;
+            device.Image = Image;
+            device.Status = Status;
             if (mode == ViewMode.Edit)
             {
                 _ideviceservice.Update(device);

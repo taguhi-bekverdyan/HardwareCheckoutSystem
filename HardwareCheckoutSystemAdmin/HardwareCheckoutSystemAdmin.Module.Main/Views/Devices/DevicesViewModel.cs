@@ -13,6 +13,7 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
 using static HardwareCheckoutSystemAdmin.Module.Main.Views.Devices.AddDeviceViewModel;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
@@ -128,12 +129,20 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         private async Task  UpdateDevicesData()
         {
             List<DeviceViewItem> _Devices = new List<DeviceViewItem>();
-            var temp = await _ideviceservice.FindAll();
-            foreach (var item in temp)
+            try
+            {
+                var temp= await _ideviceservice.FindAll();
+                foreach (var item in temp)
             {
                 _Devices.Add(new DeviceViewItem(item));
             }
             Devices = _Devices;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+           
         }
 
         

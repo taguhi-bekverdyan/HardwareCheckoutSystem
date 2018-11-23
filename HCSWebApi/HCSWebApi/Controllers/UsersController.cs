@@ -101,7 +101,7 @@ namespace HardwareCheckoutSystemWebApi.Controllers
 
         #region PUT
         [HttpPut("{guid}")]
-        public async Task<IActionResult> UpdateUser([FromRoute]Guid guid, [FromBody]User user)
+        public async Task<IActionResult> UpdateUser([FromRoute]Guid guid)
         {
             try
             {
@@ -110,7 +110,6 @@ namespace HardwareCheckoutSystemWebApi.Controllers
                 {
                     return NotFound();
                 }
-                result.Id = user.Id;
                 await _service.Update(result);
                 return Ok(result);
             }

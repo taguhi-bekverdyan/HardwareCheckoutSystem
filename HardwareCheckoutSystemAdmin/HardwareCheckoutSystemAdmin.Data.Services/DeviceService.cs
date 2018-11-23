@@ -1,4 +1,5 @@
-﻿using HardwareCheckoutSystemAdmin.Models;
+﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
+using HardwareCheckoutSystemAdmin.Models;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -11,92 +12,54 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 {
     public class DeviceService : IDeviceService
     {
+        private readonly IRestService _restService;
+
+        public DeviceService  (IRestService restservice)
+        {
+            _restService = restservice;
+        }
+
         #region [CREATE]
         public async Task Insert(Device device)
         {
-            using (var context = new DataContext())
-            {
-                context.Devices.Add(device);
-                await context.SaveChangesAsync();
-            }
+            var request = new RestRequest("api/devices", Method.POST);
+            request.AddBody(device);
+            var response = _restService.Client.Execute(request);
         }
+        
         #endregion
-
-        readonly RestClient restClient = new RestClient("https://localhost:44381/");
 
         #region [READ]
         public async Task<List<Device>> FindAll()
         {
-            _restRequest.Resource = "api/devices";
-            var response = await _restService.Client.ExecuteTaskAsync<List<Device>>(_restRequest);
-            return CheckResponseStatus(response);
+
+        //var devices = context.Devices.ToListAsync();
+        //return await devices;
+        var request = new RestRequest("api/devices", Method.GET);
+        var response = await _restService.Client.ExecuteTaskAsync<List<Device>>(request);
+        if (response.IsSuccessful)
+           {
+            return response.Data;
+            }
+          else
+        {
+            string message = response.ErrorMessage;
+            throw new Exception("Server Error: " + message);
         }
+
+    }
         #endregion
 
         #region [SN]
         public async Task<Device> FindBySn(string sn)
         {
-            using (var context = new DataContext())
-            {
-                return await context.Devices.FirstOrDefaultAsync(d => d.SerialNumber == sn);
-            }
-        }
-        #endregion
-
-        #region[FIND]
-        public async Task<Device> FindById(Guid deviceId)
-        {
-            using (var context = new DataContext())
-            {
-                return await context.Devices.FirstOrDefaultAsync(d => d.Id == deviceId);
-            }
-        }
-
-
-        #endregion
-
-        #region [UPDATE]
-        public async Task Update(Device device)
-        {
-            using (var context = new DataContext())
-            {
-                var deviceToUpdate = (from d in context.Devices
-                                      where d.Id == device.Id
-                                      select d).FirstOrDefault();
-                deviceToUpdate = device;
-                await context.SaveChangesAsync();
-            }
-        }
-        #endregion
-
-        #region [DELETE]
-        public async Task Delete(Guid key)
-        {
-            using (var context = new DataContext())
-            {
-                var deviceToDelete = (from d in context.Devices
-                                      where d.Id == key
-                                      select d).FirstOrDefault();
-                context.Devices.Remove(deviceToDelete);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        public async Task DeleteBySerialNumber(string serialnumber)
-        {
-            using (var context = new DataContext())
-            {
-                var deviceToDelete = (from d in context.Devices
-                                      where d.SerialNumber == serialnumber
-                                      select d).FirstOrDefault();
-                context.Devices.Remove(deviceToDelete);
-                await context.SaveChangesAsync();
-            }
-        }
-        #endregion
-
-        private List<Device> CheckResponseStatus(IRestResponse<List<Device>> response)
-        {
+            //using (var context = new DataContext())
+            //{
+            //    return await context.Devices.FirstOrDefaultAsync(d => d.SerialNumber == sn);
+            //}
+            var request = new RestRequest("api/devices/Sn/{sn}", Method.GET);
+            request.AddUrlSegment("{sn}", sn);
+            var response = await _restService.Client.ExecuteTaskAsync<Device>(request);
             if (response.IsSuccessful)
             {
                 return response.Data;
@@ -106,6 +69,75 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
                 string message = response.ErrorMessage;
                 throw new Exception("Server Error: " + message);
             }
+
         }
+        #endregion
+
+        #region[FIND]
+        public async Task<Device> FindById(Guid deviceId)
+        {
+            //using (var context = new DataContext())
+            //{
+            //    return await context.Devices.FirstOrDefaultAsync(d => d.Id == deviceId);
+            //}
+
+            var request = new RestRequest("api/devices/{guid}", Method.GET);
+            request.AddUrlSegment("{guid}", deviceId);
+            var response = await  _restService.Client.ExecuteTaskAsync<Device>(request);
+           if (response.IsSuccessful)
+          {
+            return response.Data;
+          }
+        else
+        {
+            string message = response.ErrorMessage;
+            throw new Exception("Server Error: " + message);
+        }
+    }
+        #endregion
+
+        #region Update
+        public async Task Update(Device device)
+        {
+            var request = new RestRequest("api/devices/{guid}", Method.PUT);
+            request.AddUrlSegment("{guid}", device.Id);
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(device);
+            IRestResponse response = _restService.Client.Execute(request);
+            if (!response.IsSuccessful)
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+        }
+        #endregion
+
+        #region [DELETE]
+        public async Task Delete(Device device)
+        {
+            await DeleteBySerialNumber(device.SerialNumber);
+        }
+
+        public async Task DeleteBySerialNumber(string sn)
+        {
+
+            var request = new RestRequest("api/devices/{sn}", Method.DELETE);
+            request.AddUrlSegment("{sn}", sn);
+            var response = _restService.Client.Execute(request);
+            if (!response.IsSuccessful)
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+            //using (var context = new DataContext())
+            //{
+            //    var deviceToDelete = (from d in context.Devices
+            //                          where d.SerialNumber == serialnumber
+            //                          select d).FirstOrDefault();
+            //    context.Devices.Remove(deviceToDelete);
+            //    await context.SaveChangesAsync();
+            //}
+        }
+        #endregion
+
+ 
     }
 }

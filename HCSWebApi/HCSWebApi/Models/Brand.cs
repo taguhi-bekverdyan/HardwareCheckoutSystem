@@ -11,6 +11,7 @@ namespace HCSWebApi.Models
         [ValidGuid, Key]
         public Guid Id { get; set; }
         public string Name { get; set; }
+
         public ICollection<Device> Devices { get; set; }
 
         public Brand(string name)

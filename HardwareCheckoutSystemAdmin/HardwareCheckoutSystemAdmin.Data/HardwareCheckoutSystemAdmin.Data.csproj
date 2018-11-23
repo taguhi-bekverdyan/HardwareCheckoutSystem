@@ -73,6 +73,14 @@
     <Compile Include="Migrations\201810131239511_ChangedForeignKey.Designer.cs">
       <DependentUpon>201810131239511_ChangedForeignKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811221211458_update.cs" />
+    <Compile Include="Migrations\201811221211458_update.Designer.cs">
+      <DependentUpon>201811221211458_update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811221251148_image.cs" />
+    <Compile Include="Migrations\201811221251148_image.Designer.cs">
+      <DependentUpon>201811221251148_image.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -98,6 +106,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810131239511_ChangedForeignKey.resx">
       <DependentUpon>201810131239511_ChangedForeignKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811221211458_update.resx">
+      <DependentUpon>201811221211458_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811221251148_image.resx">
+      <DependentUpon>201811221251148_image.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

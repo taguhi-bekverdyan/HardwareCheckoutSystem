@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using static HardwareCheckoutSystemAdmin.Module.Main.Views.Categories.AddCategoryViewModel;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
@@ -29,8 +30,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
             _ishellservice = shellservice;
             _icategoryservice = categoryservice;
             _ieventaggregator = eventaggregator;
-            Categories = new List<Category>();
-            FindAll();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -43,9 +42,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
             throw new NotImplementedException();
         }
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            throw new NotImplementedException();
+            await FindAll();
         }
 
         private List<Category> _categories;
@@ -64,9 +63,16 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
             set { SetProperty(ref _selectedcategory, value); }
         }
 
-        public async void FindAll()
+        public async Task FindAll()
         {
-            Categories = await _icategoryservice.FindAll();
+            try
+            {
+                Categories = await _icategoryservice.FindAll();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
         private DelegateCommand _DeleteCategoryCommand;
@@ -75,7 +81,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
         public async void DeleteCategoryAction()
         {
             await _icategoryservice.Delete(SelectedCategory);
-            FindAll();
+            await FindAll();
 
         }
 
@@ -102,10 +108,10 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
            addCategoryView= _ishellservice.ShowShell(nameof(AddCategoryView),param,280,200);
         }
 
-        private void CategoryAddedOrEditedEventHandler(CategoryAddedOrEditedEventArgs args)
+        private async  void CategoryAddedOrEditedEventHandler(CategoryAddedOrEditedEventArgs args)
         {
             addCategoryView.Close();
-            FindAll();
+            await FindAll();
             _ieventaggregator.GetEvent<CategoryAddedOrEditedEvent>().Unsubscribe(CategoryAddedOrEditedEventHandler);
         }
 

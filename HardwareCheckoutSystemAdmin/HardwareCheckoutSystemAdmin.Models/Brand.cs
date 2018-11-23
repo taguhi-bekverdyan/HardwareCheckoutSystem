@@ -24,6 +24,7 @@ namespace HardwareCheckoutSystemAdmin.Models
         {
 
         }
+
     }
 }
 

@@ -4,6 +4,7 @@ using System.Reflection;
 using HardwareCheckoutSystemAdmin.Common.Prism;
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Data.Services;
+using HardwareCheckoutSystemAdmin.Properties;
 using HardwareCheckoutSystemAdmin.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
@@ -44,6 +45,7 @@ namespace HardwareCheckoutSystemAdmin
             Container.RegisterType<IResponseService, ResponseService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IBrandService, BrandService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IRestService, RestService>(new InjectionConstructor(Resources.url));
         }
 
         protected override System.Windows.DependencyObject CreateShell()

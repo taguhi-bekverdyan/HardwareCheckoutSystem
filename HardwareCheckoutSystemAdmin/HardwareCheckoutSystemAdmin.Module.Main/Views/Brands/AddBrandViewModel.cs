@@ -33,7 +33,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
 
         }
 
-        #region[TYPESANDNAVIGATION]
+        #region TYPESANDNAVIGATION
         private string _name;
         public string Name
         {
@@ -69,7 +69,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
 
         #endregion
 
-        #region[BUTTONS]
+        #region BUTTONS
         private DelegateCommand _AddBrandCommand;
         public DelegateCommand AddBrandCommand => _AddBrandCommand ?? (_AddBrandCommand = new DelegateCommand(AddBrandAction));
 
@@ -95,7 +95,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
 
         public void CancelAddingBrandAction()
         {
-            //_ieventaggregator.GetEvent<BrandAddedOrEditedEvent>().Publish(new BrandAddedOrEditedEventArgs {  });
+            _ieventaggregator.GetEvent<BrandAddedOrEditedEvent>().Publish(new BrandAddedOrEditedEventArgs { Brand = null });
         }
         #endregion
 

@@ -61,8 +61,8 @@ namespace HardwareCheckoutSystemWebApi.Controllers
             }
         }
 
-        [HttpGet("byName/{name}", Name = "GetDeviceByName")]
-        public async Task<IActionResult> GetDeviceBySN([FromRoute]string sn)
+        [HttpGet("bySn/{sn}", Name = "GetDeviceBySn")]
+        public async Task<IActionResult> GetDeviceBySn([FromRoute]string sn)
         {
             try
             {
@@ -101,18 +101,17 @@ namespace HardwareCheckoutSystemWebApi.Controllers
 
         #region PUT
         [HttpPut("{guid}")]
-        public async Task<IActionResult> UpdateDevice([FromRoute]Guid guid, [FromBody]Device device)
+        public async Task<IActionResult> UpdateDevice([FromRoute]Guid guid)
         {
+            var device = await _service.FindById(guid);
             try
             {
-                Device result = await _service.FindById(guid);
-                if (result == null)
+                if (device == null)
                 {
                     return NotFound();
                 }
-                result.SerialNumber = device.SerialNumber;
-                await _service.Update(result);
-                return Ok(result);
+                await _service.Update(device);
+                return Ok(device);
             }
             catch (Exception e)
             {
@@ -129,6 +128,25 @@ namespace HardwareCheckoutSystemWebApi.Controllers
             try
             {
                 Device result = await _service.FindById(guid);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                await _service.Delete(result);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
+        }
+
+        [HttpDelete("{sn}")]
+        public async Task<IActionResult> DeleteDeviceBySn([FromRoute]string sn)
+        {
+            try
+            {
+                Device result = await _service.FindBySn(sn);
                 if (result == null)
                 {
                     return NotFound();

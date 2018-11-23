@@ -11,7 +11,8 @@ namespace HardwareCheckoutSystemAdmin.Data.Infrastructure
     {
         Task Insert(Category category);
         Task<List<Category>> FindAll();
-        Task<Category> FindById(Guid catrgoryId);
+        Task<Category> FindByName(string name);
+        Task<Category> FindById(Guid Id);
         Task Update(Category category);
         Task Delete(Category category);
         Task DeleteByName(string name);

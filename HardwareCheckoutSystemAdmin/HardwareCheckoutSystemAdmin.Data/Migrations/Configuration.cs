@@ -34,7 +34,8 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
             //   });
 
             context.Brands.AddRange(new List<Brand>()
-                 {  new Brand ("Dell"),
+                 {
+                 new Brand ("Dell"),
                      new Brand ("TP-Link"),
                      new Brand ("D-Link")
             });

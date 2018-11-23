@@ -11,7 +11,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         Task<List<User>> FindAll();
         Task<User> FindById(Guid userId);
         Task Update(User user);
-        Task Delete(Guid key);
+        Task Delete(User user);
         Task DeleteBySerialNumber(string serialnumber);
     }
 }
