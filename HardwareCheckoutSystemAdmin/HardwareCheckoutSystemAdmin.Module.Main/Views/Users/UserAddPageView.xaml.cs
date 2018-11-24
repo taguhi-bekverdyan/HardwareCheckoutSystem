@@ -24,5 +24,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
         {
             InitializeComponent();
         }
+
+        
     }
 }

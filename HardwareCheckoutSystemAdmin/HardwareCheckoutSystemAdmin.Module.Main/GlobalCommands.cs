@@ -10,6 +10,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main
     public class GlobalCommands
     {
         public static CompositeCommand SaveUser = new CompositeCommand();
-
+        public static CompositeCommand Save_Edit = new CompositeCommand();
     }
 }
