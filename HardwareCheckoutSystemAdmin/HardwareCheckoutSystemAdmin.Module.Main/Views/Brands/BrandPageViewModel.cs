@@ -36,9 +36,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
         {
             var brands = await _brands.FindAll();
             BrandNames.AddRange(brands.Select(b => b.Name));
-
-           
-           
         }
         private async void AddBrandPageAction()
         {

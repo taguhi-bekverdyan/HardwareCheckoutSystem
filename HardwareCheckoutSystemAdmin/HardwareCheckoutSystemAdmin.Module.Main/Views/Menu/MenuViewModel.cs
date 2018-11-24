@@ -18,14 +18,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Menu
 {
   public class MenuViewModel : BindableBase, IRegionManagerAware
   {
-        private IShellService _service;
-
-        //private readonly IShellService _service;
-        public IRegionManager RegionManager { get ; set; }
+    private IShellService _service;
+    public IRegionManager RegionManager { get ; set; }
     public DelegateCommand DeviceCommand => new DelegateCommand(OpenDevicesPageAction);
     public DelegateCommand BrandCommand => new DelegateCommand(OpenBrandsPageAction);
     public DelegateCommand CategoryCommand => new DelegateCommand(OpenCategorysPageAction);
-   public DelegateCommand UserCommand => new DelegateCommand(OpenUsersPageAction);
+    public DelegateCommand UserCommand => new DelegateCommand(OpenUsersPageAction);
 
     private void OpenDevicesPageAction()
   {

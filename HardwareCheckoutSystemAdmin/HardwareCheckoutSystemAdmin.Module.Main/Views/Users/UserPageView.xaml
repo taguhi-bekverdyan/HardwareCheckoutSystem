@@ -6,28 +6,64 @@
              xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views.Users"
              xmlns:local1="clr-namespace:HardwareCheckoutSystemAdmin.Models;assembly=HardwareCheckoutSystemAdmin.Models"
              xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:gc="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main"
              xmlns:codeg="clr-namespace:System;assembly=mscorlib"
              xmlns:common="clr-namespace:HardwareCheckoutSystemAdmin.Common;assembly=HardwareCheckoutSystemAdmin.Common"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <ObjectDataProvider  MethodName="GetValues" ObjectType="{x:Type codeg:Enum}" x:Key="myenum">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type Type="local1:Permission"></x:Type>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Themes/Theme.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <ObjectDataProvider  MethodName="GetValues" ObjectType="{x:Type codeg:Enum}" x:Key="myenum">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type Type="local1:Permission"></x:Type>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="6*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Grid.Row="1" Content="add" Command="{Binding AddCommand}"></Button>
-        <DataGrid Grid.Row="0"  AutoGenerateColumns="False"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" Grid.Row="1" Width="100" Height="60"  Command="{Binding AddCommand}">
+            <StackPanel>
+                <Image Stretch="Uniform" Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Resources/add.png" RenderTransformOrigin="0,0" Height="38" Width="93"/>
+                <TextBlock HorizontalAlignment="Center" Foreground="MidnightBlue" FontFamily="Corsiva" FontStyle="Italic" FontSize="10">A d d</TextBlock>
+            </StackPanel>
+        </Button>
+        <Button Grid.Column="2" Grid.Row="1" Width="100" Height="60"  Command="{Binding EditCommand}" CommandParameter="{Binding SelectedUser}">
+            <StackPanel>
+                <Image Stretch="Uniform" Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Resources/useredit.png" RenderTransformOrigin="0,0" Height="38" Width="93" />
+                <TextBlock HorizontalAlignment="Center" Foreground="MidnightBlue" FontFamily="Corsiva" FontStyle="Italic" FontSize="10">E D I T</TextBlock>
+            </StackPanel>
+        </Button>
+        <Button Grid.Column="1" Grid.Row="1" Width="100" Height="60" Command="{Binding DelateCommand}">
+            <StackPanel>
+                <Image Stretch="Uniform" Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Resources/delete.png" RenderTransformOrigin="0,0" Height="38" Width="93"/>
+                <TextBlock HorizontalAlignment="Center" Foreground="MidnightBlue" FontFamily="Corsiva" FontStyle="Italic" FontSize="10">D e l e t e</TextBlock>
+            </StackPanel>
+        </Button>
+        <DataGrid Grid.Row="0"  Grid.ColumnSpan="3" AutoGenerateColumns="False"
               RowBackground="#FFCCCEFD" AlternatingRowBackground="White"
-              ItemsSource="{Binding UserItems}">
+              ItemsSource="{Binding UserItems}"
+              SelectedItem="{Binding SelectedUser}">
             <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Image" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding AvatarImage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Stretch="Fill" ></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="FirstName" Width="*" Binding="{Binding FirstName}"/>
                 <DataGridTextColumn Header="LastName" Width="*" Binding="{Binding LastName}"/>
                 <DataGridTextColumn Header="Address" Width="*" Binding="{Binding Address}"/>
@@ -37,7 +73,6 @@
                                         SelectedValueBinding="{Binding Permission}"
                                         DisplayMemberPath="{Binding Permission}"/>
                 <DataGridTextColumn Header="TelNumber" Width="*" Binding="{Binding TelNumber}"/>
-                <DataGridTextColumn Header="AvatarImage" Width="*" Binding="{Binding AvatarImage}"/>
                 <DataGridTextColumn Header="Occupation" Width="*" Binding="{Binding Occupation}"/>
             </DataGrid.Columns>
         </DataGrid>

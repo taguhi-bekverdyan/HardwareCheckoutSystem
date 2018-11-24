@@ -34,7 +34,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Migrations
             //  new Category { Id = Guid.NewGuid(), Name = "Laptops" } };
             //      context.Categories.AddRange(categories);
 
-            //      context.Users.Add(new User { Id = Guid.NewGuid(), FirstName = "Admin" });
+                //context.Users.Add(new User { Id = Guid.NewGuid(), FirstName = "Admin" });
 
             //      List<Brand> brands = new List<Brand> {
             //  new Brand { Id = Guid.NewGuid(), Name = "Dell"},
