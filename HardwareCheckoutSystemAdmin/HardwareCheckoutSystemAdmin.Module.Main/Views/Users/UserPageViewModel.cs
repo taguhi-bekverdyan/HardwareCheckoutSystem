@@ -83,7 +83,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
             ui.Address = User_Item.Address;
             ui.AvatarImage = User_Item.AvatarImage;
             ui.Birthdate = User_Item.Birthdate;
-            ui.FirstName = User_Item.FirstName;
+            ui.FirstName =  User_Item.FirstName;
             ui.LastName = User_Item.LastName;
             ui.Occupation = User_Item.Occupation;
             ui.Permission = User_Item.Permission;

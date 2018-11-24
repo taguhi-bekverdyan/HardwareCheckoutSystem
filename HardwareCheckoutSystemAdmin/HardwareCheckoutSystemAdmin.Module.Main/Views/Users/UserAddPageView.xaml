@@ -63,12 +63,19 @@
         <TextBox  Margin="1,0" Grid.Row="5" Grid.Column="0" Text="{Binding User_item.Address}"></TextBox>
         <TextBox Margin="1,0" Grid.Row="7" Grid.Column="0" Text="{Binding User_item.Birthdate}"></TextBox>
         <TextBox Margin="1,0" Grid.Row="9" Grid.Column="0" Text="{Binding User_item.TelNumber}"></TextBox>
-        <ComboBox Margin="1,0" Grid.Row="11" Grid.Column="0" SelectedItem="{Binding User_item.Permisssion}"  ItemsSource="{Binding Source={StaticResource myenum}}"></ComboBox>
+        <ComboBox xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"  Margin="1,0" Grid.Row="11" Grid.Column="0" SelectedItem="{Binding SelectedUserPermisssion}"  ItemsSource="{Binding Source={StaticResource myenum}}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding PermisssionChenged}">
+                    </i:InvokeCommandAction>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ComboBox>
         <TextBox Margin="1,0" Grid.Row="13" Grid.Column="0" Text="{Binding User_item.Occupation}" ></TextBox>
         <Button Grid.Row="17"  Width="200" Command="{x:Static gc:GlobalCommands.SaveUser}" CommandParameter="{Binding User_item}">
             <TextBlock Text="SAVE" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Button>
-        <Image Source="{Binding User_item.AvatarImage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="2" Grid.Row="0" Grid.RowSpan="12" ></Image>
+        <Image Source="{Binding User_item.AvatarImage, Mode=TwoWay}" Grid.Column="2" Grid.Row="0" Grid.RowSpan="12" ></Image>
         <Button  Width="200" Grid.Column="2" Grid.Row="13" Command="{Binding SearchCommand}">
             <TextBlock Text="BROWSE" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Button>

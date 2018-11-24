@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HardwareCheckoutSystemAdmin.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
         public UserAddPageView()
         {
             InitializeComponent();
+            
         }
 
         

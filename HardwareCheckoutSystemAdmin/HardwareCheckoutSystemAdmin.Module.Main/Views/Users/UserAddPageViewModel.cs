@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Drawing;
+using HardwareCheckoutSystemAdmin.Models;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
 {
@@ -21,22 +22,34 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
         public IRegionManager RegionManager { get; set; }
         private UserItem _user_item;
         private IShellService _service;
+        private Permission selectedUserPermisssion;
+        public DelegateCommand SearchCommand => new DelegateCommand(Search);
+        public DelegateCommand PermisssionChenged => new DelegateCommand(PermisssionChengedFunc);
+        private void PermisssionChengedFunc()
+        {
+            User_item.Permission = SelectedUserPermisssion;
+        }
+        public Permission SelectedUserPermisssion
+        {
+            get { return selectedUserPermisssion; }
+            set { SetProperty(ref selectedUserPermisssion, value); }
+        }
 
         public UserItem User_item
         {
             get { return _user_item; }
             set { SetProperty(ref _user_item, value); }
         }
-        public DelegateCommand SearchCommand => new DelegateCommand(Search);
+        
         public UserAddPageViewModel(IShellService service)
         {
             _service = service;
             User_item = new UserItem();
-          
         }
        
         private void Search()
         {
+           
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "Image File|*.bmp;*.gif;*.jpeg;*.jpg;*.png";
             open.Title = "Select a picture";
@@ -49,6 +62,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             User_item = (UserItem)navigationContext.Parameters["Param"];
+            SelectedUserPermisssion = User_item.Permission;
             MessageBox.Show(User_item.Index.ToString());
         }
 
