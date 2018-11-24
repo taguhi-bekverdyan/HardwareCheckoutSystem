@@ -26,8 +26,7 @@ namespace HardwareCheckoutSystemAdmin.Common.Prism
                 {
                     IRegionManager regionManager = Region.RegionManager;
 
-                    FrameworkElement element = item as FrameworkElement;
-                    if (element != null)
+                    if (item is FrameworkElement element)
                     {
                         IRegionManager scopedRegionManager =
                             element.GetValue(RegionManager.RegionManagerProperty) as IRegionManager;

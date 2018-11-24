@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using static HardwareCheckoutSystemAdmin.Module.Main.Views.Brands.AddBrandViewModel;
@@ -31,6 +32,15 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
             _ieventaggregator = eventaggregator;
         }
 
+        private bool _isbusy;
+        public bool IsBusy
+        {
+            get { return _isbusy; }
+
+            set { SetProperty(ref _isbusy, value); }
+        }
+
+
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
             throw new NotImplementedException();
@@ -41,9 +51,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
             throw new NotImplementedException();
         }
 
-        public async void OnNavigatedTo(NavigationContext navigationContext)
+        public  void OnNavigatedTo(NavigationContext navigationContext)
         {
-            await FindAll();
+            IsBusy = true;
+            LoadBrands();
+            IsBusy = false;
         }
 
         private List<Brand> _brands;
@@ -67,7 +79,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
             }
         }
 
-        public async Task FindAll()
+        public async void LoadBrands()
         {
             try
             {
@@ -85,9 +97,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
         public async void DeleteBrandAction()
         {
             await _ibrandservice.Delete(SelectedBrand);
-            await FindAll();
+            LoadBrands();
 
         }
+
+        #region BUTTONS
 
         private DelegateCommand _AddBrandCommand;
         public DelegateCommand AddBrandCommand => _AddBrandCommand ?? (_AddBrandCommand = new DelegateCommand(AddBrandAction));
@@ -101,7 +115,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
         }
 
         private DelegateCommand _EditBrandCommand;
-        public DelegateCommand EditBrandCommand => _EditBrandCommand ?? (_EditBrandCommand = new DelegateCommand(AddBrandAction));
+        public DelegateCommand EditBrandCommand => _EditBrandCommand ?? (_EditBrandCommand = new DelegateCommand(EditBrandAction));
 
         public void EditBrandAction()
         {
@@ -109,14 +123,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
             param = new NavigationParameters { { "request",new Param<Brand>(ViewMode.Edit,SelectedBrand) } };
             _ieventaggregator.GetEvent<BrandAddedOrEditedEvent>().Subscribe(BrandAddedOrEditedEventHandler, ThreadOption.UIThread);
             addBrandView = _ishellservice.ShowShell(nameof(AddBrandView), param, 280, 200);
-
         }
 
+#endregion
 
-        private  async void BrandAddedOrEditedEventHandler(BrandAddedOrEditedEventArgs args)
+        private  void BrandAddedOrEditedEventHandler(BrandAddedOrEditedEventArgs args)
         {
             addBrandView.Close();
-            await FindAll();
+            LoadBrands();
             _ieventaggregator.GetEvent<BrandAddedOrEditedEvent>().Unsubscribe(BrandAddedOrEditedEventHandler);
         }
     }

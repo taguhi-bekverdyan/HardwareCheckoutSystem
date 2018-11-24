@@ -20,5 +20,7 @@ namespace HardwareCheckoutSystemAdmin.Models
         public string TelNumber { get; set; }
         public byte[] AvatarImage { get; set; }
         public string SerialNumber { get; set; }
+
+   
     }
 }

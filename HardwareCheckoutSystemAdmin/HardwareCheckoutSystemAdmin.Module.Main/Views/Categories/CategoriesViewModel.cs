@@ -47,6 +47,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
             await FindAll();
         }
 
+        private bool _isbusy;
+        public bool IsBusy
+        {
+            get { return _isbusy; }
+
+            set { SetProperty(ref _isbusy, value); }
+        }
+
         private List<Category> _categories;
         public List<Category> Categories
         {
@@ -103,7 +111,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
         public void EditCategoryAction()
         {
             NavigationParameters param;
-            param = new NavigationParameters { { "request", new Param<Category>(ViewMode.Add, SelectedCategory) } };
+            param = new NavigationParameters { { "request", new Param<Category>(ViewMode.Edit, SelectedCategory) } };
             _ieventaggregator.GetEvent<CategoryAddedOrEditedEvent>().Subscribe(CategoryAddedOrEditedEventHandler, ThreadOption.UIThread);
            addCategoryView= _ishellservice.ShowShell(nameof(AddCategoryView),param,280,200);
         }

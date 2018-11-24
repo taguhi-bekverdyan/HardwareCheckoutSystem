@@ -73,18 +73,18 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Brands
         private DelegateCommand _AddBrandCommand;
         public DelegateCommand AddBrandCommand => _AddBrandCommand ?? (_AddBrandCommand = new DelegateCommand(AddBrandAction));
 
-        public void AddBrandAction()
+        public async void AddBrandAction()
         {
 
             if (mode == ViewMode.Edit)
             {
                 brand.Name = Name;
-                _ibrandservice.Update(brand);
+                await _ibrandservice.Update(brand);
             }
             else
             {
                 brand = new Brand(Name);
-                _ibrandservice.Insert(brand);
+              await  _ibrandservice.Insert(brand);
             }
 
             _ieventaggregator.GetEvent<BrandAddedOrEditedEvent>().Publish(new BrandAddedOrEditedEventArgs { Brand = brand });

@@ -25,7 +25,13 @@
                 <DataGridTextColumn Header="BirthDate" Binding="{Binding BirthDate, StringFormat={}{0:MM/dd/yyyy}}" />
                 <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
                 <DataGridTextColumn Header="TelNumber" Binding="{Binding TelNumber}" />
-
+                <DataGridTemplateColumn Header="Image" Width="SizeToCells">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding AvatarImage}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="0">
@@ -34,8 +40,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Line Grid.Column="1"  Y1="0" Y2="60" Stroke="Blue" />
-            <Line Grid.Column="2" Y1="0" Y2= "60" Stroke="Blue"/>
+            <Line Grid.Column="1"  Y1="0" Y2="70" Stroke="Blue" />
+            <Line Grid.Column="2" Y1="0" Y2= "70" Stroke="Blue"/>
             
             <Button FontSize="13" Command="{Binding EditUserCommand}" Content="Edit" x:Name="ButtonEdit" Style="{StaticResource RoundCorner}"   FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="1" Background="#FFB7B713" Foreground="Black"  ></Button>
             <Button FontSize="13" Command="{Binding DeleteUserCommand}"  x:Name="ButtonDelete" Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="2"  Content="Delete" Background="#FFB70F0F" ></Button>

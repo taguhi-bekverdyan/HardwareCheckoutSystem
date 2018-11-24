@@ -25,6 +25,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
         private readonly IShellService _ishellservice;
         private ViewMode mode;
 
+
         public AddUserViewModel(IEventAggregator eventaggregator, IUserService userservice, IShellService shellservice)
         {
             _ieventaggregator = eventaggregator;
@@ -57,6 +58,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
             get { return _avatarimage; }
 
             set { SetProperty(ref _avatarimage, value); }
+        }
+
+        private User _user;
+        public User user
+        {
+            get { return _user; }
+
+            set { SetProperty(ref _user, value); }
         }
 
         private string _firstname;
@@ -98,12 +107,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
             set { SetProperty(ref _permission, value); }
         }
 
-        private DateTime _datebirth;
-        public DateTime DateBirth
+        private DateTime _birthdate;
+        public DateTime BirthDate
         {
-            get { return _datebirth; }
+            get { return _birthdate; }
 
-            set { SetProperty(ref _datebirth, value); }
+            set { SetProperty(ref _birthdate, value); }
         }
 
 
@@ -128,25 +137,26 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
         }
 
         private DelegateCommand _AddNewUserCommand;
-        public DelegateCommand AddNewUserCommand => _AddNewUserCommand ?? (_AddNewUserCommand = new DelegateCommand(AddNewUserAction));
+        public DelegateCommand AddNewUserCommand => _AddNewUserCommand ?? (_AddNewUserCommand = new DelegateCommand(AddNewUserActionAsync));
 
-        public void AddNewUserAction()
+        public async void AddNewUserActionAsync()
         {
-            User user = new User();
-            user.Id = new Guid();
             user.Permission = Permission;
             user.AvatarImage = AvatarImage;
             user.LastName = LastName;
             user.SerialNumber = SerialNumber;
             user.Permission = Permission;
+            user.TelNumber = TelNumber;
+            user.Address = Address;
+            user.BirthDate = BirthDate;
             if (mode == ViewMode.Edit)
             {
-                _iuserservice.Update(user);
+                await _iuserservice.Update(user);
             }
             else
             {
                 user.Id = new Guid();
-                _iuserservice.Insert(user);
+                await _iuserservice.Insert(user);
             }
             _ieventaggregator.GetEvent<UserAddedOrEditedEvent>().Publish(new UserAddedOrEditedEventArgs { User = user });
         }
@@ -154,8 +164,8 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            var param = (Param<UserViewItem>)navigationContext.Parameters["request"];
-            var user = param._ViewItem;
+            var param = (Param<User>)navigationContext.Parameters["request"];
+            user = param._ViewItem;
             mode = param._ViewMode;
             if (param._ViewMode.Equals(ViewMode.Edit))
             {

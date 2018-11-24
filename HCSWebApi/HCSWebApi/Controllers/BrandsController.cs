@@ -42,7 +42,14 @@ namespace HardwareCheckoutSystemWebApi.Controllers
             try
             {
                 List<Brand> brands = await _service.FindAll();
-                return Ok(brands);
+                if (brands != null)
+                {
+                    return Ok(brands);
+                }
+                else
+                {
+                    return NotFound(brands);
+                }
             }
             catch (Exception e)
             {

@@ -9,6 +9,7 @@ namespace HardwareCheckoutSystemAdmin.Models
 {
     public class DeviceViewItem
     {
+        public Guid Id { get; set; }
         public string SerialNumber { get; set; }
         public Category Category { get; set; }
         public Brand Brand { get; set; }
@@ -23,8 +24,10 @@ namespace HardwareCheckoutSystemAdmin.Models
         {
 
         }
+
         public DeviceViewItem(Device device)
         {
+            this.Id = Id;
             this.Brand = device.Brand;
             this.Category = device.Category;
             this.Description = device.Description;

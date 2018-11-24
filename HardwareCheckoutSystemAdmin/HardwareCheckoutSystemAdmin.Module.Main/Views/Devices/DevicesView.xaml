@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views.Devices"
         xmlns:mvvm="http://prismlibrary.com/"
@@ -16,7 +17,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="6*"/>
             </Grid.RowDefinitions>
-            <!--<xctk:BusyIndicator IsBusy="{Binding IsBusy}">-->
+            <extToolkit:BusyIndicator BusyContent="Loading,Please Wait.." IsBusy="{Binding IsBusy}">
                 <DataGrid  IsReadOnly="True"  Background="LightGray" RowBackground="LightYellow" AlternatingRowBackground="LightBlue" SelectedItem="{Binding SelectedDevice,Mode=TwoWay}" ItemsSource="{Binding Devices}"  Grid.Row="1" x:Name="datagrid" AutoGenerateColumns="False"  >
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="SerialNumber" Binding="{Binding Name}" />
@@ -24,10 +25,18 @@
                         <DataGridTextColumn Header="Category" Binding="{Binding Category}" />
                         <DataGridTextColumn Header="Brand" Binding="{Binding Brand}" />
                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+                        <DataGridTextColumn Header="Permission" Binding="{Binding Status}" />
                         <DataGridTextColumn Header="Permission" Binding="{Binding Permission}" />
+                        <DataGridTemplateColumn Header="Image" Width="SizeToCells">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding Image}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-            <!--</xctk:BusyIndicator>-->
+            </extToolkit:BusyIndicator>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -36,10 +45,10 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Line Grid.Column="2"  Y1="0" Y2="40" Stroke="Blue" />
-                <Line Grid.Column="3" Y1="0" Y2= "40" Stroke="Blue"/>
-                <Line Grid.Column="4" Y1="0" Y2= "40" Stroke="Blue"/>
-                <Line Grid.Column="1" Y1="0" Y2="40" Stroke="Blue"/>
+                <Line Grid.Column="2"  Y1="0" Y2="70" Stroke="Blue" />
+                <Line Grid.Column="3" Y1="0" Y2= "70" Stroke="Blue"/>
+                <Line Grid.Column="4" Y1="0" Y2= "70" Stroke="Blue"/>
+                <Line Grid.Column="1" Y1="0" Y2="70" Stroke="Blue"/>
 
                 <Button  IsEnabled="{Binding ElementName=datagrid, Path=SelectedItems.Count}"  FontSize="13" Command="{Binding EditDeviceCommand}" Content="Edit"  Style="{StaticResource RoundCorner}"   FontFamily="Calibri" FontWeight="Bold" Margin="5" Grid.Column="3" Background="#FFB7B713" Foreground="Black"  ></Button>
                 <Button Margin="5" Background="Bisque" FontSize="13" Command="{Binding OpenBrandsCommand}" Content="Brands" Style="{StaticResource RoundCorner}" Grid.Column="0"></Button>

@@ -45,14 +45,15 @@
     <Compile Include="Category.cs" />
     <Compile Include="Device.cs" />
     <Compile Include="DeviceStatus.cs" />
-    <Compile Include="DeviceViewItem.cs" />
+    <Compile Include="ViewItems\DeviceViewItem.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="RequestStatus.cs" />
+    <Compile Include="ViewItems\RequestViewItem.cs" />
     <Compile Include="Response.cs" />
+    <Compile Include="ViewItems\ResponseViewItem.cs" />
     <Compile Include="User.cs" />
-    <Compile Include="UserViewItem.cs" />
     <Compile Include="ValidGuidAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

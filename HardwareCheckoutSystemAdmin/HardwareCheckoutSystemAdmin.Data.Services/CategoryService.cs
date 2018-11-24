@@ -23,8 +23,17 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         public async Task Insert(Category category)
         {
             var request = new RestRequest("api/categories", Method.POST);
-            request.AddBody(category);
-            IRestResponse response = _restService.Client.Execute(request);
+            request.AddJsonBody(category);
+            var response = await _restService.Client.ExecuteTaskAsync<Category>(request);
+            if (response.IsSuccessful)
+            {
+                return;
+            }
+            else
+            {
+                string message = response.ErrorMessage;
+                throw new Exception("Server Error: " + message);
+            }
         }
 
         #endregion
@@ -93,13 +102,16 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         {
             var request = new RestRequest("api/categories/{guid}", Method.PUT);
             request.AddUrlSegment("{guid}", category.Id);
-            request.RequestFormat = DataFormat.Json;
-            request.AddBody(category);
-
-            IRestResponse response = _restService.Client.Execute(request);
-            if (!response.IsSuccessful)
+            request.AddJsonBody(category);
+            var response = await _restService.Client.ExecuteTaskAsync<Category>(request);
+            if (response.IsSuccessful)
             {
-                throw new Exception(response.ErrorMessage);
+                return;
+            }
+            else
+            {
+                string message = response.ErrorMessage;
+                throw new Exception("Server Error: " + message);
             }
         }
         #endregion
@@ -114,10 +126,15 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         {
             var request = new RestRequest("api/categories/{name}", Method.DELETE);
             request.AddUrlSegment("name", name);
-            var response = _restService.Client.Execute(request);
-            if (!response.IsSuccessful)
+            var response = await _restService.Client.ExecuteTaskAsync<Category>(request);
+            if (response.IsSuccessful)
             {
-                throw new Exception(response.ErrorMessage);
+                return;
+            }
+            else
+            {
+                string message = response.ErrorMessage;
+                throw new Exception("Server Error: " + message);
             }
             #endregion
         }

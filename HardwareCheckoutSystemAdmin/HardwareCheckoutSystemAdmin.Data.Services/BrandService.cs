@@ -22,9 +22,19 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         #region [CREATE]
         public async Task Insert(Brand brand)
         {
+            
             var request = new RestRequest("api/brands", Method.POST);
-            request.AddBody(brand);
-            var response = _restService.Client.Execute(request);
+            request.AddJsonBody(brand);
+           var response = await  _restService.Client.ExecuteTaskAsync<Brand>(request);
+            if (response.IsSuccessful)
+            {
+                return;
+            }
+            else
+            {
+                string message = response.ErrorMessage;
+                throw new Exception("Server Error: " + message);
+            }
         }
 
         #endregion
@@ -91,12 +101,16 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         {
             var request = new RestRequest("api/brands/{guid}", Method.PUT);
             request.AddUrlSegment("{guid}", brand.Id);
-            request.RequestFormat = DataFormat.Json;
-            request.AddBody(brand);
-            IRestResponse response = _restService.Client.Execute(request);
-            if (!response.IsSuccessful)
+            request.AddJsonBody(brand);
+            var response = await _restService.Client.ExecuteTaskAsync<Brand>(request);
+            if (response.IsSuccessful)
             {
-                throw new Exception(response.ErrorMessage);
+                return;
+            }
+            else
+            {
+                string message = response.ErrorMessage;
+                throw new Exception("Server Error: " + message);
             }
         }
         #endregion
@@ -111,10 +125,15 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         {
             var request = new RestRequest("api/brands/{name}", Method.DELETE);
             request.AddUrlSegment("name", name);
-            var response = _restService.Client.Execute(request);
-            if (!response.IsSuccessful)
+            var response = await _restService.Client.ExecuteTaskAsync<Brand>(request);
+            if (response.IsSuccessful)
             {
-                throw new Exception(response.ErrorMessage);
+                return;
+            }
+            else
+            {
+                string message = response.ErrorMessage;
+                throw new Exception("Server Error: " + message);
             }
             #endregion
 

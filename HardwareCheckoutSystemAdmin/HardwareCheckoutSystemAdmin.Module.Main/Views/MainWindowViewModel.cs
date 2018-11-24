@@ -28,7 +28,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
             //include new user control in region
             //var parameters = new NavigationParameters { { "request", new PartsPickerRequest(vendorId.Value) } };
 
-            _ishellservice.ShowShell(nameof(DevicesView),550,550);
+            _ishellservice.ShowShell(nameof(DevicesView),600,600);
 
         }
 
@@ -53,7 +53,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views
 
         public void UsersAction()
         {
-            _ishellservice.ShowShell(nameof(UsersView),550,550);
+            _ishellservice.ShowShell(nameof(UsersView),600,600);
         }
 
         private DelegateCommand _ResponsesCommand;

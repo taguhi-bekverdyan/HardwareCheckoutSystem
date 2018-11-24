@@ -23,8 +23,17 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         public async Task Insert(User user)
         {
             var request = new RestRequest("api/users", Method.POST);
-            request.AddBody(user);
-            var response =  _restService.Client.Execute(request);
+            request.AddJsonBody(user);
+            var response = await _restService.Client.ExecuteTaskAsync<User>(request);
+            if (response.IsSuccessful)
+            {
+                return;
+            }
+            else
+            {
+                string message = response.ErrorMessage;
+                throw new Exception("Server Error: " + message);
+            }
         }
 
         #endregion
@@ -103,9 +112,8 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         {
             var request = new RestRequest("api/users/{guid}", Method.PUT);
             request.AddUrlSegment("{guid}", user.Id);
-            request.RequestFormat = DataFormat.Json;
-            request.AddBody(user);
-            IRestResponse response = _restService.Client.Execute(request);
+            request.AddJsonBody(user);
+            var response = await _restService.Client.ExecuteTaskAsync(request);
             if (!response.IsSuccessful)
             {
                 throw new Exception(response.ErrorMessage);
@@ -124,19 +132,11 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
             
             var request = new RestRequest("api/users/{sn}", Method.DELETE);
             request.AddUrlSegment("{sn}", sn);
-            var response =  _restService.Client.Execute(request);
+            var response = await  _restService.Client.ExecuteTaskAsync(request);
             if (!response.IsSuccessful)
             {
                 throw new Exception(response.ErrorMessage);
             }
-            //using (var context = new DataContext())
-            //{
-            //    var deviceToDelete = (from d in context.Devices
-            //                          where d.SerialNumber == serialnumber
-            //                          select d).FirstOrDefault();
-            //    context.Devices.Remove(deviceToDelete);
-            //    await context.SaveChangesAsync();
-            //}
         }
         #endregion
 

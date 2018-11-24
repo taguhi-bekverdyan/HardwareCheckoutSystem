@@ -25,7 +25,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         private readonly ICategoryService _icategoryservice;
         private readonly IShellService _ishellservice;
         private ViewMode mode;
-        private Device device;
 
         public AddDeviceViewModel(IEventAggregator eventaggregator, IDeviceService deviceservice, IShellService shellservice, IBrandService brandservice, ICategoryService categoryService)
         {
@@ -48,12 +47,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             throw new NotImplementedException();
         }
 
-        private Device _newdevice;
-        public Device NewDevice
+        private Device _device;
+        public Device device
         {
-            get { return _newdevice; }
+            get { return _device; }
 
-            set { SetProperty(ref _newdevice, value); }
+            set { SetProperty(ref _device, value); }
         }
 
         private List<Brand> _brands;
@@ -177,9 +176,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
         }
 
         private DelegateCommand _AddNewDeviceCommand;
-        public DelegateCommand AddNewDeviceCommand => _AddNewDeviceCommand ?? (_AddNewDeviceCommand = new DelegateCommand(AddNewDeviceAction));
+        public DelegateCommand AddNewDeviceCommand => _AddNewDeviceCommand ?? (_AddNewDeviceCommand = new DelegateCommand(AddNewDeviceActionAsync));
 
-        public void AddNewDeviceAction()
+        public async void AddNewDeviceActionAsync()
         {
             device.Permission = Permission;
             device.Model = Model;
@@ -191,12 +190,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             device.Status = Status;
             if (mode == ViewMode.Edit)
             {
-                _ideviceservice.Update(device);
+                await _ideviceservice.Update(device);
             }
             else
             {
                 device.Id = new Guid();
-                _ideviceservice.Insert(device);
+                await _ideviceservice.Insert(device);
             }
             _ieventaggregator.GetEvent<DeviceAddedOrEditedEvent>().Publish(new DeviceAddedOrEditedEventArgs { Device = device });
         }

@@ -68,20 +68,20 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Categories
         }
 
         private DelegateCommand _AddCategoryCommand;
-        public DelegateCommand AddCategoryCommand => _AddCategoryCommand ?? (_AddCategoryCommand = new DelegateCommand(AddCategoryAction));
+        public DelegateCommand AddCategoryCommand => _AddCategoryCommand ?? (_AddCategoryCommand = new DelegateCommand(AddCategoryActionAsync));
 
-        public void AddCategoryAction()
+        public async void AddCategoryActionAsync()
         {
            
             if (mode == ViewMode.Add)
             {
                 category = new Category(Name);
-                _icategoryservice.Insert(category);
+                await _icategoryservice.Insert(category);
             }
             else
             {
                 category.Name = Name;
-                _icategoryservice.Update(category);
+               await  _icategoryservice.Update(category);
             }
            
             _ieventaggregator.GetEvent<CategoryAddedOrEditedEvent>().Publish(new CategoryAddedOrEditedEventArgs { Category = category });

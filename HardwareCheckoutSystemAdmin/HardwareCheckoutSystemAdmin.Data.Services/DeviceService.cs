@@ -22,9 +22,18 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         #region [CREATE]
         public async Task Insert(Device device)
         {
-            var request = new RestRequest("api/devices", Method.POST);
-            request.AddBody(device);
-            var response = _restService.Client.Execute(request);
+            var request = new RestRequest("api/categories", Method.POST);
+            request.AddJsonBody(device);
+            var response = await _restService.Client.ExecuteTaskAsync<Device>(request);
+            if (response.IsSuccessful)
+            {
+                return;
+            }
+            else
+            {
+                string message = response.ErrorMessage;
+                throw new Exception("Server Error: " + message);
+            }
         }
         
         #endregion
@@ -99,14 +108,17 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         #region Update
         public async Task Update(Device device)
         {
-            var request = new RestRequest("api/devices/{guid}", Method.PUT);
-            request.AddUrlSegment("{guid}", device.Id);
-            request.RequestFormat = DataFormat.Json;
-            request.AddBody(device);
-            IRestResponse response = _restService.Client.Execute(request);
-            if (!response.IsSuccessful)
+            var request = new RestRequest("api/brands", Method.PUT);
+            request.AddJsonBody(device);
+            var response = await _restService.Client.ExecuteTaskAsync<Device>(request);
+            if (response.IsSuccessful)
             {
-                throw new Exception(response.ErrorMessage);
+                return;
+            }
+            else
+            {
+                string message = response.ErrorMessage;
+                throw new Exception("Server Error: " + message);
             }
         }
         #endregion
@@ -122,19 +134,12 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 
             var request = new RestRequest("api/devices/{sn}", Method.DELETE);
             request.AddUrlSegment("{sn}", sn);
-            var response = _restService.Client.Execute(request);
+            var response = await _restService.Client.ExecuteTaskAsync(request);
             if (!response.IsSuccessful)
             {
                 throw new Exception(response.ErrorMessage);
             }
-            //using (var context = new DataContext())
-            //{
-            //    var deviceToDelete = (from d in context.Devices
-            //                          where d.SerialNumber == serialnumber
-            //                          select d).FirstOrDefault();
-            //    context.Devices.Remove(deviceToDelete);
-            //    await context.SaveChangesAsync();
-            //}
+      
         }
         #endregion
 

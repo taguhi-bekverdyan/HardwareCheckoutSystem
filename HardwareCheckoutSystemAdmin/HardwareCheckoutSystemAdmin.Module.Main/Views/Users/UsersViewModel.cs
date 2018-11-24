@@ -31,18 +31,26 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
             _ishellservice = shellservice;
         }
 
-        #region [TYPES]
+        #region TYPES
 
-        private List<UserViewItem> _users;
-        public List<UserViewItem> Users
+        private bool _isbusy;
+        public bool IsBusy
+        {
+            get { return _isbusy; }
+
+            set { SetProperty(ref _isbusy, value); }
+        }
+
+        private List<User> _users;
+        public List<User> Users
         {
             get { return _users; }
 
             set { SetProperty(ref _users, value); }
         }
 
-        private UserViewItem _selecteditem;
-        public UserViewItem SelectedItem
+        private User _selecteditem;
+        public User SelectedItem
         {
             get { return _selecteditem; }
 
@@ -56,15 +64,15 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
 
         #endregion
 
-        #region [BUTTONS]
+        #region BUTTONS
         private DelegateCommand _EditUserCommand;
         public DelegateCommand EditUserCommand => _EditUserCommand ?? (_EditUserCommand = new DelegateCommand(EditUserAction));
 
         public void EditUserAction()
         {
             NavigationParameters param;
-            param = new NavigationParameters { { "request", new Param<UserViewItem>(ViewMode.Edit, SelectedItem) } };
-            addUserView=_ishellservice.ShowShell(nameof(AddUserView), param,450,450);
+            param = new NavigationParameters { { "request", new Param<User>(ViewMode.Edit, SelectedItem) } };
+            addUserView = _ishellservice.ShowShell(nameof(AddUserView), param,450,450);
             _ieventaggregator.GetEvent<UserAddedOrEditedEvent>().Subscribe(UserAddedOrEditedEventHandler, ThreadOption.UIThread);
 
         }
@@ -75,9 +83,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
         public void AddUserAction()
         {
             NavigationParameters param;
-            param = new NavigationParameters { { "request", new Param<UserViewItem>(ViewMode.Add, new UserViewItem()) } };
+            param = new NavigationParameters { { "request", new Param<User>(ViewMode.Add, new User()) } };
             _ieventaggregator.GetEvent<UserAddedOrEditedEvent>().Subscribe(UserAddedOrEditedEventHandler, ThreadOption.UIThread);
-            _ishellservice.ShowShell(nameof(AddUserView), param,450,450);
+            addUserView = _ishellservice.ShowShell(nameof(AddUserView), param,450,450);
         }
 
         private DelegateCommand _DeleteUserCommand;
@@ -103,15 +111,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Users
 
         private async Task UpdateUsersData()
         {
-            List<UserViewItem> _Users = new List<UserViewItem>();
             try
             {
-                var temp = await _iuserservice.FindAll();
-                foreach (var item in temp)
-                {
-                    _Users.Add(new UserViewItem(item));
-                }
-                Users = _Users;
+                Users = await _iuserservice.FindAll();
             }
             catch (Exception e)
             {

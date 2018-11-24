@@ -19,6 +19,12 @@
                 <x:Type TypeName="Alias:Permission"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="DataFromEnum2" MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Alias:DeviceStatus"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
     <Grid Background="AliceBlue" TextBlock.FontSize="18"> 
         <Grid.RowDefinitions>
@@ -37,7 +43,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Line Grid.Column="1" Grid.RowSpan="8"  Y1="0" Y2="430" Stroke="Blue" />
+        <Line Grid.Column="1" Grid.RowSpan="10"  Y1="0" Y2="550" Stroke="Blue" />
         <TextBlock Grid.Row="0" Grid.Column="0" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" >SerialNumber</TextBlock>
         <TextBox FontSize="18" Width="80" Text="{Binding SerialNumber,Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="10"  VerticalAlignment="Center" ></TextBox>
         <TextBlock Grid.Row="1" Grid.Column="0" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" >Model</TextBlock>
@@ -52,8 +58,8 @@
         <ComboBox FontSize="18" Width="80" ItemsSource="{Binding Path=Categories}" DisplayMemberPath="Name"  SelectedValuePath="Name"  SelectedItem="{Binding SelectedCategory,Mode=TwoWay}" Margin="10" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center"  VerticalAlignment="Center" ></ComboBox>
         <TextBlock Grid.Column="0" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" >MaxPeriod</TextBlock>
         <DatePicker FontSize="18" Width="80" Grid.Column="1" Grid.Row="6"  HorizontalAlignment="Center"  VerticalAlignment="Center" SelectedDate="{Binding Path= MaxPeriod, Mode=TwoWay}"/>
-        <TextBlock  Grid.Column="0" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" >Categories</TextBlock>
-        <ComboBox FontSize="18" Width="80" ItemsSource="{Binding Path=DeviceStatus}" DisplayMemberPath="Status"  SelectedValuePath="Status"  SelectedItem="{Binding Status,Mode=TwoWay}" Margin="10" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Center"  VerticalAlignment="Center" ></ComboBox>
+        <TextBlock  Grid.Column="0" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" >Status</TextBlock>
+        <ComboBox FontSize="18" Width="80" Grid.Column="1" Grid.Row="7" ItemsSource="{Binding Source={StaticResource DataFromEnum2}}"  SelectedItem="{Binding Status,Mode=TwoWay}" Margin="10" VerticalAlignment="Center" ></ComboBox>
         <TextBlock  Grid.Column="0" Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center" >Image</TextBlock>
         <Button FontSize="12" Width="80" Margin="5" Content="Choose" Command="{Binding ChooseImageCommand}" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Center"  VerticalAlignment="Center" ></Button>
         <Grid Grid.Row="9" Grid.Column="1">
@@ -61,8 +67,8 @@
                 <ColumnDefinition />
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button  FontSize="13" Command="{Binding CacnelAddingDeviceCommand}"  Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="5"  Content="Cancel" Background="#FFB70F0F" ></Button>
-            <Button Grid.Column="1"   FontSize="13" Command="{Binding AddDeviceCommand}"  Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="5"  Content="Add" Background="Green" ></Button>
+            <Button  FontSize="13" Command="{Binding CancelAddingDeviceCommand}"  Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="5"  Content="Cancel" Background="#FFB70F0F" ></Button>
+            <Button Grid.Column="1"   FontSize="13" Command="{Binding AddNewDeviceCommand}"  Style="{StaticResource RoundCorner}" FontFamily="Calibri" FontWeight="Bold" Margin="5"  Content="Add" Background="Green" ></Button>
         </Grid>
     </Grid>
 </UserControl>

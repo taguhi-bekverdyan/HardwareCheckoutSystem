@@ -59,9 +59,17 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
             }
         }
 
+        private bool _isbusy;
+        public bool IsBusy
+        {
+            get { return _isbusy; }
+
+            set { SetProperty(ref _isbusy, value); }
+        }
+
         #endregion
 
-        #region [BUTTONS]
+        #region BUTTONS
         private DelegateCommand _EditDeviceCommand;
         public DelegateCommand EditDeviceCommand => _EditDeviceCommand ?? (_EditDeviceCommand = new DelegateCommand(EditDeviceAction));
 
@@ -113,7 +121,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.Devices
 
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
+            IsBusy = true;
             await UpdateDevicesData();
+            IsBusy = false;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
