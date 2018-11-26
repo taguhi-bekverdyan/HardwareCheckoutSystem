@@ -10,7 +10,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 {
     public class BrandService : IBrandService
     {
-        private const string EndPoint = @"https://localhost:44350/api/";
+        private const string EndPoint = @"http://localhost:63569/api/";
         private readonly RestClient _client;
 
         public BrandService()

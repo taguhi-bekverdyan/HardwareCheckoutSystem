@@ -31,7 +31,7 @@ namespace HardwareCheckoutSystemWebApi.Controllers
             try
             {
                 var result = await _service.FindAll();
-                return Ok(result);
+                return StatusCode(200,result);
             }
             catch (Exception e)
             {
