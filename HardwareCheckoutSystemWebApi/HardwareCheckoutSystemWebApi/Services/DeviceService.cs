@@ -1,5 +1,6 @@
 ﻿using HardwareCheckoutSystemWebApi.Context.Models;
 using HardwareCheckoutSystemWebApi.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,10 @@ namespace HardwareCheckoutSystemWebApi.Services
                         .FirstOrDefault(d => d.Id == id);
              */
             return Task<List<Device>>.Factory.StartNew(()=> {
-                return _context.Devices.ToList();
+                return _context.Devices
+                .Include(dev => dev.Brand)
+                .Include(dev => dev.Category)
+                .ToList();
                         
             });
         }
