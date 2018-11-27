@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HardwareCheckoutSystemWebApi.Context.Models;
+using HardwareCheckoutSystemWebApi.Models;
+using HardwareCheckoutSystemWebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,38 +12,93 @@ using Microsoft.AspNetCore.Mvc;
 namespace HardwareCheckoutSystemWebApi.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class RequestsController : Controller
     {
-        // GET: api/<controller>
+
+        private readonly RequestService _service;
+
+        #region Ctor
+
+        public RequestsController(DataContext context)
+        {
+            _service = new RequestService(context);
+        }
+
+        #endregion
+
+        #region GET
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var result = await _service.FindAll();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{guid}")]
+        public async Task<IActionResult> GetRequestById([FromRoute]Guid guid)
         {
-            return "value";
+            try
+            {
+                Request request = await _service.FindRequestById(guid);
+                if (request == null) { return NotFound(); }
+                return Ok(request);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
         }
 
-        // POST api/<controller>
+        #endregion
+
+        #region POST
+
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<IActionResult> Create([FromBody]Request request)
         {
+            try
+            {
+                await _service.Insert(request);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        #endregion
+
+        #region PUT
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody]Request request)
         {
+            try
+            {
+                if (await _service.Update(request))
+                {
+                    return Ok(request);
+                }
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
         }
 
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        #endregion
+
+
     }
 }
