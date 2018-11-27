@@ -16,37 +16,32 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Email</th>
-
+                            <th>SN</th>
+                            <th>Model</th>
+                            <th>Description</th>
+                            <th>EndDate</th>
+                            <th>Status</th>
+                            <th>Permission</th>
+                            <th>Image</th>
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach (var deviceRow in Model.Devices)
+                    {
                         <tr>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>john@example.com</td>
+                            <td>@deviceRow.SerialNumber</td>
+                            <td>@deviceRow.Model</td>
+                            <td>@deviceRow.Description</td>
+                            <td>@deviceRow.MaxPeriod</td>
+                            <td>@deviceRow.Status</td>
+                            <td>@deviceRow.Permission</td>
+                            <td>Image</td>
                             <td>
                                 <button type="button" class="btn btn-primary btn-md  center-block">Request</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Mary</td>
-                            <td>Moe</td>
-                            <td>mary@example.com</td>
-                            <td>
-                                <button type="button" class="btn btn-primary btn-md  center-block">Request</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>July</td>
-                            <td>Dooley</td>
-                            <td>july@example.com</td>
-                            <td>
-                                <button type="button" class="btn btn-primary btn-md  center-block">Request</button>
-                            </td>
-                        </tr>                        
+                    }
+
                     </tbody>
                 </table>
             </div>
