@@ -1,5 +1,6 @@
 ﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,51 +12,84 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 {
     public class RequestService : IRequestService
     {
+        private const string EndPoint = @"http://localhost:63596/api";
+        private readonly RestClient _client;
+
+        public RequestService()
+        {
+            _client = new RestClient(EndPoint);
+        }
+
         public async Task Delete(Request request)
         {
-            using (DataContext context = new DataContext())
+            await DeleteRequestById(request.Id);
+        }
+
+        public async Task DeleteRequestById(Guid id)
+        {
+            RestRequest request = new RestRequest("requests/{guid}", Method.DELETE);
+            request.AddUrlSegment("guid", id.ToString());
+
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+            if (!response.IsSuccessful)
             {
-                context.Requests.Attach(request);
-                context.Requests.Remove(request);
-                await context.SaveChangesAsync();
+                throw new Exception(response.ErrorMessage);
             }
         }
 
         public async Task<List<Request>> FindAll()
         {
-            using (DataContext context = new DataContext())
+            var request = new RestRequest("requests", Method.GET);
+            IRestResponse<List<Request>> response = await _client.ExecuteTaskAsync<List<Request>>(request);
+            if (!response.IsSuccessful)
             {
-                return await context.Requests.ToListAsync();
+                throw new Exception(response.ErrorMessage);
+            }
+            else
+            {
+                return response.Data;
             }
         }
 
         public async Task<Request> FindRequestById(Guid id)
         {
-            using (DataContext context = new DataContext())
+            var request = new RestRequest("requests/{guid}", Method.GET);
+            request.AddUrlSegment("guid", id.ToString());
+
+            IRestResponse<Request> response = await _client.ExecuteTaskAsync<Request>(request);
+            if (!response.IsSuccessful)
             {
-                return await context.Requests.FirstOrDefaultAsync(r => r.Id == id);
+                throw new Exception(response.ErrorMessage);
+            }
+            else
+            {
+                return response.Data;
             }
         }
 
-        public async Task Insert(Request request)
+        public async Task Insert(Request newRequest)
         {
-            using (DataContext context = new DataContext())
+            var request = new RestRequest("requests", Method.POST);
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(newRequest);
+
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+            if (!response.IsSuccessful)
             {
-                context.Requests.Add(request);
-                await context.SaveChangesAsync();
+                throw new Exception(response.ErrorMessage);
             }
         }
-
-        public async Task Update(Request request)
+        
+        public async Task Update(Request newRequest)
         {
-            using (DataContext context = new DataContext())
+            var request = new RestRequest("requests", Method.PUT);
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(newRequest);
+
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+            if (!response.IsSuccessful)
             {
-                Request temp = await context.Requests.FirstOrDefaultAsync(d => d.Id == request.Id);
-                if (temp != null)
-                {
-                    context.Entry(temp).CurrentValues.SetValues(request);
-                    await context.SaveChangesAsync();
-                }
+                throw new Exception(response.ErrorMessage);
             }
         }
     }

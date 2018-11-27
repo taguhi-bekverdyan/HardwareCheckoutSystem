@@ -37,21 +37,26 @@ namespace HardwareCheckoutSystemWebApi.Services
         public Task<List<Device>> FindAll()
         {
             return Task<List<Device>>.Factory.StartNew(()=> {
-                return _context.Devices.ToList();       
+                return _context.Devices
+                .ToList();       
             });
         }
 
         public Task<Device> FindDeviceById(Guid id)
         {
             return Task<Device>.Factory.StartNew(() => {
-                return _context.Devices.FirstOrDefault(d => d.Id == id);
+                return _context.Devices
+
+                .FirstOrDefault(d => d.Id == id);
             });
         }
 
         public Task<Device> FindDeviceBySerialNumber(string sn)
         {
             return Task<Device>.Factory.StartNew(() => {
-                return _context.Devices.FirstOrDefault(d => d.SerialNumber == sn);
+                return _context.Devices
+
+                .FirstOrDefault(d => d.SerialNumber == sn);
             });
         }
 

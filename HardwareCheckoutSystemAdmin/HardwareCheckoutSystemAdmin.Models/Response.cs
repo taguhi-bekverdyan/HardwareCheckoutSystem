@@ -17,5 +17,9 @@ namespace HardwareCheckoutSystemAdmin.Models
 
         public Guid UserId { get; set; }
         public User User { get; set; }
+
+        [Required]
+        public Guid RequestId { get; set; }
+        public Request Request { get; set; }
     }
 }

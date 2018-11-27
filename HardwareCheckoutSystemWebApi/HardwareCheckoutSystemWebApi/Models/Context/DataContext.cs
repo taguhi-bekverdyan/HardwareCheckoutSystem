@@ -12,7 +12,7 @@ namespace HardwareCheckoutSystemWebApi.Context.Models
 
         public DataContext(DbContextOptions<DataContext> options):base(options)
         {
-
+            
         }
 
         #region DbSets
@@ -25,6 +25,16 @@ namespace HardwareCheckoutSystemWebApi.Context.Models
         public DbSet<Category> Categories { get; set; }
 
         #endregion
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Request>()
+                .HasOne<Response>(req => req.Response)
+                .WithOne(res => res.Request)
+                .HasForeignKey<Response>(res => res.RequestId);
+        }
+
+        
 
     }
 }

@@ -180,6 +180,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             TelNumber = _user.TelNumber;
             Occupation = _user.Occupation;
             AvatarImage = _user.AvatarImage;
+            ImagePath = string.Empty;
            // AvatarImage = GetBytesFromImage(ImagePath);
         }
         private void SetData()

@@ -16,11 +16,11 @@ namespace HardwareCheckoutSystemWebApi.Models
 
         [Required]
         public Guid DeviceId { get; set; }
-        public Device Device { get; set; }
+        public virtual Device Device { get; set; }
 
         [Required]
         public Guid UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public RequestStatus Status { get; set; }
         public DateTime RequestDate { get; set; }
@@ -28,11 +28,17 @@ namespace HardwareCheckoutSystemWebApi.Models
         public DateTime? RentEndDate { get; set; }
         public string Message { get; set; }
 
-        [ForeignKey("Response")]
-        public Guid? LastResponseId { get; set; }
+        //[ForeignKey("Response")]
+        //public Guid? LastResponseId { get; set; }
         public Response Response { get; set; }
 
-        public ICollection<Response> Responses { get; set; }
+        //public ICollection<Response> Responses { get; set; }
+
+        public Request()
+        {
+            Id = Guid.NewGuid();
+        }
+
     }
 
     public enum RequestStatus

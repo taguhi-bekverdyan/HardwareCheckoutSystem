@@ -26,5 +26,13 @@ namespace HardwareCheckoutSystemWebApi.Models
         public string Occupation { get; set; }
 
         public ICollection<Request> Requests { get; set; }
+
+
+        public User()
+        {
+            Id = Guid.NewGuid();
+            Requests = new List<Request>();
+        }
+
     }
 }

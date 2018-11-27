@@ -24,10 +24,12 @@ namespace HardwareCheckoutSystemAdmin.Models
         public DateTime? RentEndDate { get; set; }
         public string Message { get; set; }
 
-        public Guid? LastResponseId { get; set; }
+        //[ForeignKey("Response")]
+        //public Guid? LastResponseId { get; set; }
         public Response Response { get; set; }
 
-        public ICollection<Response> Responses { get; set; }
+        //public ICollection<Response> Responses { get; set; }
+
     }
 
     public enum RequestStatus

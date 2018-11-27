@@ -1,5 +1,7 @@
 ﻿using HardwareCheckoutSystemWebApi.Context.Models;
 using HardwareCheckoutSystemWebApi.Models;
+using Microsoft.EntityFrameworkCore;
+using Remotion.Linq.Clauses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +37,8 @@ namespace HardwareCheckoutSystemWebApi.Services
         public Task<List<Brand>> FindAll()
         {
             return Task.Factory.StartNew(()=> {
-                return _context.Brands.ToList();
+                return _context.Brands
+                .ToList();
             });
         }
 
