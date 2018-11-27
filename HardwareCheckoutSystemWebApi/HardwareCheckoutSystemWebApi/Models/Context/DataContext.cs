@@ -34,7 +34,10 @@ namespace HardwareCheckoutSystemWebApi.Context.Models
                 .HasForeignKey<Response>(res => res.RequestId);
         }
 
-        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {           
+            optionsBuilder.EnableSensitiveDataLogging();
+        }
 
     }
 }

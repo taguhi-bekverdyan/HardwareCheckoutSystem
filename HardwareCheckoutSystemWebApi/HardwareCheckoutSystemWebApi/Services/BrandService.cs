@@ -37,8 +37,9 @@ namespace HardwareCheckoutSystemWebApi.Services
         public Task<List<Brand>> FindAll()
         {
             return Task.Factory.StartNew(()=> {
-                return _context.Brands
+                List<Brand> categories = _context.Brands
                 .ToList();
+                return categories;
             });
         }
 
