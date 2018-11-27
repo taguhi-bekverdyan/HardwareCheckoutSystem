@@ -8,15 +8,13 @@ namespace HardwareCheckoutSystemAdmin.Models
 {
     public class Request
     {
-        [Key, ValidGuid]
-        [Required]
+
         public Guid Id { get; set; }
 
-        [Required]
+
         public Guid DeviceId { get; set; }
         public Device Device { get; set; }
 
-        [Required]
         public Guid UserId { get; set; }
         public User User { get; set; }
 
@@ -26,7 +24,6 @@ namespace HardwareCheckoutSystemAdmin.Models
         public DateTime? RentEndDate { get; set; }
         public string Message { get; set; }
 
-        [ForeignKey("Response")]
         public Guid? LastResponseId { get; set; }
         public Response Response { get; set; }
 

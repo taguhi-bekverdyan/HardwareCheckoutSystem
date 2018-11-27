@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
+using Newtonsoft.Json;
 using RestSharp;
 
 namespace HardwareCheckoutSystemAdmin.Data.Services
@@ -13,7 +14,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
     public class DeviceService : IDeviceService
     {
 
-        private const string EndPoint = @"https://localhost:44350/api/";
+        private const string EndPoint = @"http://localhost:63569/api/";
         private readonly RestClient _client;
 
         public DeviceService()
@@ -41,15 +42,13 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         public async Task<List<Device>> FindAll()
         {
             var request = new RestRequest("devices", Method.GET);
-            IRestResponse<List<Device>> response = await _client.ExecuteTaskAsync<List<Device>>(request);
-            if (!response.IsSuccessful)
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+            if (response.IsSuccessful)
             {
-                throw new Exception(response.ErrorMessage);
+                List<Device> devices = JsonConvert.DeserializeObject<List<Device>>(response.Content);
+                return devices;
             }
-            else
-            {
-                return response.Data;
-            }
+            throw new Exception(response.ErrorMessage);
         }
 
         public async Task<Device> FindDeviceById(Guid id)
@@ -70,7 +69,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 
         public async Task<Device> FindDeviceBySerialNumber(string sn)
         {
-            var request = new RestRequest("categories/serialNumber/{sn}", Method.GET);
+            var request = new RestRequest("devices/serialNumber/{sn}", Method.GET);
             request.AddUrlSegment("sn", sn);
 
             IRestResponse<Device> response = await _client.ExecuteTaskAsync<Device>(request);

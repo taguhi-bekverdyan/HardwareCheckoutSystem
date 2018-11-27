@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HardwareCheckoutSystemWebApi.Models
 {
-    public class Device
+    public class Device:IEquatable<Device>
     {
         [Key, ValidGuid]
         [Required]
@@ -34,7 +34,10 @@ namespace HardwareCheckoutSystemWebApi.Models
             Id = Guid.NewGuid();
         }
 
-
+        public bool Equals(Device other)
+        {
+            return Id == other.Id;
+        }
     }
 
     public enum DeviceStatus

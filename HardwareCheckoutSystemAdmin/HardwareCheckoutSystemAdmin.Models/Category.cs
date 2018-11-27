@@ -7,8 +7,7 @@ namespace HardwareCheckoutSystemAdmin.Models
 {
     public class Category:IEquatable<Category>
     {
-        [Key, ValidGuid]
-        [Required]
+
         public Guid Id { get; set; }
         public string Name { get; set; }
 

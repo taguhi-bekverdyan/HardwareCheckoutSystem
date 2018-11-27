@@ -30,7 +30,7 @@ namespace HardwareCheckoutSystemWebApi.Controllers
         {
             try
             {
-                var result = await _service.FindAll();
+                List<Device> result = await _service.FindAll();
                 return Ok(result);
             }
             catch (Exception e)
