@@ -98,7 +98,15 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
             IsBusy = true;
-            await UpdateData();
+            try
+            {
+                await UpdateData();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+            
             IsBusy = false;
         }
 

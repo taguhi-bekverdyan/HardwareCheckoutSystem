@@ -12,6 +12,7 @@ using Prism.Events;
 using HardwareCheckoutSystemAdmin.Views;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements;
+using HardwareCheckoutSystemAdmin.Models;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 {
@@ -135,7 +136,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
             IsBusy = true;
-            await UpdateData();
+            try
+            {
+                await UpdateData();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Connection error "+e.ToString());
+            }            
             IsBusy = false;
         }
 
@@ -152,7 +160,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         private async Task UpdateData()
         {
             List<DeviceViewItem> tempDevices = new List<DeviceViewItem>();
-            var temp = await _deviceService.FindAll();
+            List<Device> temp = await _deviceService.FindAll();
             foreach (var item in temp)
             {
                 tempDevices.Add(new DeviceViewItem(item));

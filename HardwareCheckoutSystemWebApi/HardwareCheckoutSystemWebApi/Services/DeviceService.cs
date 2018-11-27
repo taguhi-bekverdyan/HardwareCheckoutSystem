@@ -36,18 +36,8 @@ namespace HardwareCheckoutSystemWebApi.Services
 
         public Task<List<Device>> FindAll()
         {
-            /*
-             return context.Devices
-                        .Include((d) => d.Brand)
-                        .Include((d) => d.Category)
-                        .FirstOrDefault(d => d.Id == id);
-             */
             return Task<List<Device>>.Factory.StartNew(()=> {
-                return _context.Devices
-                .Include(dev => dev.Brand)
-                .Include(dev => dev.Category)
-                .ToList();
-                        
+                return _context.Devices.ToList();       
             });
         }
 

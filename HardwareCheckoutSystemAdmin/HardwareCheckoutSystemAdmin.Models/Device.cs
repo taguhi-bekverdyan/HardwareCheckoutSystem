@@ -11,19 +11,13 @@ namespace HardwareCheckoutSystemAdmin.Models
 {
     public class Device
     {
-        [Key, ValidGuid]
-        [Required]
         public Guid Id { get; set; }
-        [StringLength(50),Required]
         public string SerialNumber { get; set; }
-        [StringLength(50)]
         public string Model { get; set; }
         public string Description { get; set; }
         public DateTime? MaxPeriod { get; set; }
         public byte[] Image { get; set; }
-        [Required]
         public DeviceStatus Status { get; set; }
-        [Required]
         public Permission Permission { get; set; }
 
         public Guid CategoryId { get; set; }
