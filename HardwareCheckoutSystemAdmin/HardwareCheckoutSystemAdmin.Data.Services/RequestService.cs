@@ -1,5 +1,6 @@
 ﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -40,15 +41,12 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
         public async Task<List<Request>> FindAll()
         {
             var request = new RestRequest("requests", Method.GET);
-            IRestResponse<List<Request>> response = await _client.ExecuteTaskAsync<List<Request>>(request);
-            if (!response.IsSuccessful)
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+            if (response.IsSuccessful)
             {
-                throw new Exception(response.ErrorMessage);
+                return JsonConvert.DeserializeObject<List<Request>>(response.Content);
             }
-            else
-            {
-                return response.Data;
-            }
+            throw new Exception(response.ErrorMessage);
         }
 
         public async Task<Request> FindRequestById(Guid id)
@@ -56,15 +54,12 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
             var request = new RestRequest("requests/{guid}", Method.GET);
             request.AddUrlSegment("guid", id.ToString());
 
-            IRestResponse<Request> response = await _client.ExecuteTaskAsync<Request>(request);
-            if (!response.IsSuccessful)
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+            if (response.IsSuccessful)
             {
-                throw new Exception(response.ErrorMessage);
+                return JsonConvert.DeserializeObject<Request>(response.Content);
             }
-            else
-            {
-                return response.Data;
-            }
+            throw new Exception(response.ErrorMessage);
         }
 
         public async Task Insert(Request newRequest)

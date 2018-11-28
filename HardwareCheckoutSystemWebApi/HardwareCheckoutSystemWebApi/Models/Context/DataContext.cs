@@ -26,13 +26,7 @@ namespace HardwareCheckoutSystemWebApi.Context.Models
 
         #endregion
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Request>()
-                .HasOne<Response>(req => req.Response)
-                .WithOne(res => res.Request)
-                .HasForeignKey<Response>(res => res.RequestId);
-        }
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {           

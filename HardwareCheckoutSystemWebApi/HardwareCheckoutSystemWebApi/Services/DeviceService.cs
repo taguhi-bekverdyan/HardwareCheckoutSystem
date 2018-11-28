@@ -51,7 +51,8 @@ namespace HardwareCheckoutSystemWebApi.Services
         {
             return Task<Device>.Factory.StartNew(() => {
                 return _context.Devices
-
+                .Include(d => d.Brand)
+                .Include(d => d.Category)
                 .FirstOrDefault(d => d.Id == id);
             });
         }

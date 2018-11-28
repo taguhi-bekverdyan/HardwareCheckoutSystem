@@ -93,7 +93,15 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.ResponseViewElements
 
         private async void UpdateData()
         {
-            Responses = await _responseService.FindAll();
+            try
+            {
+                Responses = await _responseService.FindAll();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+            
         }
 
     }

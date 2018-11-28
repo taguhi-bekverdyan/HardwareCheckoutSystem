@@ -39,8 +39,19 @@ namespace HardwareCheckoutSystemWebApi.Services
         {
             return Task<List<User>>.Factory.StartNew(() =>
             {
-                return _context.Users
+                List<User> users = _context.Users
+                .Include(u => u.Requests)                
                 .ToList();
+
+                foreach (var item in users)
+                {
+                    foreach (var item1 in item.Requests)
+                    {
+                        item1.User = null;
+                    }
+                }
+
+                return users;
             });
         }
 
@@ -48,9 +59,16 @@ namespace HardwareCheckoutSystemWebApi.Services
         {
             return Task<User>.Factory.StartNew(() =>
             {
-                return _context.Users
-                
+                User user = _context.Users
+                .Include(u => u.Requests)
                 .FirstOrDefault(u => u.Id == id);
+
+                foreach (var item in user.Requests)
+                {
+                    item.User = null;
+                }
+
+                return user;
             });
         }
 
