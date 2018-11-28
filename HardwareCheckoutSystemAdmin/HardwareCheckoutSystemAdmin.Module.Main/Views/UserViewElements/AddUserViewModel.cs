@@ -124,7 +124,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
         #endregion
 
         #region Ctor
-        public AddUserViewModel(IUserService userService,IEventAggregator eventAggregator)
+        public AddUserViewModel(IUserService userService, IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
             _userService = userService;
@@ -160,6 +160,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             if (_mode == Mode.Add)
             {
                 _user = new UserViewItem();
+
             }
             else
             {
@@ -181,7 +182,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             Occupation = _user.Occupation;
             AvatarImage = _user.AvatarImage;
             ImagePath = string.Empty;
-           // AvatarImage = GetBytesFromImage(ImagePath);
+            // AvatarImage = GetBytesFromImage(ImagePath);
         }
         private void SetData()
         {
@@ -203,7 +204,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
 
         private byte[] GetBytesFromImage(string path)
         {
-            if (path != string.Empty)
+            if (!string.IsNullOrEmpty(path))
             {
                 //return File.ReadAllBytes(path);
                 Bitmap image = new Bitmap(path);

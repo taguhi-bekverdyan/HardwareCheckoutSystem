@@ -1,5 +1,6 @@
 ﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 
         public async Task DeleteResponseById(Guid id)
         {
-            RestRequest request = new RestRequest("response/{guid}", Method.DELETE);
+            RestRequest request = new RestRequest("responses/{guid}", Method.DELETE);
             request.AddUrlSegment("guid", id.ToString());
 
             IRestResponse response = await _client.ExecuteTaskAsync(request);
@@ -36,32 +37,29 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
 
         public async Task<List<Response>> FindAll()
         {
-            var request = new RestRequest("response", Method.GET);
-            IRestResponse<List<Response>> response = await _client.ExecuteTaskAsync<List<Response>>(request);
-            if (!response.IsSuccessful)
+            var request = new RestRequest("responses", Method.GET);
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+
+            if (response.IsSuccessful)
             {
-                throw new Exception(response.ErrorMessage);
+                return JsonConvert.DeserializeObject<List<Response>>(response.Content);
             }
-            else
-            {
-                return response.Data;
-            }
+            throw new Exception(response.ErrorMessage);
         }
 
         public async Task<Response> FindResponseById(Guid id)
         {
-            var request = new RestRequest("response/{guid}", Method.GET);
+            var request = new RestRequest("responses/{guid}", Method.GET);
             request.AddUrlSegment("guid", id.ToString());
 
-            IRestResponse<Response> response = await _client.ExecuteTaskAsync<Response>(request);
-            if (!response.IsSuccessful)
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+
+            if (response.IsSuccessful)
             {
-                throw new Exception(response.ErrorMessage);
+                JsonConvert.DeserializeObject<Response>(response.Content);
             }
-            else
-            {
-                return response.Data;
-            }
+            throw new Exception(response.ErrorMessage);
+            
         }
 
         public async Task Insert(Response newResponse)

@@ -38,9 +38,25 @@ namespace HardwareCheckoutSystemWebApi.Services
         {
             return Task<List<Request>>.Factory.StartNew(() =>
             {
-                return _context.Requests
-                
+                var requests = _context.Requests
+                .Include(r => r.User)
+                .Include(r => r.Device)
+                .Include(r => r.Responses)               
                 .ToList();
+
+                foreach (var item in requests)
+                {
+                    item.User.Requests = null;
+                    
+                    foreach (var item1 in item.Responses)
+                    {
+                        item1.Request = null;
+                        item1.User = null;
+                        item.LastResponseId = item1.Id;
+                    }
+                }
+
+                return requests;
             });
         }
 
@@ -48,9 +64,22 @@ namespace HardwareCheckoutSystemWebApi.Services
         {
             return Task<Request>.Factory.StartNew(() =>
             {
-                return _context.Requests
-                
+                Request request = _context.Requests
+                .Include(r => r.User)
+                .Include(r => r.Device)
+                .Include(r => r.Responses)
                 .FirstOrDefault(r => r.Id == id);
+
+                request.User.Requests = null;
+
+                foreach (var item in request.Responses)
+                {
+                    item.Request = null;
+                    item.User = null;
+                    request.LastResponseId = item.Id;
+                }
+
+                return request;
             });
         }
 
