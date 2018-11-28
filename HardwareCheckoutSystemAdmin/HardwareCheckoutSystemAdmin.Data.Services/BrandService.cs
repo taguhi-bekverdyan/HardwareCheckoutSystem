@@ -3,7 +3,6 @@ using HardwareCheckoutSystemAdmin.Models;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Threading.Tasks;
 
 namespace HardwareCheckoutSystemAdmin.Data.Services
