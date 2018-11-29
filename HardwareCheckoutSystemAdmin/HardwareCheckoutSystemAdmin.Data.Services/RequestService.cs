@@ -59,6 +59,18 @@ namespace HardwareCheckoutSystemAdmin.Data.Services
             throw new Exception(response.ErrorMessage);
         }
 
+        public async Task<List<Request>> FindRequestsInPending()
+        {
+            var request = new RestRequest("requests/inPending",Method.GET);
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+
+            if (response.IsSuccessful)
+            {
+                return JsonConvert.DeserializeObject<List<Request>>(response.Content);
+            }
+            throw new Exception(response.ErrorMessage);
+        }
+
         public async Task Insert(Request newRequest)
         {
             var request = new RestRequest("requests", Method.POST);

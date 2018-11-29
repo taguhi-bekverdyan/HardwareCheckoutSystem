@@ -58,6 +58,20 @@ namespace HardwareCheckoutSystemWebApi.Controllers
             }
         }
 
+        [HttpGet("inPending")]
+        public async Task<IActionResult> GetRequestsInPending()
+        {
+            try
+            {
+                List<Request> requests = await _service.FindRequestsInPending();
+                return Ok(requests);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500,e);
+            }
+        }
+
         #endregion
 
         #region POST

@@ -20,5 +20,11 @@ namespace HardwareCheckoutSystemAdmin.Models
 
         public Guid RequestId { get; set; }
         public Request Request { get; set; }
+
+        public Response()
+        {
+            Id = Guid.NewGuid();
+        }
+
     }
 }

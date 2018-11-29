@@ -14,5 +14,6 @@ namespace HardwareCheckoutSystemAdmin.Data.Infrastructure
         Task Delete(Request request);
         Task<Request> FindRequestById(Guid id);
         Task<List<Request>> FindAll();
+        Task<List<Request>> FindRequestsInPending();
     }
 }

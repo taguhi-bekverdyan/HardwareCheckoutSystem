@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements.SendResponseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements"
+             mc:Ignorable="d" 
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:StyleAlias="clr-namespace:HardwareCheckoutSystemAdmin.Models;assembly=HardwareCheckoutSystemAdmin.Models"
+             Background="#212224"
+             xmlns:mvvm="http://prismlibrary.com/"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+             d:DesignHeight="350" d:DesignWidth="450">
+    <UserControl.Resources>
+        <ObjectDataProvider
+             x:Key="dataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="StyleAlias:RequestStatus"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ResourceDictionary x:Key="myResources">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HardwareCheckoutSystemAdmin.Module.Main;component/Themes/WPF.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Resources="{StaticResource myResources}">
+        <StackPanel Orientation="Vertical" Margin="10">
+            <Label Content="Sender Id" FontSize="15"/>
+            <TextBox Height="25" Text="{Binding SenderId,Mode=TwoWay}"/>
+            <Label Content="Message" FontSize="15"/>
+            <TextBox Height="100" Text="{Binding Message,Mode=TwoWay}"/>
+            <Label Content="New Status" FontSize="15"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
+                      SelectedItem="{Binding Path=NewStatus,Mode=TwoWay}"/>
+            <Grid Height="70" Margin="0 10 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Margin="0 10 10 10" Content="Cancel"
+                        Command="{Binding Cancel}"/>
+                <Button Grid.Column="1" Margin="10 10 0 10" Content="Send"
+                        Command="{Binding Send}"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -41,6 +41,9 @@ namespace HardwareCheckoutSystemWebApi.Services
                 var requests = _context.Requests
                 .Include(r => r.User)
                 .Include(r => r.Device)
+                .ThenInclude(r => r.Brand)
+                .Include(r => r.Device)
+                .ThenInclude(r => r.Category)
                 .Include(r => r.Responses)               
                 .ToList();
 
@@ -58,6 +61,12 @@ namespace HardwareCheckoutSystemWebApi.Services
 
                 return requests;
             });
+        }
+
+        public async Task<List<Request>> FindRequestsInPending()
+        {
+            List<Request> requests = await FindAll();
+            return requests.FindAll(r => r.LastResponseId == null);
         }
 
         public Task<Request> FindRequestById(Guid id)

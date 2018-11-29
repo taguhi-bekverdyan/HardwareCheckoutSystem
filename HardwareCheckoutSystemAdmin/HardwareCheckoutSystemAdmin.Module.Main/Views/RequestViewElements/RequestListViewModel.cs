@@ -1,6 +1,9 @@
-﻿using HardwareCheckoutSystemAdmin.Data.Infrastructure;
+﻿using HardwareCheckoutSystemAdmin.Common.Prism;
+using HardwareCheckoutSystemAdmin.Data.Infrastructure;
 using HardwareCheckoutSystemAdmin.Models;
+using HardwareCheckoutSystemAdmin.Views;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -14,73 +17,108 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements
 {
     class RequestListViewModel:BindableBase, INavigationAware
     {
+
+        #region Services
+
+        private IShellService _shellService;
         private IRequestService _requestService;
+        private readonly IEventAggregator _eventAggregator;
 
+        #endregion
 
-        private List<Request> _requests = new List<Request>();
-        public List<Request> Requests
+        #region Binding Properties
+
+        private List<RequestViewModel> _requests = new List<RequestViewModel>();
+        public List<RequestViewModel> Requests
         {
             get { return _requests; }
             set { SetProperty(ref _requests, value); }
         }
 
-        private Request _selectedRequest;
-        public Request SelectedRequest
+        private RequestViewModel _selectedRequest;
+        public RequestViewModel SelectedRequest
         {
             get { return _selectedRequest; }
             set
             {
                 SetProperty(ref _selectedRequest, value);
-                DeleteRequest.RaiseCanExecuteChanged();
+                SendResponse.RaiseCanExecuteChanged();
             }
         }
 
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                SetProperty(ref _isBusy,value);
+            }
+        }
 
-        public RequestListViewModel(IRequestService service)
+        private ShellView _sendResponseView;
+
+        #endregion
+
+        #region Ctor
+
+        public RequestListViewModel(IRequestService service,IShellService shellService,
+            IEventAggregator eventAggregator)
         {
             _requestService = service;
+            _shellService = shellService;
+            _eventAggregator = eventAggregator;
+
+            IsBusy = true;
+            _sendResponseView = null;
+            SendResponse = new DelegateCommand(SendResponseAction, CanSendResponse);
+        }
+
+        #endregion
+
+        #region Commands
+
+        public DelegateCommand SendResponse { get; private set; }
+
+        public void SendResponseAction()
+        {
+            NavigationParameters param;
+            param = new NavigationParameters { { "request", SelectedRequest.GetId() } };
+            _eventAggregator.GetEvent<SendResponseEvent>().Subscribe(SendResponseHandler, ThreadOption.UIThread);
+
+            _sendResponseView = _shellService.ShowShell(nameof(SendResponseView),450,400,param);
+        }
+
+        private async void SendResponseHandler(SendResponseEventArgs obj)
+        {
+            _sendResponseView.Close();
+            _sendResponseView = null;
             
-
-
-            DeleteRequest = new DelegateCommand(DeleteRequestAction, CanUpdateOrDelete);
-            AddRequest = new DelegateCommand(AddRequestAction);
-            UpdateRequest = new DelegateCommand(UpdateRequestAction, CanUpdateOrDelete);
+                await UpdateData();
+              
+            _eventAggregator.GetEvent<SendResponseEvent>().Unsubscribe(SendResponseHandler);
         }
 
-
-        public DelegateCommand AddRequest { get; private set; }
-
-        public void AddRequestAction()
-        {
-            MessageBox.Show("TODO");
-        }
-
-        public DelegateCommand UpdateRequest { get; private set; }
-
-        public void UpdateRequestAction()
-        {
-            MessageBox.Show("TODO");
-        }
-
-        public DelegateCommand DeleteRequest { get; private set; }
-
-        public void DeleteRequestAction()
-        {
-            MessageBox.Show("TODO");
-        }
-
-        public bool CanUpdateOrDelete()
+        public bool CanSendResponse()
         {
             if (SelectedRequest == null)
             {
                 return false;
             }
             return true;
+
         }
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
+        #endregion
+
+        #region Navigation
+        public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            UpdateData();
+            IsBusy = true;
+            
+                await UpdateData();
+            
+            IsBusy = false;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -92,11 +130,27 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements
         {
             throw new NotImplementedException();
         }
+        #endregion
 
-        private async void UpdateData()
+        #region Helpers
+        private async Task UpdateData()
         {
-            Requests = await _requestService.FindAll();
+            try
+            {
+                List<RequestViewModel> temp = new List<RequestViewModel>();
+                var requests = await _requestService.FindRequestsInPending();
+                foreach (var item in requests)
+                {
+                    temp.Add(new RequestViewModel(item));
+                }
+                Requests = temp;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
         }
+        #endregion
 
     }
 }
