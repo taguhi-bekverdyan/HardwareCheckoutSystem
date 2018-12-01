@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="HardwareCheckoutSystemAdmin.Module.Main.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views"
+             mc:Ignorable="d" 
+             xmlns:mvvm="http://prismlibrary.com/"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance local:MainView}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="#212224">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Column="0" Grid.Row="1" Background="Transparent" BorderBrush="Transparent"
+                Command="{Binding OpenDeviceListView}" Width="150" Height="150">
+            <StackPanel Width="120" Height="120">
+                <Image Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Images/devices.png" Stretch="Uniform" Width="110"/>
+                
+            </StackPanel>
+        </Button>
+        <Button Grid.Column="0" Grid.Row="2" Background="Transparent" BorderBrush="Transparent"
+                Command="{Binding OpenUserListView}" Width="150" Height="150">
+            <StackPanel Width="120" Height="120">
+                <Image Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Images/users.png" Stretch="Uniform" Width="110"/>
+
+            </StackPanel>
+        </Button>
+        <Button Grid.Column="1" Grid.Row="1" Background="Transparent" BorderBrush="Transparent"
+                Command="{Binding OpenRequestListView}" Width="150" Height="150">
+            <StackPanel Width="120" Height="120">
+                <Image Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Images/resuests.png" Stretch="Uniform" Width="110"/>
+
+            </StackPanel>
+        </Button>
+        <!--<Button Grid.Column="2" Grid.Row="1" Background="Transparent" BorderBrush="Transparent"
+                Command="{Binding OpenResponseListView}" Width="150" Height="150">
+            <StackPanel Width="120" Height="120">
+                <Image Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Images/responses.png" Stretch="Uniform" Width="110"/>
+
+            </StackPanel>
+        </Button>-->
+        <Button Grid.Column="2" Grid.Row="2" Background="Transparent" BorderBrush="Transparent"
+                Command="{Binding OpenBrandListView}" Width="150" Height="150">
+            <StackPanel Width="120" Height="120">
+                <Image Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Images/responses.png" Stretch="Uniform" Width="110"/>
+
+            </StackPanel>
+        </Button>
+        <Button Grid.Column="1" Grid.Row="2" Background="Transparent" BorderBrush="Transparent"
+                Command="{Binding OpenCategoryListView}" Width="150" Height="150">
+            <StackPanel Width="120" Height="120">
+                <Image Source="/HardwareCheckoutSystemAdmin.Module.Main;component/Images/categories.png" Stretch="Uniform" Width="110"/>
+
+            </StackPanel>
+        </Button>
+
+    </Grid>
+</UserControl>

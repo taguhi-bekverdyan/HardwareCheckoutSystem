@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements.AddDeviceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements"
+             mc:Ignorable="d" 
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:StyleAlias="clr-namespace:HardwareCheckoutSystemAdmin.Models;assembly=HardwareCheckoutSystemAdmin.Models"
+             Background="#212224"
+             xmlns:mvvm="http://prismlibrary.com/"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+             d:DesignHeight="500" d:DesignWidth="450">
+    <UserControl.Resources>
+        <ObjectDataProvider
+             x:Key="dataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="StyleAlias:Permission"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ResourceDictionary x:Key="myResources">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HardwareCheckoutSystemAdmin.Module.Main;component/Themes/WPF.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel Margin="10" Resources="{StaticResource myResources}">
+
+        <Label Content="Serial number" FontSize="15"/>
+        <TextBox Height="25" Text="{Binding SerialNumber,Mode=TwoWay}"/>
+
+        <Grid Margin="0 5 0 0" Height="60">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Content="Brand" Grid.Column="1" HorizontalAlignment="Center" FontSize="15"/>
+            <Label Content="Category" Grid.Row="0" HorizontalAlignment="Center" FontSize="15"/>
+            <ComboBox Grid.Column="0" Grid.Row="1" Margin="2" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"/>
+            <ComboBox Grid.Column="1" Grid.Row="1" Margin="2" ItemsSource="{Binding Brands}" SelectedItem="{Binding SelectedBrand,Mode=TwoWay}"/>
+        </Grid>
+
+        <Label Content="Model" FontSize="15"/>
+        <TextBox Height="25" Text="{Binding Model,Mode=TwoWay}"/>
+
+        <Label Content="Description" FontSize="15"/>
+        <TextBox Height="80" Text="{Binding Description,Mode=TwoWay}"/>
+
+        <!--<Label Content="Max Period" FontSize="15"/>-->
+        <Label Content="Permission" FontSize="15"/>
+        <ComboBox Height="30" ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
+                  SelectedItem="{Binding Permission,Mode=TwoWay}"/>
+
+        <Grid Grid.ColumnSpan="2" Margin="0 5 0 0" Height="60">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Image" FontSize="15" Grid.Column="0"/>
+            <TextBox IsReadOnly="True" Grid.Row="1" Margin="0 0 5 0"
+                     Text="{Binding ImagePath}"/>
+            <Button Grid.Column="1" Grid.Row="1" Content="Choose Image" Margin="5 0 0 0"
+                    Command="{Binding ChooseImage}"/>
+        </Grid>
+
+        <Grid Height="35" Margin="0 5 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button  Grid.Row="1" Content="Save" Command="{Binding AddDevice}" 
+                    Margin="0 0 5 0"/>
+            <Button Grid.Column="1"  Grid.Row="1" Content="Cancel" Command="{Binding Cancel}"
+                    Margin="5 0 0 0"/>
+
+        </Grid>
+    </StackPanel>
+</UserControl>

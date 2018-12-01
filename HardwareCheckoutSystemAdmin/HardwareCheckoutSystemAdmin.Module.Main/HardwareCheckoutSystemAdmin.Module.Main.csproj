@@ -59,11 +59,14 @@
       <HintPath>..\packages\Prism.Wpf.6.3.0\lib\net45\Prism.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Configuration.ConfigurationManager.4.4.1\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.6.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -79,22 +82,122 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\DeviceListViewModel.cs" />
-    <Compile Include="Views\EditDeviceViewModel.cs" />
-    <Compile Include="Views\DeviceListView.xaml.cs">
+    <Compile Include="Views\BrandViewElements\BrandViewItem.cs" />
+    <Compile Include="Views\BrandViewElements\BrandListView.xaml.cs">
+      <DependentUpon>BrandListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BrandViewElements\BrandListViewModel.cs" />
+    <Compile Include="Views\CategoryViewElements\CategoryListView.xaml.cs">
+      <DependentUpon>CategoryListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CategoryViewElements\CategoryListViewModel.cs" />
+    <Compile Include="Views\DeviceViewElements\AddDeviceViewModel.cs" />
+    <Compile Include="Views\DeviceViewElements\AddDeviceView.xaml.cs">
+      <DependentUpon>AddDeviceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CategoryViewElements\CategoryViewItem.cs" />
+    <Compile Include="Views\DeviceViewElements\DeviceListView.xaml.cs">
       <DependentUpon>DeviceListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DeviceViewElements\DeviceListViewModel.cs" />
+    <Compile Include="Views\DeviceViewElements\DeviceViewItem.cs" />
+    <Compile Include="Views\DeviceViewElements\Parameters.cs" />
+    <Compile Include="Views\EditDeviceViewModel.cs" />
     <Compile Include="Views\EditDeviceView.xaml.cs">
       <DependentUpon>EditDeviceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainModule.cs" />
-    <Page Include="Views\DeviceListView.xaml">
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainViewModel.cs" />
+    <Compile Include="Views\RequestViewElements\RequestListView.xaml.cs">
+      <DependentUpon>RequestListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RequestViewElements\RequestListViewModel.cs" />
+    <Compile Include="Views\RequestViewElements\RequestViewModel.cs" />
+    <Compile Include="Views\RequestViewElements\SendResponseView.xaml.cs">
+      <DependentUpon>SendResponseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RequestViewElements\SendResponseViewModel.cs" />
+    <Compile Include="Views\ResponseViewElements\ResponseListView.xaml.cs">
+      <DependentUpon>ResponseListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResponseViewElements\ResponseListViewModel.cs" />
+    <Compile Include="Views\UserViewElements\AddUserView.xaml.cs">
+      <DependentUpon>AddUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserViewElements\AddUserViewModel.cs" />
+    <Compile Include="Views\UserViewElements\UserViewItem.cs" />
+    <Compile Include="Views\UserViewElements\UserListView.xaml.cs">
+      <DependentUpon>UserListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserViewElements\UserListViewModel.cs" />
+    <Page Include="Themes\WPF.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BrandViewElements\BrandListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CategoryViewElements\CategoryListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceViewElements\AddDeviceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceViewElements\DeviceListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditDeviceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RequestViewElements\RequestListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RequestViewElements\SendResponseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ResponseViewElements\ResponseListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserViewElements\AddUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserViewElements\UserListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -118,9 +221,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -135,10 +236,21 @@
       <Project>{FBBC1189-56AD-4BF2-9355-D92D036C8472}</Project>
       <Name>HardwareCheckoutSystemAdmin.Data.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HardwareCheckoutSystemAdmin.Data.Services\HardwareCheckoutSystemAdmin.Data.Services.csproj">
+      <Project>{625CE3FE-FFCD-440C-9BAF-087044F1E24E}</Project>
+      <Name>HardwareCheckoutSystemAdmin.Data.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HardwareCheckoutSystemAdmin.Models\HardwareCheckoutSystemAdmin.Models.csproj">
       <Project>{5B83FC4C-DBB4-4F55-A74B-344ED25433BE}</Project>
       <Name>HardwareCheckoutSystemAdmin.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\categories.png" />
+    <Resource Include="Images\devices.png" />
+    <Resource Include="Images\responses.png" />
+    <Resource Include="Images\resuests.png" />
+    <Resource Include="Images\users.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

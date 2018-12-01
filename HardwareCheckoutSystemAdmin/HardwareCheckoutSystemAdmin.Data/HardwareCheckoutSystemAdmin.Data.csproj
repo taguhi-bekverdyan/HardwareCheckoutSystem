@@ -30,21 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Npgsql.2.2.7\lib\net45\Mono.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="Npgsql, Version=2.2.7.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Npgsql.2.2.7\lib\net45\Npgsql.dll</HintPath>
-    </Reference>
-    <Reference Include="Npgsql.EntityFramework, Version=2.2.7.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Npgsql.EntityFramework.2.2.7\lib\net45\Npgsql.EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -56,49 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContext.cs" />
-    <Compile Include="Migrations\201810121752268_FirstMigration.cs" />
-    <Compile Include="Migrations\201810121752268_FirstMigration.Designer.cs">
-      <DependentUpon>201810121752268_FirstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810131215258_ChangedPersonAnnotations.cs" />
-    <Compile Include="Migrations\201810131215258_ChangedPersonAnnotations.Designer.cs">
-      <DependentUpon>201810131215258_ChangedPersonAnnotations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810131230548_AddedParent.cs" />
-    <Compile Include="Migrations\201810131230548_AddedParent.Designer.cs">
-      <DependentUpon>201810131230548_AddedParent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810131239511_ChangedForeignKey.cs" />
-    <Compile Include="Migrations\201810131239511_ChangedForeignKey.Designer.cs">
-      <DependentUpon>201810131239511_ChangedForeignKey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HardwareCheckoutSystemAdmin.Models\HardwareCheckoutSystemAdmin.Models.csproj">
       <Project>{5B83FC4C-DBB4-4F55-A74B-344ED25433BE}</Project>
       <Name>HardwareCheckoutSystemAdmin.Models</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201810121752268_FirstMigration.resx">
-      <DependentUpon>201810121752268_FirstMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810131215258_ChangedPersonAnnotations.resx">
-      <DependentUpon>201810131215258_ChangedPersonAnnotations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810131230548_AddedParent.resx">
-      <DependentUpon>201810131230548_AddedParent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810131239511_ChangedForeignKey.resx">
-      <DependentUpon>201810131239511_ChangedForeignKey.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
