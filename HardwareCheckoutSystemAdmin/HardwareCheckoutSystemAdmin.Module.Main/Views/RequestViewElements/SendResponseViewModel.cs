@@ -21,6 +21,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements
         private readonly IEventAggregator _eventAggregator;
         private readonly IShellService _shellService;
         private readonly IResponseService _responseService;
+        private readonly IRequestService _requestService;
         #endregion
 
         #region Binding Properties
@@ -66,11 +67,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements
         #region ctor
 
         public SendResponseViewModel(IEventAggregator eventAgregator, IShellService shellService,
-            IResponseService responseService)
+            IResponseService responseService,IRequestService requestService)
         {
             _eventAggregator = eventAgregator;
             _shellService = shellService;
             _responseService = responseService;
+            _requestService = requestService;
 
             Cancel = new DelegateCommand(CancelAction);
             Send = new DelegateCommand(SendAction,CanSendResponse);
@@ -87,7 +89,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements
         }
 
         public DelegateCommand Send { get; private set; }
-        private void SendAction()
+        private async void SendAction()
         {
             try
             {
@@ -98,7 +100,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements
                 response.RequestId = _requestId;
                 response.UserId = Guid.Parse(SenderId);
 
-                _responseService.Insert(response);
+                Request request = await _requestService.FindRequestById(_requestId);
+                request.LastResponseId = response.Id;
+                request.Status = response.NewStatus;
+                await _requestService.Update(request);
+
+                await _responseService.Insert(response);
             }
             catch(Exception e)
             {
@@ -140,8 +147,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements
         private bool CanSendResponse()
         {
             Guid id;
-            if (Guid.TryParse(SenderId,out id) && string.IsNullOrEmpty(Message)
-                && !NewStatus.Equals(DeviceStatus.Other))
+            if (Guid.TryParse(SenderId,out id) && !string.IsNullOrEmpty(Message))
             {
                 return true;
             }

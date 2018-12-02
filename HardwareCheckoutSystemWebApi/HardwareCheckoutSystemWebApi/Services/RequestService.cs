@@ -43,20 +43,13 @@ namespace HardwareCheckoutSystemWebApi.Services
                 .Include(r => r.Device)
                 .ThenInclude(r => r.Brand)
                 .Include(r => r.Device)
-                .ThenInclude(r => r.Category)
-                .Include(r => r.Responses)               
+                .ThenInclude(r => r.Category)                             
                 .ToList();
 
                 foreach (var item in requests)
                 {
                     item.User.Requests = null;
-                    
-                    foreach (var item1 in item.Responses)
-                    {
-                        item1.Request = null;
-                        item1.User = null;
-                        item.LastResponseId = item1.Id;
-                    }
+                                      
                 }
 
                 return requests;
