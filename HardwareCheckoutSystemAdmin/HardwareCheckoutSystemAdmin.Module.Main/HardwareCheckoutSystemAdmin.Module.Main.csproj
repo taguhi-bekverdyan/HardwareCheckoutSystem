@@ -122,10 +122,6 @@
     <Compile Include="Views\DeviceViewElements\DeviceListViewModel.cs" />
     <Compile Include="Views\DeviceViewElements\DeviceViewItem.cs" />
     <Compile Include="Views\DeviceViewElements\Parameters.cs" />
-    <Compile Include="Views\EditDeviceViewModel.cs" />
-    <Compile Include="Views\EditDeviceView.xaml.cs">
-      <DependentUpon>EditDeviceView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainModule.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -170,10 +166,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DeviceViewElements\DeviceListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\EditDeviceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
