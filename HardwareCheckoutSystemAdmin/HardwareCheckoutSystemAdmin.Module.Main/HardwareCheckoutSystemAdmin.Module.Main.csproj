@@ -153,10 +153,6 @@
       <DependentUpon>UserListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserViewElements\UserListViewModel.cs" />
-    <Page Include="Themes\WPF.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\BrandViewElements\BrandListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -245,12 +241,6 @@
       <Name>HardwareCheckoutSystemAdmin.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\categories.png" />
-    <Resource Include="Images\devices.png" />
-    <Resource Include="Images\responses.png" />
-    <Resource Include="Images\resuests.png" />
-    <Resource Include="Images\users.png" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

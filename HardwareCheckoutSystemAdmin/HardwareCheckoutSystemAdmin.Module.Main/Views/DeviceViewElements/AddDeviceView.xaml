@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:StyleAlias="clr-namespace:HardwareCheckoutSystemAdmin.Models;assembly=HardwareCheckoutSystemAdmin.Models"
-             Background="#212224"
+             Background="#ffffff"
              xmlns:mvvm="http://prismlibrary.com/"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="500" d:DesignWidth="450">
@@ -19,13 +19,8 @@
                 <x:Type TypeName="StyleAlias:Permission"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ResourceDictionary x:Key="myResources">
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/HardwareCheckoutSystemAdmin.Module.Main;component/Themes/WPF.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel Margin="10" Resources="{StaticResource myResources}">
+    <StackPanel Margin="10">
 
         <Label Content="Serial number" FontSize="15"/>
         <TextBox Height="25" Text="{Binding SerialNumber,Mode=TwoWay}"/>
