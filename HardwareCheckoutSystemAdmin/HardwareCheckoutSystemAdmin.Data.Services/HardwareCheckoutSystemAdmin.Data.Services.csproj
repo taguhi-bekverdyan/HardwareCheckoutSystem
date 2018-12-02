@@ -67,10 +67,6 @@
       <Project>{FBBC1189-56AD-4BF2-9355-D92D036C8472}</Project>
       <Name>HardwareCheckoutSystemAdmin.Data.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HardwareCheckoutSystemAdmin.Data\HardwareCheckoutSystemAdmin.Data.csproj">
-      <Project>{34FBE2A4-E3C5-4CF5-9169-C94F54D0951B}</Project>
-      <Name>HardwareCheckoutSystemAdmin.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\HardwareCheckoutSystemAdmin.Models\HardwareCheckoutSystemAdmin.Models.csproj">
       <Project>{5B83FC4C-DBB4-4F55-A74B-344ED25433BE}</Project>
       <Name>HardwareCheckoutSystemAdmin.Models</Name>
