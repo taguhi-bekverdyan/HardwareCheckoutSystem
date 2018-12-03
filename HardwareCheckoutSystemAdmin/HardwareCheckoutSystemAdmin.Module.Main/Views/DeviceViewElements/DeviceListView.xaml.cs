@@ -1,5 +1,7 @@
-﻿using System;
+﻿using HardwareCheckoutSystemAdmin.Common.Controls;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,5 +26,18 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         {
             InitializeComponent();
         }
+
+    private void DataGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+      headerContextMenu.Initialize(grid);
+
+      //LoadColumnVisibilities
+
     }
+
+    private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+    {
+      //SaveColumnVisibilities
+    }
+  }
 }

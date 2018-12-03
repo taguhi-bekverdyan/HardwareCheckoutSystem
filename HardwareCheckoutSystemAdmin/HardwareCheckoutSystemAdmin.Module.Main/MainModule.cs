@@ -37,7 +37,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main
 
             //register views
             _unityContainer.RegisterType(typeof(object), typeof(MainView), nameof(MainView));
-            _unityContainer.RegisterType(typeof(object), typeof(EditDeviceView), nameof(EditDeviceView));
             _unityContainer.RegisterType(typeof(object),typeof(DeviceListView), nameof(DeviceListView));
             _unityContainer.RegisterType(typeof(object), typeof(CategoryListView), nameof(CategoryListView));
             _unityContainer.RegisterType(typeof(object), typeof(BrandListView), nameof(BrandListView));
