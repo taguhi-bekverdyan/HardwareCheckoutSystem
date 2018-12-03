@@ -17,7 +17,7 @@ namespace HardwareCheckoutSystemWebApi.Models
         [StringLength(50)]
         public string Model { get; set; }
         public string Description { get; set; }
-        public DateTime? MaxPeriod { get; set; }
+        public int? MaxPeriod { get; set; }
         public byte[] Image { get; set; }
         [Required]
         public DeviceStatus Status { get; set; }

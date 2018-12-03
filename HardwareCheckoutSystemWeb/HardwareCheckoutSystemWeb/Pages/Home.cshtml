@@ -1,0 +1,177 @@
+﻿@page
+@using HardwareCheckoutSystemWeb.Models;
+@model HardwareCheckoutSystemWeb.Pages.HomeModel
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 id="asa">asds</h1>
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 bg-success" style="background-color:azure">
+            <div class="table-responsive">
+                @if (Model.Devices.Count != 0)
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Brand</th>
+                                <th>Model</th>
+                                <th>Description</th>
+                                <th>Max per day</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var device in Model.Devices)
+                            {
+                                <tr>
+                                    <td class="col-md-1">@device.Category.Name</td>
+                                    <td class="col-md-2">@device.Brand.Name</td>
+                                    <td class="col-md-2">@device.Model</td>
+                                    <td class="col-md-5">@device.Description</td>
+                                    <td class="col-md-2">@device.MaxPeriod</td>
+                                    <td class="col-md-2">@device.Status</td>
+                                    <td class="col-md-2">
+                                        <button type="button" class="btn btn-primary btnSend" data-toggle="modal" data-target="#SendRequestModal"
+                                                id="@device.Id">
+                                            Send Request
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h3>There are not devices</h3>
+                }
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 bg-warning" style="background-color:azure">
+            <div class="container-fluid">
+                <h2>Request statuses</h2>
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Request 1</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                Request info
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Request 2</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                Request info
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Request 3</a>
+                            </h4>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                Request info
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-md pull-right">Open</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="SendRequestModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Send Request Dialog</h4>
+                <button type="button" class="close" data-dismiss="modal">X</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="buttonSendModel">Send</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var deviceId;
+    var userId;
+    var status = 1;
+    var requestDate = new Date();
+    var reqStard = new Date();
+    var reqEnd = new Date();
+    var message = "some message";
+    $(document).ready(function () {
+        $(".btnSend").click(function () {
+            deviceId = $(this).attr("id").toString();
+            console.log(deviceId);
+        });
+
+        $("#buttonSendModel").click(function () {
+            
+            var request = {
+                DeviceId: deviceId,
+                UserId: userId,
+                Status: status,
+                RequestDate: requestDate,
+                RentStartDate: reqStard,
+                RentEndDate: reqEnd,
+                Message: message
+            };
+
+            console.log(JSON.stringify(request));
+
+            
+
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "Home?handler=UserId",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                userId = response.toString();
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+
+    });
+</script>
+
+
+

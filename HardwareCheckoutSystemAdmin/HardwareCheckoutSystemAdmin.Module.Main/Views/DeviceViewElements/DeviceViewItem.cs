@@ -19,7 +19,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         public Brand Brand { get; set; }
         public string Model { get; set; }
         public string Description { get; set; }
-        public DateTime? MaxPeriod { get; set; }
+        public int? MaxPeriod { get; set; }
         public DeviceStatus Status { get; set; }
         public Permission Permission { get; set; }
         public byte[] Image { get; set; }

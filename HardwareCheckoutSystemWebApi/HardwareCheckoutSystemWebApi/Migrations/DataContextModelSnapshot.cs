@@ -56,7 +56,7 @@ namespace HardwareCheckoutSystemWebApi.Migrations
 
                     b.Property<byte[]>("Image");
 
-                    b.Property<DateTime?>("MaxPeriod");
+                    b.Property<int?>("MaxPeriod");
 
                     b.Property<string>("Model")
                         .HasMaxLength(50);

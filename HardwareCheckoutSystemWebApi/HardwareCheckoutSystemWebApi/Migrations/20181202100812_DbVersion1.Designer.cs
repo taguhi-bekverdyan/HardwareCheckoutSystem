@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HardwareCheckoutSystemWebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181128145911_changeDb")]
-    partial class changeDb
+    [Migration("20181202100812_DbVersion1")]
+    partial class DbVersion1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,7 +58,7 @@ namespace HardwareCheckoutSystemWebApi.Migrations
 
                     b.Property<byte[]>("Image");
 
-                    b.Property<DateTime?>("MaxPeriod");
+                    b.Property<int?>("MaxPeriod");
 
                     b.Property<string>("Model")
                         .HasMaxLength(50);

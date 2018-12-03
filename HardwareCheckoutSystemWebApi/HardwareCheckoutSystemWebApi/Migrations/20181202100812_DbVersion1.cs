@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HardwareCheckoutSystemWebApi.Migrations
 {
-    public partial class V2 : Migration
+    public partial class DbVersion1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,7 +58,7 @@ namespace HardwareCheckoutSystemWebApi.Migrations
                     SerialNumber = table.Column<string>(maxLength: 50, nullable: false),
                     Model = table.Column<string>(maxLength: 50, nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    MaxPeriod = table.Column<DateTime>(nullable: true),
+                    MaxPeriod = table.Column<int>(nullable: true),
                     Image = table.Column<byte[]>(nullable: true),
                     Status = table.Column<int>(nullable: false),
                     Permission = table.Column<int>(nullable: false),
@@ -122,7 +122,7 @@ namespace HardwareCheckoutSystemWebApi.Migrations
                     Message = table.Column<string>(nullable: true),
                     NewStatus = table.Column<int>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
-                    RequestId = table.Column<Guid>(nullable: true)
+                    RequestId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -132,7 +132,7 @@ namespace HardwareCheckoutSystemWebApi.Migrations
                         column: x => x.RequestId,
                         principalTable: "Requests",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Responses_Users_UserId",
                         column: x => x.UserId,
@@ -157,11 +157,6 @@ namespace HardwareCheckoutSystemWebApi.Migrations
                 column: "DeviceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requests_LastResponseId",
-                table: "Requests",
-                column: "LastResponseId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Requests_UserId",
                 table: "Requests",
                 column: "UserId");
@@ -175,43 +170,10 @@ namespace HardwareCheckoutSystemWebApi.Migrations
                 name: "IX_Responses_UserId",
                 table: "Responses",
                 column: "UserId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Requests_Responses_LastResponseId",
-                table: "Requests",
-                column: "LastResponseId",
-                principalTable: "Responses",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Devices_Brands_BrandId",
-                table: "Devices");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Devices_Categories_CategoryId",
-                table: "Devices");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Requests_Devices_DeviceId",
-                table: "Requests");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Requests_Responses_LastResponseId",
-                table: "Requests");
-
-            migrationBuilder.DropTable(
-                name: "Brands");
-
-            migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Devices");
-
             migrationBuilder.DropTable(
                 name: "Responses");
 
@@ -219,7 +181,16 @@ namespace HardwareCheckoutSystemWebApi.Migrations
                 name: "Requests");
 
             migrationBuilder.DropTable(
+                name: "Devices");
+
+            migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Brands");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

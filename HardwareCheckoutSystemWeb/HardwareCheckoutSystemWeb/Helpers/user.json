@@ -1,0 +1,12 @@
+{
+  "id": "1a3e0526-1fe3-4878-a7db-c2a7dcd7b5ac",
+  "firstName": "Ghevond",
+  "lastName": "Gevorgyan",
+  "address": "Ayntap",
+  "birthdate": "1998-05-14T14:00:00",
+  "telNumber": "37455767476",
+  "permission": 1,
+  "avatarImage": null,
+  "occupation": "C# developer",
+  "requests": []
+}
