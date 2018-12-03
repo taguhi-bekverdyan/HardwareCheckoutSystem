@@ -12,7 +12,6 @@ namespace HardwareCheckoutSystemAdmin.Common.Controls
   {
     public DataGrid DataGrid { get; set; }
 
-
     public void Initialize(DataGrid grid)
     {
       DataGrid = grid;
@@ -38,18 +37,17 @@ namespace HardwareCheckoutSystemAdmin.Common.Controls
       var currentColumn = (from col in DataGrid.Columns where col.Header == menuItem.Header select col).FirstOrDefault();
       if (!menuItem.IsChecked)
       {
-        currentColumn.Visibility = System.Windows.Visibility.Collapsed;
+        currentColumn.Visibility = Visibility.Collapsed;
       }
     }
 
-    //context menu checked events
-    private void Item_Checked(object sender, System.Windows.RoutedEventArgs e)
+    private void Item_Checked(object sender, RoutedEventArgs e)
     {
       var menuItem = sender as MenuItem;
       var currentColumn = (from col in DataGrid.Columns where col.Header == menuItem.Header select col).FirstOrDefault();
       if (menuItem.IsChecked)
       {
-        currentColumn.Visibility = System.Windows.Visibility.Visible;
+        currentColumn.Visibility = Visibility.Visible;
       }
     }
   }
