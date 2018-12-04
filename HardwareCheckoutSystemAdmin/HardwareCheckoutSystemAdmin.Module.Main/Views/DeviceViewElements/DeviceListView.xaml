@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views"
              xmlns:mvvm="http://prismlibrary.com/"            
-             
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
              xmlns:extToolkit1="http://schemas.xceed.com/wpf/xaml/toolkit"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              
@@ -54,28 +54,28 @@
         </Grid>
 
         <extToolkit1:BusyIndicator Grid.Row="1" BusyContent="Loading..." IsBusy="{Binding IsBusy}">
-            <DataGrid Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
-                  CanUserAddRows="False" ItemsSource="{Binding Devices,Mode=TwoWay}"
+            <telerik:RadGridView Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
+                  CanUserInsertRows="False" ItemsSource="{Binding Devices,Mode=TwoWay}"
                   SelectedItem="{Binding SelectedDevice,Mode=TwoWay}">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Image" Width="100" IsReadOnly="True">
-                        <DataGridTemplateColumn.CellTemplate>
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Header="Image" Width="100" IsReadOnly="True">
+                        <telerik:GridViewDataColumn.CellTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding BitmapImage}"/>
                             </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Serial Number" Binding="{Binding SerialNumber}" />
-                    <DataGridTextColumn Header="Category" Binding="{Binding Category}" />
-                    <DataGridTextColumn Header="Brand" Binding="{Binding Brand}" />
-                    <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
-                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
-                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
-                    <DataGridTextColumn Header="Max Period" Binding="{Binding MaxPeriod}" />
-                    <DataGridTextColumn Header="Permission" Binding="{Binding Permission}" />
-                </DataGrid.Columns>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn Header="Serial Number" DataMemberBinding="{Binding SerialNumber}" />
+                    <telerik:GridViewDataColumn Header="Category" DataMemberBinding="{Binding Category}" />
+                    <telerik:GridViewDataColumn Header="Brand" DataMemberBinding="{Binding Brand}" />
+                    <telerik:GridViewDataColumn Header="Model" DataMemberBinding="{Binding Model}" />
+                    <telerik:GridViewDataColumn Header="Status" DataMemberBinding="{Binding Status}" />
+                    <telerik:GridViewDataColumn Header="Description" DataMemberBinding="{Binding Description}" />
+                    <telerik:GridViewDataColumn Header="Max Period" DataMemberBinding="{Binding MaxPeriod}" />
+                    <telerik:GridViewDataColumn Header="Permission" DataMemberBinding="{Binding Permission}" />
+                </telerik:RadGridView.Columns>
                 
-            </DataGrid>
+            </telerik:RadGridView>
         </extToolkit1:BusyIndicator>
     </Grid>
 </UserControl>
