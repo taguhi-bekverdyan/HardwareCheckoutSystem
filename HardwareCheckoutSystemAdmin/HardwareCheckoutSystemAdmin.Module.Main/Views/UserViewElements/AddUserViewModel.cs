@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -58,7 +59,9 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             }
         }
 
-        private DateTime _birthdate = DateTime.Now;
+        private DateTime _birthdate;
+
+        [Range(typeof(DateTime), "01.01.1900", "01.01.2099")]
         public DateTime Birthdate
         {
             get { return _birthdate; }

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
              xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views"
              mc:Ignorable="d" 
              xmlns:mvvm="http://prismlibrary.com/"
@@ -37,11 +38,10 @@
         </Grid>
 
 
-        <DataGrid Grid.Row="1" Margin="10" IsReadOnly="True" 
-                  CanUserAddRows="False" ItemsSource="{Binding Responses}"
+        <telerik:RadGridView Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
+                  CanUserInsertRows="False" ItemsSource="{Binding Responses,Mode=TwoWay}"
                   SelectedItem="{Binding SelectedResponse,Mode=TwoWay}">
-
-        </DataGrid>
+        </telerik:RadGridView>
 
     </Grid>
 </UserControl>

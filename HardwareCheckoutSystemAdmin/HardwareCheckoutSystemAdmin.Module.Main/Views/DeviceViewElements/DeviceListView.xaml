@@ -57,6 +57,14 @@
             <telerik:RadGridView Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
                   CanUserInsertRows="False" ItemsSource="{Binding Devices,Mode=TwoWay}"
                   SelectedItem="{Binding SelectedDevice,Mode=TwoWay}">
+                <telerik:RadGridView.GroupDescriptors>
+                <telerik:GroupDescriptor Member="Category" 
+                            SortDirection="Ascending" />
+                <telerik:GroupDescriptor Member="Brand" 
+                            SortDirection="Ascending" />
+                 <telerik:GroupDescriptor Member="MaxPeriod" 
+                            SortDirection="Ascending" />
+                </telerik:RadGridView.GroupDescriptors>
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn Header="Image" Width="100" IsReadOnly="True">
                         <telerik:GridViewDataColumn.CellTemplate>

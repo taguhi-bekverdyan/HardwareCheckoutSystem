@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
              xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views"
              mc:Ignorable="d" 
              xmlns:mvvm="http://prismlibrary.com/"
@@ -34,11 +35,14 @@
 
         <extToolkit1:BusyIndicator Margin="10" Grid.Row="1" Grid.ColumnSpan="2" BusyContent="Loading..."
                                    IsBusy="{Binding IsBusy}">
-            <DataGrid IsReadOnly="True" 
-                  ColumnWidth="360" VerticalGridLinesBrush="#ffffff"
-                  CanUserAddRows="False" ItemsSource="{Binding Brands}"
-                  SelectedItem="{Binding SelectedBrand,Mode=TwoWay}" >
-            </DataGrid>
+            <telerik:RadGridView Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
+                  CanUserInsertRows="False" ItemsSource="{Binding Brands,Mode=TwoWay}"
+                  SelectedItem="{Binding SelectedBrand,Mode=TwoWay}">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn Header="Brand" DataMemberBinding="{Binding Name}" />
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+
         </extToolkit1:BusyIndicator>
         
         <TextBox Width="280" Height="40" Grid.Row="2" Text="{Binding Name, Mode=TwoWay}"/>

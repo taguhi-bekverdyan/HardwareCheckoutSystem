@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements.SendResponseView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views.RequestViewElements"
@@ -28,10 +29,18 @@
     <Grid Resources="{StaticResource myResources}">
         <StackPanel Orientation="Vertical" Margin="10">
             <Label Content="Sender Id" FontSize="15"/>
-            <TextBox Height="25" Text="{Binding SenderId,Mode=TwoWay}"/>
+            <!--<TextBox Height="25" Text="{Binding SenderId,Mode=TwoWay}"/>-->
+            <telerik:RadMaskedNumericInput Height =" 25"
+                                    ErrorMessage="{Binding Path=Text, ElementName=customErrorMessage}" 
+                                    InputBehavior="Insert" 
+                                    Value="{Binding Path=SenderId, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />
             <Label Content="Message" FontSize="15"/>
-            <TextBox Height="100" Text="{Binding Message,Mode=TwoWay}"/>
-            <Label Content="New Status" FontSize="15"/>
+            <!--<TextBox Height="100" Text="{Binding Message,Mode=TwoWay}"/>-->
+            <telerik:RadMaskedTextInput Height ="100"
+                                ErrorMessage="{Binding Path=Text, ElementName=customErrorMessage}" 
+                                Value="{Binding Path=Message, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />
+        </StackPanel>
+        <Label Content="New Status" FontSize="15"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                       SelectedItem="{Binding Path=NewStatus,Mode=TwoWay}"/>
             <Grid Height="70" Margin="0 10 0 0">
