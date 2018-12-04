@@ -86,6 +86,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\HeaderContextMenu.cs" />
+    <Compile Include="Helpers\JsonMenuItem.cs" />
+    <Compile Include="Helpers\JsonSerializer.cs" />
     <Compile Include="Prism\IRegionManagerAware.cs" />
     <Compile Include="Prism\IShellService.cs" />
     <Compile Include="Prism\RegionManagerAware.cs" />
