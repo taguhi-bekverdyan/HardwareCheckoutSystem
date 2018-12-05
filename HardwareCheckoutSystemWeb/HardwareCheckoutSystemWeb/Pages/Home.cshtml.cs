@@ -18,12 +18,11 @@ namespace HardwareCheckoutSystemWeb.Pages
         private readonly IDeviceService _deviceService;
         private readonly IRequestService _requestService;
 
+
         private User _user;
 
-        
-        public List<Device> Devices { get; private set; }
-        
-
+        [BindProperty]
+        public List<Device> Devices { get; private set; } = new List<Device>();
 
         public HomeModel(IDeviceService deviceService, IRequestService requestService)
         {
@@ -65,9 +64,29 @@ namespace HardwareCheckoutSystemWeb.Pages
                 .ToList<Device>();
         }
 
-        public JsonResult OnGetUserId()
+        //public JsonResult OnGetUserId()
+        //{
+        //    return new JsonResult(_user.Id);
+        //}
+        [BindProperty]
+        public Request Request { get; set; } = new Request();
+
+        private string _deviceId = string.Empty;
+
+        public async Task<IActionResult> OnPostAsync()
         {
-            return new JsonResult(_user.Id);
+            Request.UserId = _user.Id;
+            Request.DeviceId = Guid.Parse(_deviceId);
+            Request.Status = RequestStatus.StatusOne;
+            Request.RequestDate = DateTime.Now;
+            await _requestService.Insert(Request);
+            Request = new Request();
+            return Page();
+        }
+
+        public void OnPostDeviceId([FromBody]string deviceId)
+        {
+            _deviceId = deviceId;
         }
 
     }
