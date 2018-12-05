@@ -49,7 +49,7 @@ namespace HardwareCheckoutSystemWeb.Pages
         {
             try
             {
-                await GetData();
+                Devices = await OnGetData();
             }
             catch (Exception)
             {
@@ -57,37 +57,45 @@ namespace HardwareCheckoutSystemWeb.Pages
             }
         }
 
-        private async Task GetData()
+        
+        private async Task<List<Device>> OnGetData()
         {
             List<Device> temp = await _deviceService.FindAll();
-            Devices = (from i in temp where i.Status != DeviceStatus.StatusTwo select i)
+            return (from i in temp where i.Status != DeviceStatus.StatusThree select i)
                 .ToList<Device>();
         }
 
-        //public JsonResult OnGetUserId()
-        //{
-        //    return new JsonResult(_user.Id);
-        //}
-        [BindProperty]
-        public Request Request { get; set; } = new Request();
-
-        private string _deviceId = string.Empty;
-
-        public async Task<IActionResult> OnPostAsync()
+        [HttpGet]
+        public JsonResult OnGetUserId()
         {
-            Request.UserId = _user.Id;
-            Request.DeviceId = Guid.Parse(_deviceId);
-            Request.Status = RequestStatus.StatusOne;
-            Request.RequestDate = DateTime.Now;
-            await _requestService.Insert(Request);
-            Request = new Request();
-            return Page();
+            return new JsonResult(_user.Id);
         }
 
-        public void OnPostDeviceId([FromBody]string deviceId)
+        [HttpGet]
+        public async Task<JsonResult> OnGetDevices()
         {
-            _deviceId = deviceId;
+            return new JsonResult(await OnGetData());
         }
+        
+        
+        [HttpPost]
+        public async Task<IActionResult> OnPost([FromBody]Request request)
+        {
+            try
+            {
+                await _requestService.Insert(request);
+                Device device = await _deviceService.FindDeviceById(request.DeviceId);
+                device.Status = DeviceStatus.StatusThree;
+                await _deviceService.Update(device);
+                return StatusCode(200);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500,e);
+            }
+        }
+
+        
 
     }
 }

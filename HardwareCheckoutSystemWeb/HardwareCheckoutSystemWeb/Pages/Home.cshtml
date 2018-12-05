@@ -5,8 +5,7 @@
     ViewData["Title"] = "Home";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-@Html.AntiForgeryToken();
-<h1 id="asa">asds</h1>
+@Html.AntiForgeryToken()
 <div class="container-fluid">
     <div class="row">
 
@@ -112,43 +111,38 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form method="post">
-                    <div class="form-group">
-                        <label asp-for="Request.Message" class="control-label"> </label>
-                        <input asp-for="Request.Message" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Request.RentStartDate" class="control-label"> </label>
-                        <input asp-for="Request.RentStartDate" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Request.RentEndDate" class="control-label"> </label>
-                        <input asp-for="Request.RentEndDate" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-default" value="Create"/>
-                    </div>
-                </form>
+                <div class="form-group">
+                    <label>Message</label>
+                    <input type="text" class="form-control" id="messageInput" />
+                </div>
+                <div class="form-group">
+                    <label>Rent Start Date</label>
+                    <input type="date" class="form-control" id="rentStartDate" />
+                </div>
+                <div class="form-group">
+                    <label>Rent End Date</label>
+                    <input type="date" class="form-control" id="rentEndDate" />
+                </div>
             </div>
 
             <!-- Modal footer -->
-            @*<div class="modal-footer">
+            <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" id="buttonSendModel">Send</button>
-            </div>*@
+            </div>
 
         </div>
     </div>
 </div>
 
-@*<script type="text/javascript">
+<script type="text/javascript">
     var deviceId;
     var userId;
     var status = 1;
-    var requestDate = new Date();
-    var reqStard = new Date();
-    var reqEnd = new Date();
-    var message = "some message";
+    var requestDate;
+    var rentStartDate;
+    var rentEndDate;
+    var message;
     $(document).ready(function () {
         $(".btnSend").click(function () {
             deviceId = $(this).attr("id").toString();
@@ -156,14 +150,20 @@
         });
 
         $("#buttonSendModel").click(function () {
-            
+
+            requestDate = new Date();
+
+            rentStartDate = $("#rentStartDate").val();
+            rentEndDate = $("#rentEndDate").val();
+            message = $("#messageInput").val();
+
             var request = {
                 DeviceId: deviceId,
                 UserId: userId,
                 Status: status,
                 RequestDate: requestDate,
-                RentStartDate: reqStard,
-                RentEndDate: reqEnd,
+                RentStartDate: rentStartDate,
+                RentEndDate: rentEndDate,
                 Message: message
             };
 
@@ -179,6 +179,9 @@
                 },
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(request)
+            }).done(function (result) {
+                console.log(result.toString());
+                updateDevicesList();
             });
 
             
@@ -198,25 +201,17 @@
             }
         });
 
-    });
-</script>*@
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".btnSend").click(function () {
-            var deviceId = $(this).attr("id").toString();
-            $.ajax({
-                url: '/Home?handler=DeviceId',
-                type: 'POST',
-                headers: {
-                    RequestVerificationToken:
-                        $('input:hidden[name="__RequestVerificationToken"]').val()
-                },
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(deviceId)
-            });
-        });
+        function updateDevicesList() {
+            //todo
+        }
+
+        function Device() {
+            //todo
+        }
+
     });
 </script>
+
 
 
 
