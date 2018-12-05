@@ -12,7 +12,7 @@ namespace HardwareCheckoutSystemAdmin.Common.Helpers
         string filetext = File.ReadAllText(path);
         return JsonConvert.DeserializeObject<T>(filetext);
       }
-      else throw new FileNotFoundException();
+      else return default(T);//throw new FileNotFoundException();
     }
 
     public static void JsonWriteToFile(string path, T obj)

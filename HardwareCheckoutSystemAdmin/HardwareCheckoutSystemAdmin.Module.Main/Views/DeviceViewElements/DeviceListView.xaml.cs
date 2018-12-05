@@ -39,9 +39,12 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
       headerContextMenu.Initialize(grid);
 
       menuItemList = JsonSerializer<List<JsonMenuItem>>.JsonReadFile(path);
-      foreach (MenuItem item in headerContextMenu.ItemsSource)
+      if (menuItemList != null)
       {
-        item.IsChecked = menuItemList.Find(i => i.Header == item.Header.ToString()).IsChecked;
+        foreach (MenuItem item in headerContextMenu.ItemsSource)
+        {
+          item.IsChecked = menuItemList.Find(i => i.Header == item.Header.ToString()).IsChecked;
+        }
       }
     }
 
