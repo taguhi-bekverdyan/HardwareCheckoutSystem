@@ -28,13 +28,18 @@
 
         <extToolkit1:BusyIndicator Margin="10" Grid.Row="1" Grid.ColumnSpan="2" BusyContent="Loading..."
                                    IsBusy="{Binding IsBusy}">
-            <DataGrid IsReadOnly="True" 
-                  ColumnWidth="360" VerticalGridLinesBrush="#ffffff"
-                  CanUserAddRows="False" ItemsSource="{Binding Brands}"
-                  SelectedItem="{Binding SelectedBrand,Mode=TwoWay}" >
+            <DataGrid 
+                AutoGenerateColumns="False" CanUserAddRows="False" 
+                ColumnWidth="360" VerticalGridLinesBrush="#ffffff"
+                ItemsSource="{Binding Brands,Mode=TwoWay}"
+                SelectedItem="{Binding SelectedBrand,Mode=TwoWay}" 
+                CellEditEnding="DataGrid_CellEditEnding" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                </DataGrid.Columns>
             </DataGrid>
         </extToolkit1:BusyIndicator>
-        
+
         <TextBox Width="280" Height="40" Grid.Row="2" Text="{Binding Name, Mode=TwoWay}"/>
         <Button Width="80" Height="40" Grid.Column="1" Grid.Row="2" Content="Add"
                     Command="{Binding AddBrand}"/>

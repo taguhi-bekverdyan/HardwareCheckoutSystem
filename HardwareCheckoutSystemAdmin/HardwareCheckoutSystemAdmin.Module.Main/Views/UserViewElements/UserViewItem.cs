@@ -52,6 +52,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             BitmapImage = (BitmapSource)new ImageSourceConverter().ConvertFrom(user.AvatarImage);
         }
 
+        public Guid GetId()
+        {
+            return _id;
+        }
+
         public static explicit operator User(UserViewItem item)
         {
             return new User() {

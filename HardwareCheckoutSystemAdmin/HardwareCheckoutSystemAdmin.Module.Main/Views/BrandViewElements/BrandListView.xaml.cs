@@ -24,5 +24,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
         {
             InitializeComponent();
         }
+
+        private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            var viewmodel = (BrandListViewModel)DataContext;
+            viewmodel.SaveBrandChanges(e.Row.DataContext);
+        }
     }
 }

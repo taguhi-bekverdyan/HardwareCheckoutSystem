@@ -37,6 +37,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
             set { SetProperty(ref _brands, value); }
         }
 
+
         private BrandViewItem _selectedBrand;
         public BrandViewItem SelectedBrand
         {
@@ -71,6 +72,20 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements
             await UpdateData();
             Name = null;
 
+        }
+
+        public async void SaveBrandChanges(object brandRowObject)
+        {
+            var brandRow = brandRowObject as BrandViewItem;
+            if (brandRow != null)
+            {
+                var brand = new Brand();
+
+                brand.Id = brandRow.GetId();
+                brand.Name = brandRow.Name;
+
+                await _brandService.Update(brand);
+            }
         }
 
         public DelegateCommand UpdateBrand { get; private set; }

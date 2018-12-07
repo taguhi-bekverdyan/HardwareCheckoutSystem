@@ -9,10 +9,12 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
 {
@@ -24,6 +26,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
         private ShellView _addUserView;
 
         private List<UserViewItem> _users = new List<UserViewItem>();
+
         public List<UserViewItem> Users
         {
             get { return _users; }
@@ -89,6 +92,54 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             _addUserView = _shellService.ShowShell(nameof(AddUserView), 450, 520, param);
             _eventAggregator.GetEvent<UserAddOrEditEvent>()
                 .Subscribe(UserAddedEventHandler, ThreadOption.UIThread);
+        }
+
+        public async void SaveUserChanges(object userRowObject)
+        {
+            var userRow = userRowObject as UserViewItem;
+            if (userRow != null)
+            {
+                //save
+                var user = new User();
+
+                user.Id = userRow.GetId();
+                user.LastName = userRow.LastName;
+                user.FirstName = userRow.FirstName;
+                user.Address = userRow.Address;
+                user.Birthdate = userRow.Birthdate;
+                user.Permission = userRow.Permission;
+                user.TelNumber = userRow.TelNumber;
+                user.Occupation = userRow.Occupation;
+                user.AvatarImage = GetBytesFromBitmap(userRow.BitmapImage);
+
+                //_user.LastName = LastName;
+                //_user.FirstName = FirstName;
+                //_user.Address = Address;
+                //_user.Birthdate = Birthdate;
+                //_user.Permission = Permission;
+                //_user.TelNumber = TelNumber;
+                //_user.Occupation = Occupation;
+                //_user.AvatarImage = GetBytesFromImage(ImagePath);
+                await _userService.Update(user);
+            }
+
+        }
+
+        private byte[] GetBytesFromBitmap(BitmapSource bitmapImage)
+        {
+            byte[] res;
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            //encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+            encoder.QualityLevel = 100;
+            // byte[] bit = new byte[0];
+            using (MemoryStream stream = new MemoryStream())
+            {
+                encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+                encoder.Save(stream);
+                res = stream.ToArray();
+                stream.Close();
+            }
+            return res;
         }
 
         public DelegateCommand DeleteUser { get; private set; }

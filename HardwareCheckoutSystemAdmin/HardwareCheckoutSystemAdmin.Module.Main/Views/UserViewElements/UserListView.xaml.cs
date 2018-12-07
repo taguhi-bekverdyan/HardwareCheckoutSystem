@@ -24,5 +24,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
         {
             InitializeComponent();
         }
+
+        private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            var viewmodel = (UserListViewModel)DataContext;
+            viewmodel.SaveUserChanges(e.Row.DataContext);
+        }
     }
 }

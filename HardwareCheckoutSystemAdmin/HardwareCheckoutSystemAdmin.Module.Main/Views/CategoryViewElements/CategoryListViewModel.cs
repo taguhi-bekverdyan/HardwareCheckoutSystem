@@ -70,6 +70,20 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
             Name = null;
         }
 
+        public async void SaveCategoryChanges(object categoryRowObject)
+        {
+            var categoryRow = categoryRowObject as CategoryViewItem;
+            if (categoryRow != null)
+            {
+                var category = new Category();
+
+                category.Id = categoryRow.GetId();
+                category.Name = categoryRow.Name;
+
+                await _categoryService.Update(category);
+            }
+        }
+
         public DelegateCommand UpdateCategory { get; private set; }
 
         public void UpdateCategoryAction()

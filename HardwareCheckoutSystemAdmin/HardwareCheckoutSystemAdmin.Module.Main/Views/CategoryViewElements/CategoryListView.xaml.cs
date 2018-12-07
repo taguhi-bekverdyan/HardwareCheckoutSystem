@@ -24,5 +24,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements
         {
             InitializeComponent();
         }
+
+        private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            var viewmodel = (CategoryListViewModel)DataContext;
+            viewmodel.SaveCategoryChanges(e.Row.DataContext);
+        }
     }
 }

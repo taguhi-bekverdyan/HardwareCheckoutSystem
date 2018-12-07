@@ -24,5 +24,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         {
             InitializeComponent();
         }
+
+        private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            var viewmodel = (DeviceListViewModel)DataContext;
+            viewmodel.SaveDeviceChanges(e.Row.DataContext);
+        }
     }
 }

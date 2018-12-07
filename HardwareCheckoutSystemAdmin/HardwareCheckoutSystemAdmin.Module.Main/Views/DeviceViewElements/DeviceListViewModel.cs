@@ -13,6 +13,8 @@ using HardwareCheckoutSystemAdmin.Views;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.CategoryViewElements;
 using HardwareCheckoutSystemAdmin.Module.Main.Views.BrandViewElements;
 using HardwareCheckoutSystemAdmin.Models;
+using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 {
@@ -25,6 +27,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         private readonly IEventAggregator _eventAggregator;
         private readonly IDeviceService _deviceService;
         private readonly IShellService _shellService;
+
         private ShellView _addDeviceView;
 
         private List<DeviceViewItem> _devices;
@@ -33,7 +36,25 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             get { return _devices; }
             set { SetProperty(ref _devices,value); }
         }
+        ////
+        private Category _selectedCategory;
+        public Category SelectedCategory
+        {
+            get { return _selectedCategory; }
+            set
+            {
+                SetProperty(ref _selectedCategory, value);
+                AddDevice.RaiseCanExecuteChanged();
+            }
+        }
 
+        private List<Category> _categories;
+        public List<Category> Categories
+        {
+            get { return _categories; }
+            set { SetProperty(ref _categories, value); }
+        }
+        ////
         private bool _isBusy;
         public bool IsBusy
         {
@@ -100,6 +121,55 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             _eventAggregator.GetEvent<DeviceAddedOrEditedEvent>().Subscribe(DeviceAddedEventHandler, ThreadOption.UIThread);
             _addDeviceView = _shellService.ShowShell(nameof(AddDeviceView), 450, 520, param);
             SelectedDevice = null;
+        }
+
+
+        public async void SaveDeviceChanges(object deviceRowObject)
+        {
+            var deviceRow = deviceRowObject as DeviceViewItem;
+            if (deviceRow != null)
+            {
+                //save
+                var device = new Device();
+
+
+                device.Id = deviceRow.GetId();
+                device.BrandId = deviceRow.Brand.Id;
+                device.CategoryId = deviceRow.Category.Id;
+                device.Model = deviceRow.Model;
+                device.Description = deviceRow.Description;
+                device.Permission = deviceRow.Permission;
+                device.SerialNumber = deviceRow.SerialNumber;
+                device.Image = GetBytesFromBitmap(deviceRow.BitmapImage);
+
+                //device.Id = Guid.NewGuid();
+                //device.BrandId = SelectedBrand.Id;
+                //device.CategoryId = SelectedCategory.Id;
+                //device.Model = Model;
+                //device.Description = Description;
+                //device.Permission = Permission;
+                //device.SerialNumber = SerialNumber;
+                //device.Image = GetBytesFromImage(ImagePath);
+                await _deviceService.Update(device);
+            }
+
+        }
+
+        private byte[] GetBytesFromBitmap(BitmapSource bitmapImage)
+        {
+            byte[] res;
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            //encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+            encoder.QualityLevel = 100;
+            // byte[] bit = new byte[0];
+            using (MemoryStream stream = new MemoryStream())
+            {
+                encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+                encoder.Save(stream);
+                res = stream.ToArray();
+                stream.Close();
+            }
+            return res;
         }
 
         public DelegateCommand DeleteDevice { get; private set; }
