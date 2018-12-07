@@ -55,44 +55,42 @@
             <div class="container-fluid">
                 <h2>Request statuses</h2>
                 <div class="panel-group" id="accordion">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Request 1</a>
-                            </h4>
-                        </div>
-                        <div id="collapse1" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                Request info
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Request 2</a>
-                            </h4>
-                        </div>
-                        <div id="collapse2" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                Request info
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Request 3</a>
-                            </h4>
-                        </div>
-                        <div id="collapse3" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                Request info
-                            </div>
-                        </div>
+                    @*<div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Request 1</a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        Request info
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary btn-md pull-right">Open</button>
+            </div>*@
+                    @foreach (var req in Model.Requests)
+                    {
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#@req.Id">Request ID=@req.Id.ToString().Split("-")[0]</a>
+                                </h4>
+                            </div>
+                            <div id="@req.Id" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <p>@req.Message</p>
+                                    <p>@req.RentStartDate</p>
+                                    <p>@req.RentEndDate</p>
+                                    <p>@req.RequestDate</p>
+                                    <p>@req.Device.Model</p>
+                                    <p>@req.Device.Brand.Name</p>
+                                    <p>@req.Device.Description</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                @*<button type="button" class="btn btn-primary btn-md pull-right" id="HistoryButton">Open</button>*@
+                <a href='@Url.Page("/MyRequests")'>About</a>
             </div>
         </div>
     </div>
@@ -200,6 +198,19 @@
                 alert(response);
             }
         });
+
+        //$("#HistoryButton").click(function () {
+        //    $.ajax({
+        //        url: '/Home?handler=ChangePage',
+        //        type: 'POST',
+        //        headers: {
+        //            RequestVerificationToken:
+        //                $('input:hidden[name="__RequestVerificationToken"]').val()
+        //        }
+        //    }).done(function (result) {
+        //        console.log(result.toString());
+        //    });           
+        //});
 
         function updateDevicesList() {
             //todo

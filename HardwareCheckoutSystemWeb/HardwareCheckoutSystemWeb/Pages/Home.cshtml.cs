@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using HardwareCheckoutSystemWeb.Infrastructore;
 using HardwareCheckoutSystemWeb.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -23,6 +24,8 @@ namespace HardwareCheckoutSystemWeb.Pages
 
         [BindProperty]
         public List<Device> Devices { get; private set; } = new List<Device>();
+        [BindProperty]
+        public List<Request> Requests { get; private set; } = new List<Request>();
 
         public HomeModel(IDeviceService deviceService, IRequestService requestService)
         {
@@ -47,9 +50,11 @@ namespace HardwareCheckoutSystemWeb.Pages
 
         public async Task OnGet()
         {
+            
             try
             {
                 Devices = await OnGetData();
+                Requests = await GetRequests();
             }
             catch (Exception)
             {
@@ -57,7 +62,14 @@ namespace HardwareCheckoutSystemWeb.Pages
             }
         }
 
-        
+        private async Task<List<Request>> GetRequests()
+        {
+            List<Request> temp = await _requestService.FindAll();
+            temp = (from i in temp where i.Status == RequestStatus.StatusOne && i.UserId == _user.Id select i)
+                .ToList();
+            return temp;
+        }
+
         private async Task<List<Device>> OnGetData()
         {
             List<Device> temp = await _deviceService.FindAll();
@@ -93,6 +105,12 @@ namespace HardwareCheckoutSystemWeb.Pages
             {
                 return StatusCode(500,e);
             }
+        }
+
+        [HttpPost]
+        public IActionResult OnPostChangePage()
+        {
+            return Redirect("./MyRequests");
         }
 
         

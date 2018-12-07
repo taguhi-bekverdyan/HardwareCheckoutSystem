@@ -54,15 +54,12 @@ namespace HardwareCheckoutSystemWeb.Services
             var request = new RestRequest("users/{guid}", Method.GET);
             request.AddUrlSegment("guid", id.ToString());
 
-            IRestResponse<User> response = await _client.ExecuteTaskAsync<User>(request);
-            if (!response.IsSuccessful)
+            IRestResponse response = await _client.ExecuteTaskAsync(request);
+            if (response.IsSuccessful)
             {
-                throw new Exception(response.ErrorMessage);
+                return JsonConvert.DeserializeObject<User>(response.Content);
             }
-            else
-            {
-                return response.Data;
-            }
+            throw new Exception(response.ErrorMessage);
         }
 
         public async Task Insert(User newUser)
