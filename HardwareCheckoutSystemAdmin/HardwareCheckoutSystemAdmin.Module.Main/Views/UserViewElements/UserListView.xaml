@@ -47,16 +47,13 @@
         </Grid>
 
         <extToolkit1:BusyIndicator Grid.Row="1" BusyContent="Loading..." IsBusy="{Binding IsBusy}">
-            <DataGrid Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
-                  CanUserAddRows="False" ItemsSource="{Binding Users, Mode=TwoWay}"
-                  SelectedItem="{Binding SelectedUser,Mode=TwoWay}">
-                <telerik:RadGridView Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
+            <telerik:RadGridView FilteringMode="FilterRow" Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
                   CanUserInsertRows="False" ItemsSource="{Binding Users,Mode=TwoWay}"
                   SelectedItem="{Binding SelectedUser,Mode=TwoWay}">
-                    telerik:RadGridView.GroupDescriptors>
-                    <telerik:GroupDescriptor Member="Permission" 
+                    <telerik:RadGridView.GroupDescriptors>
+                        <telerik:GroupDescriptor Member="Permission" 
                             SortDirection="Ascending" />
-                    t<telerik:GroupDescriptor Member="Occupation" 
+                        <telerik:GroupDescriptor Member="Occupation" 
                             SortDirection="Ascending" />
                     </telerik:RadGridView.GroupDescriptors>
                     <telerik:RadGridView.Columns>
@@ -66,16 +63,16 @@
                                     <Image Source="{Binding BitmapImage}"/>
                                 </DataTemplate>
                             </telerik:GridViewDataColumn.CellTemplate>
-                            <telerik:GridViewDataColumn Header="FirstName" DataMemberBinding="{Binding FirstName}" />
-                        <telerik:GridViewDataColumn Header="LastName" DataMemberBinding="{Binding LastName}" />
-                        <telerik:GridViewDataColumn Header="Occupation" DataMemberBinding="{Binding Occupation}" />
-                        <telerik:GridViewDataColumn Header="Address" DataMemberBinding="{Binding Address}" />
-                        <telerik:GridViewDataColumn Header="Birthdate" DataMemberBinding="{Binding Birthdate}" />
-                        <telerik:GridViewDataColumn Header="TelNumber" DataMemberBinding="{Binding TelNumber}" />
-                        <telerik:GridViewDataColumn Header="Permission" DataMemberBinding="{Binding Permission}" />
+                        </telerik:GridViewDataColumn>
+                        <telerik:GridViewDataColumn Header="FirstName" DataMemberBinding="{Binding FirstName}" />
+                            <telerik:GridViewDataColumn Header="LastName" DataMemberBinding="{Binding LastName}" />
+                            <telerik:GridViewDataColumn Header="Occupation" DataMemberBinding="{Binding Occupation}" />
+                            <telerik:GridViewDataColumn Header="Address" DataMemberBinding="{Binding Address}" />
+                            <telerik:GridViewDataColumn Header="Birthdate" DataMemberBinding="{Binding Birthdate}" />
+                            <telerik:GridViewDataColumn Header="TelNumber" DataMemberBinding="{Binding TelNumber}" />
+                            <telerik:GridViewDataColumn Header="Permission" DataMemberBinding="{Binding Permission}" />
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
-              
         </extToolkit1:BusyIndicator>
     </Grid>
 </UserControl>

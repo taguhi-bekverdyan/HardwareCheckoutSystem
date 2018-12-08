@@ -29,10 +29,10 @@
     <StackPanel Margin="10" Resources="{StaticResource myResources}">
 
         <Label Content="Serial number" FontSize="15"/>
-        <!--<TextBox Height="25" Text="{Binding SerialNumber,Mode=TwoWay}"/>-->
-        <telerik:RadMaskedTextInput Height = "25"
+        <TextBox Height="25" Text="{Binding SerialNumber,Mode=TwoWay}"/>
+        <!--<telerik:RadMaskedTextInput Height = "25"
                                 ErrorMessage="{Binding Path=Text, ElementName=customErrorMessage}" 
-                                Value="{Binding Path=SerialNumber, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />
+                                Value="{Binding Path=SerialNumber, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />-->
 
         <Grid Margin="0 5 0 0" Height="60">
             <Grid.ColumnDefinitions>
@@ -50,16 +50,16 @@
         </Grid>
 
         <Label Content="Model" FontSize="15"/>
-        <!--<TextBox Height="25" Text="{Binding Model,Mode=TwoWay}"/>-->
-        <telerik:RadMaskedTextInput Height ="25" 
+        <TextBox Height="25" Text="{Binding Model,Mode=TwoWay}"/>
+        <!--<telerik:RadMaskedTextInput Height ="25" 
                                 ErrorMessage="{Binding Path=Text, ElementName=customErrorMessage}" 
-                                Value="{Binding Path=Model, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />
+                                Value="{Binding Path=Model, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />-->
 
         <Label Content="Description" FontSize="15"/>
-        <!--<TextBox Height="80" Text="{Binding Description,Mode=TwoWay}"/>-->
-        <telerik:RadMaskedTextInput Height ="80"
+        <TextBox Height="80" Text="{Binding Description,Mode=TwoWay}"/>
+        <!--<telerik:RadMaskedTextInput Height ="80"
                                 ErrorMessage="{Binding Path=Text, ElementName=customErrorMessage}" 
-                                Value="{Binding Path=Describtion, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />
+                                Value="{Binding Path=Describtion, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />-->
 
         <!--<Label Content="Max Period" FontSize="15"/>-->
         <Label Content="Permission" FontSize="15"/>

@@ -29,30 +29,29 @@
     <Grid Resources="{StaticResource myResources}">
         <StackPanel Orientation="Vertical" Margin="10">
             <Label Content="Sender Id" FontSize="15"/>
-            <!--<TextBox Height="25" Text="{Binding SenderId,Mode=TwoWay}"/>-->
-            <telerik:RadMaskedNumericInput Height =" 25"
+            <TextBox Height="25" Text="{Binding SenderId,Mode=TwoWay}"/>
+            <!--<telerik:RadMaskedNumericInput Height =" 25"
                                     ErrorMessage="{Binding Path=Text, ElementName=customErrorMessage}" 
                                     InputBehavior="Insert" 
-                                    Value="{Binding Path=SenderId, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />
+                                    Value="{Binding Path=SenderId, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />-->
             <Label Content="Message" FontSize="15"/>
-            <!--<TextBox Height="100" Text="{Binding Message,Mode=TwoWay}"/>-->
-            <telerik:RadMaskedTextInput Height ="100"
+            <TextBox Height="100" Text="{Binding Message,Mode=TwoWay}"/>
+            <!--<telerik:RadMaskedNumericInput  Height ="100"
                                 ErrorMessage="{Binding Path=Text, ElementName=customErrorMessage}" 
-                                Value="{Binding Path=Message, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />
+                                Value="{Binding Path=Message, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />-->
         </StackPanel>
         <Label Content="New Status" FontSize="15"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                       SelectedItem="{Binding Path=NewStatus,Mode=TwoWay}"/>
-            <Grid Height="70" Margin="0 10 0 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Margin="0 10 10 10" Content="Cancel"
+        <Grid Height="70" Margin="0 10 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Margin="0 10 10 10" Content="Cancel"
                         Command="{Binding Cancel}"/>
-                <Button Grid.Column="1" Margin="10 10 0 10" Content="Send"
+            <Button Grid.Column="1" Margin="10 10 0 10" Content="Send"
                         Command="{Binding Send}"/>
-            </Grid>
-        </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

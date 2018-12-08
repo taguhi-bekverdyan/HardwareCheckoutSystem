@@ -38,7 +38,7 @@
         </Grid>
 
 
-        <telerik:RadGridView Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
+        <telerik:RadGridView FilteringMode="FilterRow" Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
                   CanUserInsertRows="False" ItemsSource="{Binding Responses,Mode=TwoWay}"
                   SelectedItem="{Binding SelectedResponse,Mode=TwoWay}">
         </telerik:RadGridView>

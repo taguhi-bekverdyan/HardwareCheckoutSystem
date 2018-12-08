@@ -28,25 +28,25 @@
     </UserControl.Resources>
     <StackPanel Margin="10" Resources="{StaticResource myResources}">
         <Label Content="First Name" FontSize="15"/>
-        <!--<TextBox Height="25" Text="{Binding FirstName, Mode=TwoWay}"/>-->
-        <telerik:RadMaskedTextInput Height ="25"
-                                    ErrorMessage="{Binding Path=Text, ElementName=customErrorMessage}" 
+        <TextBox Height="25" Text="{Binding FirstName, Mode=TwoWay}"/>
+        <!--<telerik:RadMaskedTextInput Height ="25"
+                                    ErrorMessage="Required" 
                                     InputBehavior="Insert" 
-                                    Value="{Binding Path = FirstName, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />
+                                    Value="{Binding Path = FirstName, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />-->
 
         <Label Content="Last Name" FontSize="15"/>
-        <!--<TextBox Height="25" Text="{Binding LastName, Mode=TwoWay}"/>-->
-        <telerik:RadMaskedaTextInput
-                                    Height ="25" ErrorMessage="{Binding Path=Text, ElementName=customErrorMessage}" 
+        <TextBox Height="25" Text="{Binding LastName, Mode=TwoWay}"/>
+        <!--<telerik:RadMaskedTextInput
+                                    Height ="25" ErrorMessage="Required" 
                                     InputBehavior="Insert" 
-                                    Value="{Binding Path = LastName, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />
+                                    Value="{Binding Path = LastName, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />-->
         
         <Label Content="Address" FontSize="15"/>
-        <!--<TextBox Height="25" Text="{Binding Address, Mode=TwoWay}"/>-->
-        <telerik:RadMaskedCurrencyInput
+        <TextBox Height="25" Text="{Binding Address, Mode=TwoWay}"/>
+        <!--<telerik:RadMaskedCurrencyInput
                                     Height = "25" ErrorMessage="{Binding Path=Text, ElementName=customErrorMessage}" 
                                     InputBehavior="Insert" 
-                                    Value="{Binding Path=Address, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />
+                                    Value="{Binding Path=Address, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />-->
 
         <Grid Height="80">
             <Grid.ColumnDefinitions>
@@ -59,13 +59,10 @@
             </Grid.RowDefinitions>
             
             <Label Content="Birthdate" FontSize="15" HorizontalAlignment="Center"/>
-            <!--<DatePicker Grid.Row="1" HorizontalAlignment="Center"
+            <DatePicker Grid.Row="1" HorizontalAlignment="Center"
             SelectedDate="{Binding Birthdate, Mode=TwoWay, 
             TargetNullValue={x:Static System:DateTime.Now}}"                        
-            Width="150" />-->
-            <telerik:RadMaskedDateTimeInput Width ="150" 
-                                    ErrorMessage="{Binding Path=Text, ElementName=customErrorMessage}" 
-                                    Value="{Binding Path = Birthdate , Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />
+            Width="150" />
 
             <Label Content="Permission" FontSize="15" 
                    Grid.Column="1" HorizontalAlignment="Center"/>
@@ -75,10 +72,10 @@
 
         <Label Content="Tel Number" FontSize="15"/>
         <TextBox Height="25" Text="{Binding TelNumber}"/>
-        <telerik:RadMaskedNumericInput Height ="25"
+        <!--<telerik:RadMaskedNumericInput Height ="25"
                                     ErrorMessage="{Binding Path=Text, ElementName=customErrorMessage}" 
                                     InputBehavior="Insert" 
-                                    Value="{Binding Path = TelNumber, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />
+                                    Value="{Binding Path = TelNumber, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" />-->
 
         <Label Content="Occupation" FontSize="15"/>
         <TextBox Height="25" Text="{Binding Occupation}"/>

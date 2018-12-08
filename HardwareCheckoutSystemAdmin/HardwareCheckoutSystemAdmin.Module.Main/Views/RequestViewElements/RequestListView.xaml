@@ -34,7 +34,7 @@
         
         
         <extToolkit1:BusyIndicator Grid.Row="1" IsBusy="{Binding IsBusy}">
-            <telerik:RadGridView Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
+            <telerik:RadGridView FilteringMode="FilterRow" Margin="10" IsReadOnly="True" AutoGenerateColumns="False"
                   CanUserInsertRows="False" ItemsSource="{Binding Requests,Mode=TwoWay}"
                   SelectedItem="{Binding SelectedRequest,Mode=TwoWay}">
             </telerik:RadGridView>

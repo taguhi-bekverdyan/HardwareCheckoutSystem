@@ -45,7 +45,14 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
             get { return _lasttName; }
             set
             {
-                SetProperty(ref _lasttName, value);
+                //if(!String.IsNullOrWhiteSpace(_lasttName))
+                //{
+                    SetProperty(ref _lasttName, value);
+                //}
+                //else
+                //{
+                //    throw new ValidationException("Required");
+                //}
             }
         }
 
@@ -61,7 +68,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
 
         private DateTime _birthdate;
 
-        [Range(typeof(DateTime), "01.01.1900", "01.01.2099")]
+
         public DateTime Birthdate
         {
             get { return _birthdate; }
