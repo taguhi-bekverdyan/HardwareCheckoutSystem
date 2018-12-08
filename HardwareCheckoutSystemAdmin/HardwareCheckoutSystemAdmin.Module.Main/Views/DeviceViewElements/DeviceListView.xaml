@@ -78,8 +78,13 @@
                                              DisplayMemberPath="Name"
                                              SelectedValuePath="Id"
                                              SelectedValueBinding="{Binding Category,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                    
-                    <DataGridTextColumn Header="Brand" Binding="{Binding Brand}" />
+
+                    <DataGridComboBoxColumn  Header="Brand"                           
+                                             ItemsSource="{Binding Brands}"
+                                             DisplayMemberPath="Name"
+                                             SelectedValuePath="Id"
+                                             SelectedValueBinding="{Binding Brand,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
                     <DataGridTextColumn Header="Model" Binding="{Binding Model,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <DataGridTextColumn Header="Status" Binding="{Binding Status,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <DataGridTextColumn Header="Description" Binding="{Binding Description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
@@ -87,7 +92,6 @@
                     <DataGridComboBoxColumn Header="Permission" 
                                             ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                                             SelectedValueBinding="{Binding Permission,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                    <!--<DataGridTextColumn Header="Permission" Binding="{Binding Permission,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />-->
                 </DataGrid.Columns>
 
             </DataGrid>

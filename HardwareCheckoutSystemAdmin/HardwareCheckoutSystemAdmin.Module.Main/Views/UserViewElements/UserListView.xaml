@@ -81,11 +81,9 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <!--<DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />-->
                     <DataGridTextColumn Header="TelNumber" Binding="{Binding TelNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <DataGridComboBoxColumn Header="Permission" ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                                             SelectedValueBinding="{Binding Permission,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                    <!--<DataGridTextColumn Header="Permission" Binding="{Binding Permission,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />-->
                     <DataGridTextColumn Header="Occupation" Binding="{Binding Occupation,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                 </DataGrid.Columns>
 

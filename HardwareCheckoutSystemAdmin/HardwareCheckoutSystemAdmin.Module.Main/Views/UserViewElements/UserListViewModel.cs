@@ -112,14 +112,6 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
                 user.Occupation = userRow.Occupation;
                 user.AvatarImage = GetBytesFromBitmap(userRow.BitmapImage);
 
-                //_user.LastName = LastName;
-                //_user.FirstName = FirstName;
-                //_user.Address = Address;
-                //_user.Birthdate = Birthdate;
-                //_user.Permission = Permission;
-                //_user.TelNumber = TelNumber;
-                //_user.Occupation = Occupation;
-                //_user.AvatarImage = GetBytesFromImage(ImagePath);
                 await _userService.Update(user);
             }
 
@@ -127,19 +119,21 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.UserViewElements
 
         private byte[] GetBytesFromBitmap(BitmapSource bitmapImage)
         {
-            byte[] res;
-            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-            //encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
-            encoder.QualityLevel = 100;
-            // byte[] bit = new byte[0];
-            using (MemoryStream stream = new MemoryStream())
+            if (bitmapImage != null)
             {
-                encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
-                encoder.Save(stream);
-                res = stream.ToArray();
-                stream.Close();
+                byte[] res;
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.QualityLevel = 100;
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+                    encoder.Save(stream);
+                    res = stream.ToArray();
+                    stream.Close();
+                }
+                return res;
             }
-            return res;
+            return null;
         }
 
         public DelegateCommand DeleteUser { get; private set; }

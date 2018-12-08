@@ -28,6 +28,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         private readonly IDeviceService _deviceService;
         private readonly IShellService _shellService;
         private readonly ICategoryService _categoryService;
+        private readonly IBrandService _brandService;
 
         private ShellView _addDeviceView;
 
@@ -43,25 +44,23 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             get { return _devices; }
             set { SetProperty(ref _devices,value); }
         }
-        ////
-        private Category _selectedCategory;
-        public Category SelectedCategory
-        {
-            get { return _selectedCategory; }
-            set
-            {
-                SetProperty(ref _selectedCategory, value);
-                AddDevice.RaiseCanExecuteChanged();
-            }
-        }
 
+        ////
         private List<Category> _categories;
         public List<Category> Categories
         {
             get { return _categories; }
             set { SetProperty(ref _categories, value); }
         }
+
+        private List<Brand> _brands;
+        public List<Brand> Brands
+        {
+            get { return _brands; }
+            set { SetProperty(ref _brands, value); }
+        }
         ////
+
         private bool _isBusy;
         public bool IsBusy
         {
@@ -82,10 +81,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         }
 
         public DeviceListViewModel(IDeviceService deviceService,IShellService shellService
-            , IEventAggregator eventAggregator,ICategoryService categoryService)
+            , IEventAggregator eventAggregator,ICategoryService categoryService,IBrandService brandService)
         {
             _deviceService = deviceService;
             _categoryService = categoryService;
+            _brandService= brandService;
             _shellService = shellService;
             _eventAggregator = eventAggregator;
             _isBusy = true;
@@ -150,15 +150,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
                 device.Permission = deviceRow.Permission;
                 device.SerialNumber = deviceRow.SerialNumber;
                 device.Image = GetBytesFromBitmap(deviceRow.BitmapImage);
-
-                //device.Id = Guid.NewGuid();
-                //device.BrandId = SelectedBrand.Id;
-                //device.CategoryId = SelectedCategory.Id;
-                //device.Model = Model;
-                //device.Description = Description;
-                //device.Permission = Permission;
-                //device.SerialNumber = SerialNumber;
-                //device.Image = GetBytesFromImage(ImagePath);
+                
                 await _deviceService.Update(device);
             }
 
@@ -166,19 +158,21 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 
         private byte[] GetBytesFromBitmap(BitmapSource bitmapImage)
         {
-            byte[] res;
-            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-            //encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
-            encoder.QualityLevel = 100;
-            // byte[] bit = new byte[0];
-            using (MemoryStream stream = new MemoryStream())
+            if (bitmapImage != null)
             {
-                encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
-                encoder.Save(stream);
-                res = stream.ToArray();
-                stream.Close();
+                byte[] res;
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.QualityLevel = 100;
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+                    encoder.Save(stream);
+                    res = stream.ToArray();
+                    stream.Close();
+                }
+                return res;
             }
-            return res;
+            return null;
         }
 
         public DelegateCommand DeleteDevice { get; private set; }
@@ -239,6 +233,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         private async Task UpdateData()
         {
             Categories = await _categoryService.FindAll();
+            Brands = await _brandService.FindAll();
             List<DeviceViewItem> tempDevices = new List<DeviceViewItem>();
             List<Device> temp = await _deviceService.FindAll();
             foreach (var item in temp)
