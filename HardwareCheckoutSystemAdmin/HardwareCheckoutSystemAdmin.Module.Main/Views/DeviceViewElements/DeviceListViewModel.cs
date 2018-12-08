@@ -27,8 +27,15 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
         private readonly IEventAggregator _eventAggregator;
         private readonly IDeviceService _deviceService;
         private readonly IShellService _shellService;
+        private readonly ICategoryService _categoryService;
 
         private ShellView _addDeviceView;
+
+
+        public DeviceListViewModel()
+        {
+        
+        }
 
         private List<DeviceViewItem> _devices;
         public List<DeviceViewItem> Devices
@@ -74,9 +81,11 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
             }
         }
 
-        public DeviceListViewModel(IDeviceService deviceService,IShellService shellService, IEventAggregator eventAggregator)
+        public DeviceListViewModel(IDeviceService deviceService,IShellService shellService
+            , IEventAggregator eventAggregator,ICategoryService categoryService)
         {
             _deviceService = deviceService;
+            _categoryService = categoryService;
             _shellService = shellService;
             _eventAggregator = eventAggregator;
             _isBusy = true;
@@ -229,6 +238,7 @@ namespace HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements
 
         private async Task UpdateData()
         {
+            Categories = await _categoryService.FindAll();
             List<DeviceViewItem> tempDevices = new List<DeviceViewItem>();
             List<Device> temp = await _deviceService.FindAll();
             foreach (var item in temp)

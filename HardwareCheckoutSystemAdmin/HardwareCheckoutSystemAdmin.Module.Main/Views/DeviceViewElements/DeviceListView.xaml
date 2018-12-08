@@ -3,16 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views"
+             xmlns:local="clr-namespace:HardwareCheckoutSystemAdmin.Module.Main.Views.DeviceViewElements"
              xmlns:mvvm="http://prismlibrary.com/"            
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:StyleAlias="clr-namespace:HardwareCheckoutSystemAdmin.Models;assembly=HardwareCheckoutSystemAdmin.Models"                     
              xmlns:extToolkit1="http://schemas.xceed.com/wpf/xaml/toolkit"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
-      
              mc:Ignorable="d" 
              Background="#ffffff"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance local:DeviceListViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
         <ObjectDataProvider
@@ -75,17 +75,17 @@
                     <DataGridTextColumn Header="Serial Number" Binding="{Binding SerialNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <DataGridComboBoxColumn  Header="Category"                           
                                              ItemsSource="{Binding Categories}"
-                                             DisplayMemberPath="Categories.Name"
-                                             SelectedValuePath="Categories.ID"
-                                             SelectedValueBinding="{Binding SelectedCategory,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                             DisplayMemberPath="Name"
+                                             SelectedValuePath="Id"
+                                             SelectedValueBinding="{Binding Category,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                     
-                    <DataGridTextColumn Header="Categories" Binding="{Binding Categories}" />
                     <DataGridTextColumn Header="Brand" Binding="{Binding Brand}" />
                     <DataGridTextColumn Header="Model" Binding="{Binding Model,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <DataGridTextColumn Header="Status" Binding="{Binding Status,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <DataGridTextColumn Header="Description" Binding="{Binding Description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <DataGridTextColumn Header="Max Period" Binding="{Binding MaxPeriod,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                    <DataGridComboBoxColumn Header="Permission" ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
+                    <DataGridComboBoxColumn Header="Permission" 
+                                            ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                                             SelectedValueBinding="{Binding Permission,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                     <!--<DataGridTextColumn Header="Permission" Binding="{Binding Permission,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />-->
                 </DataGrid.Columns>
