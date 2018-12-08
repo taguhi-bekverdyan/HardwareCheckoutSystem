@@ -125,8 +125,8 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" id="buttonSendModel">Send</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="ButtonCancelSending">Close</button>                
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="buttonSendModel">Send</button>               
             </div>
 
         </div>
@@ -219,6 +219,12 @@
         function Device() {
             //todo
         }
+
+        $("#ButtonCancelSending").click(function () {
+            $("#rentStartDate").val(null);
+            $("#rentEndDate").val(null);
+            $("#messageInput").val(null);
+        });
 
     });
 </script>

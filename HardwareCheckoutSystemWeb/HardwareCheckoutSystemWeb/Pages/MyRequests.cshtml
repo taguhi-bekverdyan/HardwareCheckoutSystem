@@ -4,6 +4,7 @@
     ViewData["Title"] = "MyRequests";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+@Html.AntiForgeryToken()
 
 <div class="container-fluid">
     <div class="row">
@@ -49,53 +50,47 @@
     </div>
     <div class="row">
         <div class="container-fluid">
-            <h2 class="text-center">Requests</h2>
+            <h2 class="text-center">Requests in pending</h2>
             <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Email</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>john@example.com</td>
-                            <td class="center-block">
-                                <div class="center-block">
-                                    <button type="button" class="btn btn-primary btn-md">Edit</button>
-                                    <button type="button" class="btn btn-danger btn-md">Cancel</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mary</td>
-                            <td>Moe</td>
-                            <td>mary@example.com</td>
-                            <td>
-                                <div class="row center-block">
-                                    <button type="button" class="btn btn-primary btn-md">Edit</button>
-                                    <button type="button" class="btn btn-danger btn-md">Cancel</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>July</td>
-                            <td>Dooley</td>
-                            <td>july@example.com</td>
-                            <td>
-                                <div class="row center-block">
-                                    <button type="button" class="btn btn-primary btn-md">Edit</button>
-                                    <button type="button" class="btn btn-danger btn-md">Cancel</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                @if (Model.InProgress.Count != 0)
+                {
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Device Brand</th>
+                                <th>Device Model</th>
+                                <th>Request Date</th>
+                                <th>Rent start date</th>
+                                <th>Rent end date</th>
+                                <th>Request Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.InProgress)
+                            {
+                                <tr>
+                                    <td>@item.Id.ToString().Split("-")[0]</td>
+                                    <td>@item.Device.Brand.Name</td>
+                                    <td>@item.Device.Model</td>
+                                    <td>@item.RequestDate</td>
+                                    <td>@item.RentStartDate</td>
+                                    <td>@item.RentEndDate</td>
+                                    <td>@item.Message</td>
+                                    <td>
+                                        <div class="row center-block">
+                                            <button asp-page="/MyRequests" type="button" class="btn btn-danger btn-md RequestCancelButton" id="@item.Id">Cancel</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h2>You have no requests</h2>
+                }
             </div>
         </div>
     </div>
@@ -146,3 +141,25 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".RequestCancelButton").click(function () {
+            var requestId = $(this).attr("Id").toString();
+
+            console.log(requestId);
+
+            $.ajax({
+                url: '/MyRequests',
+                type: 'POST',
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(requestId)
+            }).done(function (result) {
+                console.log("Ok");
+            });
+        });
+    });
+</script>

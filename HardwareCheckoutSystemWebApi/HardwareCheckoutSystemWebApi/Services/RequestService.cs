@@ -59,7 +59,7 @@ namespace HardwareCheckoutSystemWebApi.Services
         public async Task<List<Request>> FindRequestsInPending()
         {
             List<Request> requests = await FindAll();
-            return requests.FindAll(r => r.LastResponseId == null);
+            return requests.FindAll(r => r.Status == RequestStatus.StatusOne);
         }
 
         public Task<Request> FindRequestById(Guid id)
